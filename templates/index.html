@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Data Analysis</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Vehicle Data Analysis</h1>
+    </header>
+    <section class="container">
+        <div class="filters">
+            <label>Start Date: <input type="datetime-local" id="startDate"></label>
+            <label>End Date: <input type="datetime-local" id="endDate"></label>
+            <button id="filterData">Filter Data</button>
+        </div>
+        <div class="info-panels">
+            <div class="panel">Acceleration Graph</div>
+            <div class="panel">Speed Graph</div>
+            <div class="panel">Oil Pressure Graph</div>
+            <div class="panel">DTCs</div>
+            <div class="panel">Engine RPM</div>
+            <div class="panel">Fuel Level</div>
+        </div>
+        <div id="map-section">
+            <h2>Vehicle Location</h2>
+            <div id="map"></div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Vehicle Analysis Dashboard</p>
+    </footer>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>
