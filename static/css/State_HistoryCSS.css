@@ -8,13 +8,17 @@ body {
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; /* Center aligns the title */
     background-color: #ff2121; /* Red */
     color: white;
-    padding: 15px 20px;
+    padding: 10px 15px; /* Reduced padding */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+header h1 {
+    font-size: 32px; /* Adjusted font size */
+    margin: 0; /* Remove default margin */
+}
 .grid-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -44,14 +48,19 @@ header {
 
 .header-row, .form-row {
     display: contents;
+    border-radius: 20px;
+    
 }
 
 .header-row div, .form-row input, .form-row button {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
-    height: 50px;
+    height: 30px;
     width: 200px;
+    border-radius: 10px;
+    background-color: rgb(193, 231, 236);
+    
 }
 
 .map-area {
@@ -99,9 +108,11 @@ button:hover {
 
 /* Div Hover Effect */
 .header-row div:hover, .form-row input:hover {
-    background-color: #f0f0f0; /* Lighten the background */
+    background-color: #21a1dc; /* Lighten the background */
     border-color: #00539b; /* Change border color */
     transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+
+    
 }
 
 /* Map Area Hover Effect */
