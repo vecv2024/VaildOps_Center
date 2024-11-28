@@ -1,0 +1,358 @@
+/* Reset margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Roboto, sans-serif !important;
+    background-color: #f4f4f4;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #d9241d;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.navbar img {
+    height: 40px;
+    margin-right: 15px;
+}
+
+.navbar a {
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    position: relative;
+}
+
+.navbar a:hover {
+    background-color: transparent;
+}
+
+.search-container {
+    display: inline-block;
+    position: relative;
+}
+
+.search-container input[type="text"] {
+    padding: 6px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.search-container button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #fff;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.search-container button i {
+    color: red;
+}
+
+.profile-container {
+    margin-left: auto;
+    padding-left: 20px;
+}
+
+/* Boxes Section */
+.box-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 10px;
+    padding: 10px;
+}
+
+.box {
+    flex-grow: 1;
+    margin: 0 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Grid Icon Styling */
+.grid-menu {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin: 10px 0;
+    position: relative;
+}
+
+.grid-menu div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-menu div span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 2px;
+}
+
+.grid-menu:hover div span {
+    background-color: #d9241d;
+}
+
+/* Specific styling for Segment Name Box */
+.box h3 {
+font-size: 18px;
+font-weight: bold;
+color: #3f3d3d; /* Dark gray color */
+margin-bottom: 10px; /* Spacing below the title */
+background-color: #d8d2d2; /* Light gray background */
+padding: 10px; /* Add padding for better visibility */
+border-radius: 8px 8px 0 0; /* Rounded corners at the top */
+width: 100%; /* Ensure the background spans the full width */
+box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.box i.icon {
+    font-size: 40px;
+    color: #d9241d;
+    margin: 10px 0;
+}
+
+.box .hd-text {
+    font-size: 16px;
+    color: darkgray;
+    margin-top: 10px;
+    font-weight: normal;
+}
+
+.kms-title {
+    color: darkgray;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.kms-icon {
+    font-size: 40px;
+    color: #d9241d;
+    margin-bottom: 30px;
+}
+
+.kms-value {
+    color: darkgray;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.Hrs-title {
+    color: darkgray;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.clock-icon {
+    font-size: 40px;
+    color: #d9241d;
+    margin-bottom: 30px;
+}
+
+.Hrs-value {
+    color: darkgray;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.box:hover h3,
+.box:hover i.icon,
+.box:hover .hd-text {
+    color: #d9241d;
+}
+
+@media (max-width: 768px) {
+    .box-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .box {
+        margin: 10px;
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .box {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+
+
+
+/* Styles for the new three-box section */
+.three-boxes-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0; /* No space between boxes */
+    width: 50%; /* Set the container width to cover from left to center */
+    margin-left: 0; /* Align the container to the left edge */
+    margin-top: 20px; /* Space above the new section */
+}
+
+/* General box styling */
+.three-box {
+    height: 50px; /* Same height for all boxes */
+    background-color: #f0f0f0; /* Light background color */
+    border: 1px solid black; /* Black border around the boxes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Set the width for each box */
+.box-1 {
+    width: 20%; /* Box 1 takes 20% of the container width */
+}
+
+.box-2 {
+    width: 50%; /* Box 2 takes 50% of the container width */
+}
+
+.box-3 {
+    width: 8%; /* Box 3 takes 8% of the container width */
+}
+
+/* Styling for the Search Criteria text */
+.search-criteria {
+    font-size: 1.2em;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Styling for the Search field */
+.search-field {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s; /* Smooth transition for the border color */
+}
+
+.search-field:focus {
+    border-color: red; /* Border turns red when focused */
+}
+
+/* Styling for the Search button */
+.search-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.search-button i {
+    font-size: 1.2em;
+    color: #333;
+    transition: color 0.3s; /* Smooth transition for the color change */
+}
+
+/* Hover effect for the search button */
+.search-button:hover i {
+    color: red; /* Change icon color to red on hover */
+}
+
+/* Wrap both map-container and connected-divs in a container */
+.container {
+    display: flex;
+    justify-content: space-between; /* Space between map and connected-divs */
+    align-items: flex-start; /* Align to the top */
+    width: 100%; /* Full width of the screen or container */
+    margin-top: 20px; /* Optional margin at the top */
+}
+
+/* Map Container Styling */
+.map-container {
+    width: 48%; /* Set width of the map container */
+    height: 400px; /* Adjust the height of the map */
+    display: flex;
+    justify-content: center; /* Center the map iframe horizontally */
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none; /* Remove default iframe border */
+}
+
+/* Styling for the connected-divs container (Square box around divs) */
+.connected-divs {
+    display: flex;
+    align-items: center; /* Center the divs vertically */
+    justify-content: center; /* Align divs in the center */
+    gap: 0; /* Remove space between divs */
+    width: 50%; /* Set the width of the connected divs */
+    height: 120px; /* Set a fixed height for the container */
+    border: 3px solid #333; /* Border around the container */
+    background-color: #f9f9f9; /* Light background */
+    padding: 10px; /* Padding inside the container */
+    box-sizing: border-box; /* Include padding in dimensions */
+    border-radius: 10px; /* Optional: rounded corners */
+}
+
+/* Styling for each connected div inside the container */
+.connected-div {
+    flex: 1; /* Distribute space equally between divs */
+    height: 100%; /* Ensure the div takes full height */
+    background-color: #fff; /* White background for inner divs */
+    padding: 20px; /* Padding inside the divs */
+    border: 2px solid hwb(0 58% 39%); /* Border around each inner div */
+    margin-right: 10px; /* Space between divs */
+    border-radius: 8px; /* Optional: rounded corners */
+    box-sizing: border-box; /* Include padding in the div's width calculation */
+}
+
+/* Remove margin for the last div */
+.connected-div:last-child {
+    margin-right: 0; /* No margin on the last div */
+}
+
+/* Optional: Hover effect for the connected divs */
+.connected-div:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Hover effect for the container */
+.connected-divs:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

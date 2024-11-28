@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('State_History.html')
+    return render_template('home.html')
 
 @app.route('/get-data', methods=['POST'])
 def get_data():

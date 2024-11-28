@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTC Problem Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 0px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #d9241d;
+        }
+
+        .dtc-details {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dtc-code {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .dtc-description {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .dtc-reason {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .dtc-status {
+            display: inline-block;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+
+        .status-pending {
+            background-color: #f0ad4e;
+            color: white;
+        }
+
+        .status-resolved {
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        .solution-section {
+            margin-top: 20px;
+            background-color: #e9f7f6;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .solution-heading {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .solution-text {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .action-solved {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .action-visit {
+            font-weight: bold;
+            color: #d9534f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1> <i class="fas fa-chart-line"></i>  DTC Code Description</h1>
+        </div>
+
+        <div class="dtc-details">
+            <div>
+                <span class="dtc-code">P0123</span> 
+                <p class="dtc-description">Throttle/Pedal Position Sensor - High Input</p>
+                <p class="dtc-reason"><strong>Reason:</strong> This occurs when the throttle or pedal position sensor sends higher input than expected, often due to a malfunctioning sensor or wiring issue.</p>
+              <span>Status:</span>  <span class="dtc-status status-pending"> Pending</span>
+            </div>
+        </div>
+
+        <div class="solution-section">
+            <p class="solution-heading">Suggested Solution:</p>
+            <p class="solution-text"><span class="action-visit">Visit a nearby service center</span> for diagnosis and repairs, as a malfunctioning sensor or wiring may need professional attention.</p>
+        </div>
+        
+    </div>
+
+</body>
+</html>
