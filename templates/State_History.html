@@ -34,11 +34,13 @@
             </div>
             
         </div>
-        <div class="grid-container01">
+        <div class="grid-container">
             <!-- Map Area -->
-            <div class="map-area">Maps With Tracing According to Above Filter</div>
-        
-            <!-- Date Inputs -->
+            <div class="map-area">
+                <!-- Maps With Tracing According to Above Filter -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9911497075846!2d2.294481815674194!3d48.85884427928771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d9f56c6c47%3A0x10e21f60293f4c0!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1632552913432!5m2!1sen!2sfr"  width="100%" height="100%" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+                <!-- Date Inputs -->
             <div class="stats-area">
                 <label for="start-date">Start Date:</label>
                 <input type="datetime-local" id="start-date" name="start_date">
@@ -51,10 +53,12 @@
             <div class="grid-container02">
                 <div class="form-row">
                 <input type="text" id="x-param" name="x_param" placeholder="X Parameter">
-                <input type="text" id="y-param" name="y_param" placeholder="Y Parameter">
                 <button id="reset-button">Reset</button>
+                <input type="text" id="y-param" name="y_param" placeholder="Y Parameter">
+                
                 </div>
             </div>
+            
             <div class="custom-plot">Plot Area</div>
         </div>
     </main>
