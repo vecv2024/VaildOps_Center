@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Stats History</title>
+    <link rel="stylesheet" href="/static/css/State_HistoryCSS.css">
+</head>
+<body>
+    <header>
+        <h1>Vehicle Stats History</h1>
+    </header>
+    <main>
+        <div class="grid-container">
+            <div class="header-row">
+                <div>Model STR No</div>
+                <div>Distance</div>
+                <div>Speed</div>
+                <div>Engine RPM/Motor RPM</div>
+                <div>Fuel Level/SOC</div>
+            </div>
+            
+            <div class="header-row">
+                <div>Engine Operation Hrs</div>
+                <div>Milage / Range</div>
+                <div>AdBlue Consumption</div>
+                <div>Events Logger</div>
+                <div>Most Common Plotted Graph</div>
+                
+            </div>
+            
+            <div class="form-row">
+                
+            </div>
+            
+        </div>
+        <div class="grid-container01">
+            <!-- Map Area -->
+            <div class="map-area">Maps With Tracing According to Above Filter</div>
+        
+            <!-- Date Inputs -->
+            <div class="stats-area">
+                <label for="start-date">Start Date:</label>
+                <input type="datetime-local" id="start-date" name="start_date">
+                
+                <label for="end-date">End Date:</label>
+                <input type="datetime-local" id="end-date" name="end_date">
+            </div>
+        </div>
+        
+            <div class="grid-container02">
+                <div class="form-row">
+                <input type="text" id="x-param" name="x_param" placeholder="X Parameter">
+                <input type="text" id="y-param" name="y_param" placeholder="Y Parameter">
+                <button id="reset-button">Reset</button>
+                </div>
+            </div>
+            <div class="custom-plot">Plot Area</div>
+        </div>
+    </main>
+    <script src="/static/js/State_HistoryJS.js"></script>
+</body>
+</html>
