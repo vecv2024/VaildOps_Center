@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ff2121; /* Red */
+    color: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-container {
+    display: flex;
+    justify-content: space-between; /* Distributes space around the items */
+    align-items: center;
+    gap: 20px; /* Adds consistent spacing between items */
+    margin: 20px auto;
+    padding: 20px; /* Adds inner spacing for a cleaner look */
+    background-color: #ffffff; /* White background for contrast */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 
+                0 1px 3px rgba(0, 0, 0, 0.06); /* Soft shadow for depth */
+    border-radius: 10px; /* Rounded corners for a smooth appearance */
+    width: 100%; /* Adjust width for responsiveness */
+    max-width: 1200px; /* Ensures the container doesn't stretch too wide */
+}
+
+.box {
+    flex: 1; /* Ensures all boxes are evenly distributed */
+    max-width: 200px; /* Limits box width for a consistent design */
+    text-align: center; /* Centers content inside the box */
+    padding: 15px; /* Adds padding around table */
+    background-color: #f7f7f7; /* Light background for boxes */
+    border: 1px solid #ddd; /* Subtle border for separation */
+    border-radius: 8px; /* Matches the overall theme */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
+}
+
+table {
+    margin: 0 auto; /* Centers the table inside the container */
+    border-collapse: collapse; /* Merges adjacent borders for a cleaner look */
+    font-size: 14px; /* Slightly larger text for readability */
+    width: 100%; /* Ensures the table fills its container */
+}
+
+td, th {
+    border: 1px solid #ddd; /* Adds borders between elements */
+    padding: 8px; /* Padding for spacing */
+    text-align: left; /* Aligns text to the left */
+    background-color: #f9f9f9; /* Light background color for cells */
+}
+
+th {
+    background-color: #f4f4f4; /* Slightly darker background for headers */
+    font-weight: bold; /* Highlights the header text */
+    text-transform: uppercase; /* Makes header text uppercase for emphasis */
+}
+
+tr:nth-child(even) td {
+    background-color: #fafafa; /* Alternating row background for readability */
+}
+
+tr:hover td {
+    background-color: #f1f1f1; /* Highlights row on hover */
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 0px; /* No rounded corners at top-left */
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 0px; /* Top-right refined and wrapped */
+}
+
+button {
+    padding: 10px 20px; /* Adds padding for a clickable area */
+    background-color: #ff2121; /* Matches the header color */
+    color: white; /* Contrast text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+button:hover {
+    background-color: #d91d1d; /* Darker red on hover */
+}
+
+
+/* .top-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+}
+.box {
+    border: 1px black;
+}
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-size: 12px;
+
+    border-radius: 5%;
+    overflow: hidden;
+  
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 
+                0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+th, td {
+    border: 1px solid #8b8b8b;
+    padding: 10px;
+    text-align: left;
+  } */
+
+  /* Test start---------------------- */
+  .container {
+    display: flex;
+    width: 95%;
+    max-width: 1200px;
+    height: 80vh;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  /* Left Section: Chart */
+  .chart-container {
+    flex: 3;
+    padding: 20px;
+    background: #f0f0f0;
+    border-right: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #chart {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Right Section: Inputs */
+  .inputs-container {
+    flex: 2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .input-group {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  select,
+  input {
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1;
+    min-width: 150px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  </style>
+</head>
+<body>
+
+    <header>
+        <h3>analytics</h3>
+    </header>
+    <main>
+        <div class="top-container">
+            <div class="box">
+                <table>
+                    <tr>
+                        <td>STR No.</td>
+                        <td>696</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="box">
+                <table>
+                    <tr>
+                        <td>Model</td>
+                        <td>PRO 6055TT</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="box">
+                <table>
+                    <tr>
+                        <td>DTC</td>
+                        <td>DTC List</td>
+                    </tr>
+                </table>
+            </div>
+            <button>Reset</button>
+        </div>
+        
+        <!-- test -->
+
+        <div class="container">
+            <!-- Left Section: Chart -->
+            <div class="chart-container">
+              <canvas id="chart"></canvas>
+            </div>
+        
+            <!-- Right Section: Input Fields -->
+            <div class="inputs-container">
+              <div class="input-group">
+                <label for="x-parameter">X-Axis:</label>
+                <select id="x-parameter">
+                  <option value="x1">X1</option>
+                  <option value="x2">X2</option>
+                  <option value="x3">X3</option>
+                </select>
+        
+                <label for="y-parameter">Y-Axis:</label>
+                <select id="y-parameter">
+                  <option value="y1">Y1</option>
+                  <option value="y2">Y2</option>
+                  <option value="y3">Y3</option>
+                </select>
+              </div>
+        
+              <div class="input-group">
+                <label for="start-date-1">Start:</label>
+                <input type="date" id="start-date-1" />
+                <input type="time" id="start-time-1" />
+        
+                <label for="end-date-1">End:</label>
+                <input type="date" id="end-date-1" />
+                <input type="time" id="end-time-1" />
+              </div>
+        
+              <div class="input-group">
+                <label for="search">Search Model:</label>
+                <select id="y-parameter">
+                    <option value="y1">Model 1</option>
+                  <option value="y2">Model 2</option>
+                  <option value="y3">Model 3</option>
+                </select>
+                <!-- <input type="text" id="search" placeholder="Search..." /> -->
+              </div>
+        
+              <div class="input-group">
+                <label for="start-date-2">Start :</label>
+                <input type="date" id="start-date-2" />
+                <input type="time" id="start-time-2" />
+        
+                <label for="end-date-2">End :</label>
+                <input type="date" id="end-date-2" />
+                <input type="time" id="end-time-2" />
+              </div>
+        
+              <div class="input-group">
+                <button id="generate">Generate</button>
+                <button id="show-individual">Show Individual</button>
+                <button id="show-overlap">Show Overlap</button>
+              </div>
+            </div>
+          </div>
+        
+          
+    </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Sample Chart Data
+    const ctx = document.getElementById('chart').getContext('2d');
+    const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+        {
+            label: 'Data Set 1',
+            data: [12, 19, 3, 5, 2, 3],
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            fill: true,
+        },
+        {
+            label: 'Data Set 2',
+            data: [10, 15, 8, 6, 4, 7],
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            fill: true,
+        },
+        ],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+    },
+    });
+    let currentDatasetIndex = 0;
+
+    const generateBtn = document.getElementById('generate');
+    generateBtn.addEventListener('click', () => {
+    generateBtn.textContent = 'Loading...';
+    generateBtn.disabled = true;
+
+    setTimeout(() => {
+        generateBtn.textContent = 'Generate';
+        generateBtn.disabled = false;
+
+        chart.data.datasets.push({
+        label: 'New Data',
+        data: [7, 11, 5, 8, 13, 6],
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: true,
+        });
+        chart.update();
+    }, 2000); // Simulate a 2-second chart generation delay
+    });
+
+    // Event Listeners for Buttons
+    document.getElementById('show-individual').addEventListener('click', () => {
+    // Toggle between datasets
+    currentDatasetIndex = (currentDatasetIndex + 1) % chart.data.datasets.length;
+
+    chart.data.datasets = [
+        {
+        ...chart.data.datasets[currentDatasetIndex],
+        },
+    ];
+    chart.update();
+    });
+
+    document.getElementById('show-overlap').addEventListener('click', () => {
+    // Restore all datasets
+    chart.data.datasets = [
+        {
+        label: 'Data Set 1',
+        data: [12, 19, 3, 5, 2, 3],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        fill: true,
+        },
+        {
+        label: 'Data Set 2',
+        data: [10, 15, 8, 6, 4, 7],
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        fill: true,
+        },
+    ];
+    chart.update();
+    });
+
+  </script>
+</body>
+</html>
