@@ -440,7 +440,7 @@ body {
 
 .data-box {
             position: absolute;
-            top: 287px;
+            top: 300px;
             left: 52%; /* Positioned to the right of the map */
             width: 47%; /* Adjust width of the boxes */
             height: 220px;
@@ -458,7 +458,7 @@ body {
         }
         .data-box1 {
             position: absolute;
-            top: 520px;
+            top: 540px;
             left: 52%; /* Positioned to the right of the map */
             width: 47%; /* Adjust width of the boxes */
             height: 210px;
@@ -640,9 +640,11 @@ body {
             <!-- <a href="#" ><i class="fas fa-cogs" ></i> Our Service</a> -->
            
        
-        <a href="./dtc.html"><i class="fas fa-chart-line"></i> DTC</a>
-        <a href="#"><i class="fas fa-chart-bar"></i> Analytics</a>
-        <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a>
+        <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
+        <a href="{{ url_for('State_History') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
+        <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
+        <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
+
       
         <!-- Help & Support Dropdown -->
         <!-- <div class="dropdown">
@@ -654,7 +656,7 @@ body {
         </div> -->
         
         <!-- My Subscriptions -->
-        <a href="#"><i class="fas fa-box"></i> My Subscriptions</a>
+        <!-- <a href="#"><i class="fas fa-box"></i> My Subscriptions</a> -->
        
         <!-- Search Bar -->
         <div class="search-container">
@@ -672,7 +674,7 @@ body {
     <div class="header">
         
         <!-- LMD Section -->
-        <a href="./Segment.html" class="header-section">
+        <a href="{{ url_for('Segment') }}" class="header-section">
             <i class="fas fa-truck km-icon" style="color : red"></i>
             <h4>LMD : 200 Vehicles</h4>
             <p><i class="fas fa-road"></i> Total Kms Covered: <span class="param">12000</span> km</p>
@@ -681,7 +683,7 @@ body {
         
     
         <!-- HD Section -->
-        <a href="./Segment.html" class="header-section">
+        <a href="{{ url_for('Segment') }}" class="header-section">
             <i class="fas fa-truck-monster km-icon" style="color : red"></i>
             <h4>HD : 350 Vehicles</h4>
             <p><i class="fas fa-road"></i> Total Kms Covered: <span class="param">9000</span> km</p>
@@ -689,7 +691,7 @@ body {
         </a>
     
         <!-- BUS Section -->
-        <a href="./Segment.html" class="header-section">
+        <a href="{{ url_for('Segment') }}" class="header-section">
             <i class="fas fa-bus km-icon" style="color : red"></i>
             <h4>BUS : 420 Vehicles</h4>
             <p><i class="fas fa-road"></i> Total Kms Covered: <span class="param">5000</span> km</p>
@@ -697,7 +699,7 @@ body {
         </a>
     
         <!-- EV Section -->
-        <a href="./Segment.html" class="header-section">
+        <a href="{{ url_for('Segment') }}" class="header-section">
             <i class="fas fa-bolt km-icon" style="color : red"></i>
             <h4>EV : 450 Vehicles</h4>
             <p><i class="fas fa-road"></i> Total Kms Covered: <span class="param">2500</span> km</p>
@@ -705,7 +707,7 @@ body {
         </a>
     
         <!-- SCV Section -->
-        <a href="./Segment.html" class="header-section">
+        <a href="{{ url_for('Segment') }}" class="header-section">
             <i class="fas fa-tractor km-icon" style="color : red"></i>
             <h4>SCV : 220 Vehicles</h4>
             <p><i class="fas fa-road"></i> Total Kms Covered: <span class="param">4000</span> km</p>

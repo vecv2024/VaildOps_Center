@@ -3,8 +3,29 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 @app.route('/')
-def index():
+def home():
     return render_template('home.html')
+
+@app.route('/dtc')
+def dtc():
+    return render_template('dtc.html')
+
+@app.route('/protus')
+def protus():
+    return render_template('protus.html')
+
+@app.route('/Segment')
+def Segment():
+    return render_template('Segment.html')
+
+@app.route('/State_History')
+def State_History():
+    return render_template('State_History.html')
+
+@app.route('/dtc_description')
+def dtc_description():
+    return render_template('dtc_description.html')
+
 
 @app.route('/get-data', methods=['POST'])
 def get_data():
