@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request
+import pandas as pd
+import os
 
 app = Flask(__name__)
+app.secret_key = 'supersecretkey'  # Required for flashing messages
+
+# Excel file path
+excel_file_path = 'Vehicle_data01.xlsx'
 
 @app.route('/')
 def home():
