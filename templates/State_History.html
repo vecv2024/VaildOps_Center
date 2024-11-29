@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Stats History</title>
-    <link rel="stylesheet" href="/static/css/State_HistoryCSS.css">
+    <link rel="stylesheet" href="../static/css/State_HistoryCSS.css">
 </head>
 <body>
     <header>
-        <h1 >Vehicle Stats History</h1>
+        <h1>Vehicle Stats History</h1>
     </header>
     <main>
         <div class="grid-container">
@@ -16,52 +16,70 @@
                 <div>Model STR No</div>
                 <div>Distance</div>
                 <div>Speed</div>
-                <div>Engine RPM/Motor RPM</div>
-                <div>Fuel Level/SOC</div>
+                <div>Engine/Motor RPM </div>
+                
             </div>
-            
             <div class="header-row">
                 <div>Engine Operation Hrs</div>
                 <div>Milage / Range</div>
                 <div>AdBlue Consumption</div>
-                <div>Events Logger</div>
-                <div>Most Common Plotted Graph</div>
-                
+                <div>Fuel Level/SOC</div>
             </div>
-            
-            <div class="form-row">
-                
-            </div>
-            
         </div>
-        <div class="grid-container">
-            <!-- Map Area -->
+
+
+        <div class="grid-container01">
+            <!-- Left: Map Area -->
             <div class="map-area">
-                <!-- Maps With Tracing According to Above Filter -->
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9911497075846!2d2.294481815674194!3d48.85884427928771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d9f56c6c47%3A0x10e21f60293f4c0!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1632552913432!5m2!1sen!2sfr"  width="100%" height="100%" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9911497075846!2d2.294481815674194!3d48.85884427928771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d9f56c6c47%3A0x10e21f60293f4c0!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1632552913432!5m2!1sen!2sfr" 
+                    width="100%" height="100%" allowfullscreen="" loading="lazy"></iframe>
             </div>
+            <!-- Right: Date Inputs and Event Logger -->
+            <div class="right-panel">
                 <!-- Date Inputs -->
-            <div class="stats-area">
-                <label for="start-date">Start Date:</label>
-                <input type="datetime-local" id="start-date" name="start_date">
-                
-                <label for="end-date">End Date:</label>
-                <input type="datetime-local" id="end-date" name="end_date">
+                <div class="date-inputs">
+                    <label for="start-date">Start Date:</label>
+                    <input type="datetime-local" id="start-date" name="start_date">
+                    <label for="end-date">End Date:</label>
+                    <input type="datetime-local" id="end-date" name="end_date">
+                </div>
+                <!-- Event Logger -->
+                <div class="event-logger">
+                    <h3>Event Logger</h3>
+                    <div class="event-log-content">
+                        <p>Event 1: Description...</p>
+                        <p>Event 2: Description...</p>
+                        <p>Event 3: Description...</p>
+                    </div>
+                </div>
             </div>
         </div>
         
-            <div class="grid-container02">
-                <div class="form-row">
-                <input type="text" id="x-param" name="x_param" placeholder="X Parameter">
-                <button id="reset-button">Reset</button>
-                <input type="text" id="y-param" name="y_param" placeholder="Y Parameter">
-                
-                </div>
-            </div>
-            
-            <div class="custom-plot">Plot Area</div>
+        <!-- X and Y Parameter Selection -->
+        <div class="form-row">
+            <select id="x-param" name="x_param">
+                <option value="" disabled selected>X Parameter</option>
+                <option value="param1">Parameter 1</option>
+                <option value="param2">Parameter 2</option>
+            </select>
+            <select id="y-param" name="y_param">
+                <option value="" disabled selected>Y Parameter</option>
+                <option value="param1">Parameter 1</option>
+                <option value="param2">Parameter 2</option>
+            </select>
+            <button id="reset-button">Reset</button>
+            <select id="Common Plot" name="Common Plot">
+                <option value="" disabled selected>Common Plot</option>
+                <option value="param1">Parameter 1</option>
+                <option value="param2">Parameter 2</option>
+            </select>
+        </div>
+        
+        <!-- Plot Area -->
+        <div class="custom-plot">
+            Plot Area
         </div>
     </main>
-    <script src="/static/js/State_HistoryJS.js"></script>
+    <script src="../static/js/State_HistoryJS.js"></script>
 </body>
 </html>
