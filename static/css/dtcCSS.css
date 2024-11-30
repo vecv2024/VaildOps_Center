@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.navbar {
+    background-color: #00539b;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.container {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two sections side by side */
+    grid-gap: 20px;
+}
+
+.vehicle-section {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.vehicle-section h2 {
+    background-color: #00539b;
+    color: white;
+    padding: 10px;
+    margin: -10px -10px 10px -10px;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+}
+
+.dtc-box {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #00539b;
+    background-color: #eef3f9;
+    border-radius: 8px;
+}
+
+.dtc-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.dtc-box li {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.dtc-box li div {
+    flex: 1;
+}
+
+.view-details {
+    color: white;
+    background-color: #00539b;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.view-details:hover {
+    background-color: #00539b;
+}

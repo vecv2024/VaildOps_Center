@@ -5,10 +5,67 @@ import folium
 import os
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Required for flashing messages
+# Load data from Excel sheets
+ev_data = pd.read_excel('Vehicle_dataEV.xlsx')
+lmd_data = pd.read_excel('Vehicle_dataLMD.xlsx')
+hd_data = pd.read_excel('Vehicle_dataHD.xlsx')
+scv_data = pd.read_excel('Vehicle_dataSCV.xlsx')
 
-# Excel file path
-excel_file_path = 'Vehicle_data01.xlsx'
+# Convert data to dictionaries for easier access
+vehicle_data = {
+    "EV": {"title": "EV Vehicle", "data": ev_data},
+    "LMD": {"title": "LMD Vehicle", "data": lmd_data},
+    "HD": {"title": "HD Vehicle", "data": hd_data},
+    "SCV": {"title": "SCV Vehicle", "data": scv_data},
+}
+
+@app.route('/dtc')
+def dtc():
+    # Create sections for each vehicle type
+    sections = {}
+    for key, info in vehicle_data.items():
+        data = info["data"]
+        dtcs = data.iloc[:, [2, 1]].values.tolist()  # Extract DTCs (column 3) and descriptions (column 2)
+        sections[key] = {"title": info["title"], "dtcs": dtcs}
+    return render_template('dtc.html', sections=sections)
+
+@app.route('/dtc/dtc_description/<vehicle>/<dtc_code>')
+def dtc_description(vehicle, dtc_code):
+    # Fetch data for the specified vehicle
+    data = vehicle_data[vehicle]["data"]
+    
+    # Find the row that corresponds to the selected DTC code
+    dtc_details = data[data.iloc[:, 2] == dtc_code].iloc[0]
+    
+    # Depending on the vehicle type, adjust which details are shown
+    if vehicle == "LMD":
+        details = {
+            "fault_name": dtc_details[0],
+            "Fault type Description": dtc_details[7],
+            "remedy": dtc_details[9],
+            "comments": dtc_details[10] if len(dtc_details) > 10 else 'No additional comments'
+        }
+    elif vehicle == "HD":
+        details = {
+            "short_name": dtc_details[3],
+            "ecu": dtc_details[1],
+            "category": dtc_details[13] if len(dtc_details) > 13 else 'No category'
+        }
+    elif vehicle == "SCV":
+        details = {
+            "fault_code": dtc_details[1],
+            "vehicle_reaction": dtc_details[31] if len(dtc_details) > 31 else 'No reaction data'
+        }
+    else:  # Default case for EV
+        details = {
+            "description": dtc_details[1],
+            "Fault type Description": dtc_details[7],
+            "Cause": dtc_details[8],
+            "Remedy": dtc_details[9] if len(dtc_details) > 9 else 'No remedy provided'
+        }
+
+    return render_template('dtc_description.html', vehicle=vehicle, dtc_code=dtc_code, details=details)
+
 
 # Function to generate the India cities map
 def generate_india_map():
@@ -171,9 +228,9 @@ def generate_india_map1():
 def home():
     return render_template('home.html')
 
-@app.route('/dtc')
-def dtc():
-    return render_template('dtc.html')
+# @app.route('/dtc')
+# def dtc():
+#     return render_template('dtc.html')
 
 @app.route('/protus')
 def protus():
@@ -187,9 +244,9 @@ def Segment():
 def State_History():
     return render_template('State_History.html')
 
-@app.route('/dtc_description')
-def dtc_description():
-    return render_template('dtc_description.html')
+# @app.route('/dtc_description')
+# def dtc_description():
+#     return render_template('dtc_description.html')
 
 @app.route('/Segment2')
 def Segment2():

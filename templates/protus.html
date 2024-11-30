@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <title>Navbar</title>
   <style>
     /* General Reset */
@@ -150,96 +151,6 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       margin: 10px;
     }
-<<<<<<< HEAD
-    .navbar {
-        background-color: #d9241d;
-        display: flex;
-        align-items: center;
-        padding: 10px 20px;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-    
-    .navbar img {
-        height: 40px; /* Adjust height of the logo */
-        margin-right: 15px; /* Space between the logo and Home */
-    }
-    
-    .navbar a {
-        color: white;
-        padding: 10px 20px;
-        text-decoration: none;
-        font-size: 16px;
-        display: inline-block;
-        position: relative;
-    }
-    
-    .navbar a:hover {
-        background-color: transparent; /* No background change on hover */
-    }
-    
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-    
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 160px;
-        z-index: 1;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        margin-top: 10px;
-    }
-    
-    .dropdown.show .dropdown-content {
-        display: block;
-    }
-    
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-    
-    .dropdown-content a:hover {
-        background-color: #ddd;
-    }
-    
-    .search-container {
-        display: inline-block;
-        position: relative;
-    }
-    
-    .search-container input[type="text"] {
-        padding: 6px 10px;
-        font-size: 16px;
-        border: none;
-        border-radius: 4px;
-        width: 200px;
-    }
-    
-    .search-container button {
-        position: absolute;
-        right: 0;
-        top: 0;
-        background-color: #fff;
-        border: none;
-        padding: 8px;
-        cursor: pointer;
-    }
-    
-    .search-container button i {
-        color: red;
-    }
-    
-    .profile-container {
-        margin-left: auto;
-        padding-left: 20px;
-    }
-=======
 
     .footer {
                 background-color: #dedddd;
@@ -286,58 +197,10 @@
                 margin-left: auto;
                 padding-left: 20px;
             }
->>>>>>> 578fe37a37ab45bdbce4483a9697468d4eaf3535
   </style>
 </head>
 
 <body>
-<<<<<<< HEAD
-  
-=======
-  <div class="navbar">
-    <!-- Logo Image (Before Home) -->
-    <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
-    <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
-    <!-- Home Icon -->
-    <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
-    
-    <!-- Our Service Dropdown -->
-    
-        <!-- <a href="#" ><i class="fas fa-cogs" ></i> Our Service</a> -->
-       
-   
-    <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
-    <a href="{{ url_for('State_History') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
-    <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
-    <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
-
-  
-    <!-- Help & Support Dropdown -->
-    <!-- <div class="dropdown">
-        <a href="javascript:void(0);" onclick="toggleDropdown('support-dropdown')"><i class="fas fa-question-circle"></i> Help & Support</a>
-        <div id="support-dropdown" class="dropdown-content">
-            <a href="#">FAQ</a>
-            <a href="#">Contact Us</a>
-        </div>
-    </div> -->
-    
-    <!-- My Subscriptions -->
-    <!-- <a href="#"><i class="fas fa-box"></i> My Subscriptions</a> -->
-   
-    <!-- Search Bar -->
-    <div class="search-container">
-        <input type="text" placeholder="Search...">
-        <button><i class="fas fa-search"></i></button>
-    </div>
-    
-    <!-- Profile Icon (Aligned to the right) -->
-    <div class="profile-container">
-        <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
-    </div>
-</div>
-
->>>>>>> 578fe37a37ab45bdbce4483a9697468d4eaf3535
-
   <div class="navbar">
     <!-- Logo Image (Before Home) -->
     <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />

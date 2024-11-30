@@ -3,159 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTC Problem Details</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <title>DTC Description</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #00539b;
+            color: white;
+            /* padding: 0.1px; */
+            text-align: center;
+            font-size: 1.8rem;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .container {
-            width: 80%;
-            max-width: 800px;
-            background-color: #fff;
-            padding: 20px;
+            margin: 30px auto;
+            max-width: 900px;
+            background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 0px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            overflow: hidden;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            font-size: 2rem;
-            color: #d9241d;
-        }
-
-        .dtc-details {
-            background-color: #f9f9f9;
+        .dtc-header {
+            background-color: #d9241d;
+            color: white;
             padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-radius: 10px;
         }
 
-        .dtc-code {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
+        .dtc-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
         }
 
-        .dtc-description {
-            margin-top: 10px;
-            font-size: 1rem;
-            color: #555;
-        }
-
-        .dtc-reason {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #777;
-        }
-
-        .dtc-status {
-            display: inline-block;
-            padding: 5px;
-            border-radius: 5px;
-            font-size: 1rem;
-            margin-top: 15px;
-        }
-
-        .status-pending {
-            background-color: #f0ad4e;
-            color: white;
-        }
-
-        .status-resolved {
-            background-color: #5bc0de;
-            color: white;
-        }
-
-        .solution-section {
-            margin-top: 20px;
-            background-color: #e9f7f6;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .solution-heading {
+        .dtc-header .description {
+            margin: 10px 0 0;
             font-size: 1.2rem;
-            color: #333;
-            margin-bottom: 10px;
         }
 
-        .solution-text {
-            font-size: 1rem;
-            color: #555;
+        .details-section {
+            padding: 20px;
+            background-color: #f9f9f9;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .action-solved {
-            font-weight: bold;
-            color: #28a745;
+        .details-section h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #00539b;
+            border-bottom: 3px solid #00539b;
+            display: inline-block;
+            padding-bottom: 5px;
         }
 
-        .action-visit {
-            font-weight: bold;
-            color: #d9534f;
+        .details-section ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 13px; /* Set font size for the data */
+            line-height: 1.6;
+        }
+
+        .details-section li {
+            padding: 8px 0;
+        }
+
+        .details-section li strong {
+            color: #00539b;
+            font-weight: 600;
+        }
+
+        .navigation-section {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
         }
 
         .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: #d9241d;
+            background-color: #00539b;
             color: white;
-            border: none;
+            text-decoration: none;
+            padding: 12px 30px;
             border-radius: 5px;
-            padding: 10px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            display: inline-block;
         }
 
         .back-button:hover {
-            background: #b71c1c;
+            background-color: #003f7a;
         }
 
+        /* Card-style layout for details */
+        .details-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            flex: 1 1 calc(50% - 20px);
+            min-width: 250px;
+            max-width: calc(50% - 20px);
+        }
+
+        .card h4 {
+            font-size: 1.3rem;
+            color: #00539b;
+            margin: 0;
+        }
+
+        .card p {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 768px) {
+            .details-cards {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
-    
-    <a href="{{ url_for('dtc')}}">
-        <button class="back-button" >
-            <i class="fas fa-arrow-left"></i> Back
-        </button>
-    </a>
+    <!-- <div class="navbar">
+        <h1>DTC Details for {{ dtc_code }}</h1>
+    </div> -->
+
     <div class="container">
-        <div class="header">
-            <h1> <i class="fas fa-chart-line"></i>  DTC Code Description</h1>
+        <div class="dtc-header">
+            <h2>Details for DTC Code: {{ dtc_code }}</h2>
+            <p class="description">Here you can find the detailed information for the selected DTC code.</p>
         </div>
 
-        <div class="dtc-details">
-            <div>
-                <span class="dtc-code">P0123</span> 
-                <p class="dtc-description">Throttle/Pedal Position Sensor - High Input</p>
-                <p class="dtc-reason"><strong>Reason:</strong> This occurs when the throttle or pedal position sensor sends higher input than expected, often due to a malfunctioning sensor or wiring issue.</p>
-              <span>Status:</span>  <span class="dtc-status status-pending"> Pending</span>
-            </div>
+        <div class="details-section">
+            <h3>Diagnostic Information:</h3>
+            <ul>
+                {% for key, value in details.items() %}
+                    <li><strong>{{ key | capitalize }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
         </div>
 
-        <div class="solution-section">
-            <p class="solution-heading">Suggested Solution:</p>
-            <p class="solution-text"><span class="action-visit">Visit a nearby service center</span> for diagnosis and repairs, as a malfunctioning sensor or wiring may need professional attention.</p>
+        <div class="navigation-section">
+            <a href="{{ url_for('dtc') }}" class="back-button">Back to DTC List</a>
         </div>
-        
     </div>
-
 </body>
 </html>
