@@ -30,7 +30,7 @@
 }
 
 .navbar img {
-    height: 40px; /* Adjust height of the logo */
+    height: 60px; /* Adjust height of the logo */
     margin-right: 15px; /* Space between the logo and Home */
 }
 
@@ -462,6 +462,48 @@
         .dtc-item>a{
             text-decoration: none;
         }
+
+        .footer {
+    background-color: #dedddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #ccc;
+    z-index: 1000;
+}
+
+.footer-left,
+.footer-center, 
+.footer-right {
+    flex: 1;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-center {
+    text-align: center;
+    color: #d9241d;
+    text-shadow: 2px 2px 4px rgba(175, 21, 21, 0.5); /* Adds a shadow to the text */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.footer-right {
+    text-align: right;
+    font-size: 18px;
+    color: #1c1b1b;
+}
+
+.footer-logo {
+    height: 20px;
+}
          
     </style>
 </head>
@@ -469,7 +511,7 @@
     <div class="navbar">
         <!-- Logo Image (Before Home) -->
         <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
-        <a href="{{ url_for('home') }}"><marquee style="font-size: 20px;">Valid Ops Centre</marquee></a>
+        <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
         <!-- Home Icon -->
         <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
         
@@ -585,8 +627,21 @@
                 </li>
             </ul>
         </div> -->
+        
 
     </div>
+
+    <footer class="footer">
+        <div class="footer-left">
+            <img src="../static/images/ve-logo.jpg" alt="VE Logo" class="footer-logo">
+        </div>
+        <div class="footer-center">
+            <a href="#"><marquee>Validation Operation Command Centre</marquee></a>
+        </div>
+        <div class="footer-right">
+            © 2024 Eicher. All rights reserved.
+        </div>
+    </footer>
 
 </body>
 </html>
