@@ -5,11 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Stats History</title>
     <link rel="stylesheet" href="../static/css/State_HistoryCSS.css">
+
 </head>
 <body>
-    <header>
-        <h1>Vehicle Stats History</h1>
-    </header>
+    <div class="navbar">
+        <!-- Logo Image (Before Home) -->
+        <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
+        <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
+        <!-- Home Icon -->
+        <a href="#"><i class="fas fa-home"></i> Home</a>
+        
+        <!-- Our Service Dropdown -->
+        
+            <!-- <a href="#" ><i class="fas fa-cogs" ></i> Our Service</a> -->
+           
+       
+        <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
+        <a href="{{ url_for('State_History') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
+        <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
+        <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
+
+       
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        
+        <!-- Profile Icon (Aligned to the right) -->
+        <div class="profile-container">
+            <a href="#"><i class="fas fa-user"></i> Profile</a>
+        </div>
+    </div>
+
     <main>
         <div class="grid-container">
             <div class="header-row">
@@ -31,8 +59,14 @@
         <div class="grid-container01">
             <!-- Left: Map Area -->
             <div class="map-area">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9911497075846!2d2.294481815674194!3d48.85884427928771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d9f56c6c47%3A0x10e21f60293f4c0!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1632552913432!5m2!1sen!2sfr" 
-                    width="100%" height="100%" allowfullscreen="" loading="lazy"></iframe>
+                <iframe 
+                    src="{{ url_for('static', filename='india_map.html') }}"   
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
             </div>
             <!-- Right: Date Inputs and Event Logger -->
             <div class="right-panel">
@@ -81,5 +115,16 @@
         </div>
     </main>
     <script src="../static/js/State_HistoryJS.js"></script>
+    <footer class="footer">
+        <div class="footer-left">
+            <img src="../static/images/ve-logo.jpg" alt="VE Logo" class="footer-logo">
+        </div>
+        <div class="footer-center">
+            <a href="#"><marquee>Validation Operation Command Centre</marquee></a>
+        </div>
+        <div class="footer-right">
+            © 2024 Eicher. All rights reserved.
+        </div>
+        </footer>
 </body>
 </html>
