@@ -66,7 +66,7 @@ def dtc_description(vehicle, dtc_code):
 
     return render_template('dtc_description.html', vehicle=vehicle, dtc_code=dtc_code, details=details)
 
-
+# <..................................................................>
 # Function to generate the India cities map
 def generate_india_map():
     # Create a map centered on India
@@ -220,7 +220,7 @@ def generate_india_map1():
     map_path = os.path.join('static', 'india_map.html')
     india_map1.save(map_path)
 
-
+# <.........................................................>
 
 
 
@@ -288,6 +288,10 @@ def get_data():
             "y_param": y_param
         }
     }
+
+# <......................................................>
+
+
 
 if __name__ == '__main__':
     # Generate the map before starting the app

@@ -22,7 +22,7 @@
     }
     
     .navbar img {
-        height: 40px; /* Adjust height of the logo */
+        height: 70px; /* Adjust height of the logo */
         margin-right: 15px; /* Space between the logo and Home */
     }
     
@@ -124,7 +124,7 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         color: white;
-        width: 260px; /* Fixed width for each section */
+        width: 300px; /* Fixed width for each section */
         min-width: 250px; /* Ensure each box has a minimum width */
         
     }
@@ -137,17 +137,20 @@
     }
     
     .header-section h4 {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        color: #19387c !important;
-        /* Change to dark color for more formal appearance */
-        
+        font-size: 20px; /* Slightly increase font size for better visibility */
+        font-weight: bold; /* Keep it bold */
+        margin-bottom: 15px; /* Maintain spacing */
+        color: #19387c !important; /* Retain the dark color for a formal look */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for highlighting */
+        background-color: #e8f0fe; /* Light background to make text stand out */
+        padding: 5px 10px; /* Add padding for better readability */
+        border-radius: 4px; /* Optional: rounded corners for a neat look */
     }
+    
     
     .header-section p {
         margin: 10px 0;
-        font-size: 12px; /* Smaller font size for better appearance */
+        font-size: 13px; /* Smaller font size for better appearance */
         /* color: #6e6e6e;  */
         display: flex;
         align-items: center;
@@ -163,9 +166,14 @@
     }
     
     .header-section .param {
-        font-weight: bold;
-        font-size: 14px;
-        color: #333; /* Darker text for contrast */
+        font-weight: bold; /* Make the text bold */
+    font-size: 1.8em; /* Slightly increase the font size */
+    color: #19387c; /* Text color */
+    background-color: #d6e2f5; /* Attractive background color */
+    padding: 3px 6px; /* Add padding for spacing */
+    border-radius: 5px; /* Rounded corners for a neat look */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    text-align: center; /* Center the text */
     }
     
     /* .header-section i {
@@ -568,11 +576,28 @@
             }
     
             .status-pending {
-                color: orange;
+                
+                    font-weight: bold; /* Make the text bold */
+                    color: #ffffff; /* White text color for better contrast */
+                    background-color: #ff731d; /* Bright red background for emphasis */
+                    padding: 5px 10px; /* Add padding to make it stand out */
+                    border-radius: 5px; /* Rounded corners for a smooth appearance */
+                    text-transform: uppercase; /* Make the text uppercase for stronger visibility */
+                    font-size: 1em; /* Adjust font size if necessary */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+                
+                
             }
     
             .status-in-progress {
-                color: green;
+                font-weight: bold; /* Make the text bold */
+                    color: #ffffff; /* White text color for better contrast */
+                    background-color: #20c747; /* Bright red background for emphasis */
+                    padding: 5px 10px; /* Add padding to make it stand out */
+                    border-radius: 5px; /* Rounded corners for a smooth appearance */
+                    text-transform: uppercase; /* Make the text uppercase for stronger visibility */
+                    font-size: 1em; /* Adjust font size if necessary */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
             }
     
             .status-completed {
@@ -619,26 +644,45 @@
                 width: 100%;    /* Adjust the map container width */
             }
             .footer {
-                background: #e7e7e7;
-                color: #525050;
-                text-align: center;
-                padding: 4px 0;
-                position: relative;
+                background-color: #dedddd;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 20px;
+                position: fixed;
                 bottom: 0;
                 width: 100%;
+                box-sizing: border-box;
+                border-top: 1px solid #ccc;
+                z-index: 1000;
             }
-    
-            .footer i {
-                margin: 0 5px;
-                color: #ff6b66; /* Icon color */
-                color: #525050;
+            
+            .footer-left,
+            .footer-center, 
+            .footer-right {
+                flex: 1;
             }
-    
-            .footer h3 {
-                margin: 4px 0;
-                font-size: 16px;
+            
+            .footer-left {
+                text-align: left;
+            }
+            
+            .footer-center {
+                text-align: center;
+                color: #d9241d;
+                text-shadow: 2px 2px 4px rgba(175, 21, 21, 0.5); /* Adds a shadow to the text */
+                font-size: 24px;
                 font-weight: bold;
-                color: #525050;
+            }
+            
+            .footer-right {
+                text-align: right;
+                font-size: 18px;
+                color: #1c1b1b;
+            }
+            
+            .footer-logo {
+                height: 20px;
             }
             .profile-container {
                 margin-left: auto;
