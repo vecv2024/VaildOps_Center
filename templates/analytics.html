@@ -300,229 +300,266 @@ th, td {
 </head>
 <body>
 
-  <div class="navbar">
-    <!-- Logo Image (Before Home) -->
-    <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
-    <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
-    <!-- Home Icon -->
-    <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
-    
-    <!-- Our Service Dropdown -->
-    
-        <!-- <a href="#" ><i class="fas fa-cogs" ></i> Our Service</a> -->
-       
-   
-    <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
-    <a href="{{ url_for('State_History') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
-    <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
-    <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
-
+    <div class="navbar">
+      <!-- Logo Image (Before Home) -->
+      <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
+      <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
+      <!-- Home Icon -->
+      <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+      <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
+      <a href="{{ url_for('State_History') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
+      <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
+      
+      <!-- Search Bar -->
+      <div class="search-container">
+          <input type="text" placeholder="Search...">
+          <button><i class="fas fa-search"></i></button>
+      </div>
+      
+      <!-- Profile Icon (Aligned to the right) -->
+      <div class="profile-container">
+          <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
+      </div>
+    </div>
   
-    <!-- Help & Support Dropdown -->
-    <!-- <div class="dropdown">
-        <a href="javascript:void(0);" onclick="toggleDropdown('support-dropdown')"><i class="fas fa-question-circle"></i> Help & Support</a>
-        <div id="support-dropdown" class="dropdown-content">
-            <a href="#">FAQ</a>
-            <a href="#">Contact Us</a>
-        </div>
-    </div> -->
-    
-    <!-- My Subscriptions -->
-    <!-- <a href="#"><i class="fas fa-box"></i> My Subscriptions</a> -->
-   
-    <!-- Search Bar -->
-    <div class="search-container">
-        <input type="text" placeholder="Search...">
-        <button><i class="fas fa-search"></i></button>
-    </div>
-    
-    <!-- Profile Icon (Aligned to the right) -->
-    <div class="profile-container">
-        <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
-    </div>
-</div>
-
     <main>
-        <div class="top-container">
-            <div class="box">
-                <table>
-                    <tr>
-                        <td>STR No.</td>
-                        <td>696</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="box">
-                <table>
-                    <tr>
-                        <td>Model</td>
-                        <td>PRO 6055TT</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="box">
-                <table>
-                    <tr>
-                        <td>DTC</td>
-                        <td>DTC List</td>
-                    </tr>
-                </table>
-            </div>
-            <button>Reset</button>
+      <div class="top-container">
+        <div class="box">
+          <table>
+            <tr>
+              <td>STR No.</td>
+              <td>696</td>
+            </tr>
+          </table>
+        </div>
+        <div class="box">
+          <table>
+            <tr>
+              <td>Model</td>
+              <td>PRO 6055TT</td>
+            </tr>
+          </table>
+        </div>
+        <div class="box">
+          <table>
+            <tr>
+              <td>DTC</td>
+              <td>DTC List</td>
+            </tr>
+          </table>
+        </div>
+        <button id="reset-button">Reset</button>
+      </div>
+      
+      <div class="container">
+        <div class="chart-container">
+          <canvas id="chart"></canvas>
         </div>
         
-        <!-- test -->
-
-        <div class="container">
-            <!-- Left Section: Chart -->
-            <div class="chart-container">
-              <canvas id="chart"></canvas>
-            </div>
-        
-            <!-- Right Section: Input Fields -->
-            <div class="inputs-container">
-              <div class="input-group">
-                <label for="x-parameter">X-Axis:</label>
-                <select id="x-parameter">
-                  <option value="x1">X1</option>
-                  <option value="x2">X2</option>
-                  <option value="x3">X3</option>
-                </select>
-        
-                <label for="y-parameter">Y-Axis:</label>
-                <select id="y-parameter">
-                  <option value="y1">Y1</option>
-                  <option value="y2">Y2</option>
-                  <option value="y3">Y3</option>
-                </select>
-              </div>
-        
-              <div class="input-group">
-                <label for="start-date-1">Start:</label>
-                <input type="date" id="start-date-1" />
-                <input type="time" id="start-time-1" />
-        
-                <label for="end-date-1">End:</label>
-                <input type="date" id="end-date-1" />
-                <input type="time" id="end-time-1" />
-              </div>
-        
-              <div class="input-group">
-                <label for="search">Search Model:</label>
-                <select id="y-parameter">
-                    <option value="y1">Model 1</option>
-                  <option value="y2">Model 2</option>
-                  <option value="y3">Model 3</option>
-                </select>
-                <!-- <input type="text" id="search" placeholder="Search..." /> -->
-              </div>
-        
-              <div class="input-group">
-                <label for="start-date-2">Start :</label>
-                <input type="date" id="start-date-2" />
-                <input type="time" id="start-time-2" />
-        
-                <label for="end-date-2">End :</label>
-                <input type="date" id="end-date-2" />
-                <input type="time" id="end-time-2" />
-              </div>
-        
-              <div class="input-group">
-                <button id="generate">Generate</button>
-                <button id="show-individual">Show Individual</button>
-                <button id="show-overlap">Show Overlap</button>
-              </div>
-            </div>
+        <div class="inputs-container">
+          <div class="input-group">
+            <label for="x-parameter">X-Axis:</label>
+            <select id="x-parameter">
+              <option value="x1">X1</option>
+              <option value="x2">X2</option>
+              <option value="x3">X3</option>
+            </select>
+            
+            <label for="y-parameter">Y-Axis:</label>
+            <select id="y-parameter">
+              <option value="y1">Y1</option>
+              <option value="y2">Y2</option>
+              <option value="y3">Y3</option>
+            </select>
           </div>
-        
+  
+          <div class="input-group">
+            <label for="start-date-1">Start:</label>
+            <input type="date" id="start-date-1" />
+            <input type="time" id="start-time-1" />
           
+            <label for="end-date-1">End:</label>
+            <input type="date" id="end-date-1" />
+            <input type="time" id="end-time-1" />
+          </div>
+          
+          <div class="input-group">
+            <label for="search">Search Model:</label>
+            <select id="search-model">
+              <option value="model1">Model 1</option>
+              <option value="model2">Model 2</option>
+              <option value="model3">Model 3</option>
+            </select>
+          </div>
+          
+          <div class="input-group">
+            <label for="start-date-2">Start:</label>
+            <input type="date" id="start-date-2" />
+            <input type="time" id="start-time-2" />
+          
+            <label for="end-date-2">End:</label>
+            <input type="date" id="end-date-2" />
+            <input type="time" id="end-time-2" />
+          </div>
+  
+          <div class="input-group">
+            <button id="generate">Generate</button>
+            <button id="show-individual">Show Individual</button>
+            <button id="show-overlap">Show Overlap</button>
+          </div>
+        </div>
+      </div>
     </main>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    // Sample Chart Data
-    const ctx = document.getElementById('chart').getContext('2d');
-    const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [
-        {
-            label: 'Data Set 1',
-            data: [12, 19, 3, 5, 2, 3],
-            borderColor: 'rgba(255, 99, 132, 1)',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            fill: true,
-        },
-        {
-            label: 'Data Set 2',
-            data: [10, 15, 8, 6, 4, 7],
-            borderColor: 'rgba(54, 162, 235, 1)',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            fill: true,
-        },
-        ],
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-    },
-    });
-    let currentDatasetIndex = 0;
+  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Sample Chart Data
+      const ctx = document.getElementById('chart').getContext('2d');
+      const chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+              datasets: [
+                  {
+                      label: 'Data Set 1',
+                      data: [12, 19, 3, 5, 2, 3],
+                      borderColor: 'rgba(255, 99, 132, 1)',
+                      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                      fill: true,
+                  },
+                  {
+                      label: 'Data Set 2',
+                      data: [10, 15, 8, 6, 4, 7],
+                      borderColor: 'rgba(54, 162, 235, 1)',
+                      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                      fill: true,
+                  },
+              ],
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+          },
+      });
+  
+      let currentDatasetIndex = 0;
+  
+      // Event listener for "Generate" button
+      document.getElementById('generate').addEventListener('click', () => {
+          const generateBtn = document.getElementById('generate');
+          generateBtn.textContent = 'Loading...';
+          generateBtn.disabled = true;
 
-    const generateBtn = document.getElementById('generate');
-    generateBtn.addEventListener('click', () => {
-    generateBtn.textContent = 'Loading...';
-    generateBtn.disabled = true;
+          fetch('http://127.0.0.1:5000/analytics-data')
+              .then(response => response.json())
+              .then(data => {
+                  // Update chart with new data
+                  chart.data.labels = data.utc;
+                  chart.data.datasets[0].data = data.FanSpeed;
+                  chart.update();
+  
+                  generateBtn.textContent = 'Generate';
+                  generateBtn.disabled = false;
+              })
+              .catch(error => {
+                  console.error('Error fetching data:', error);
+                  generateBtn.textContent = 'Generate';
+                  generateBtn.disabled = false;
+              });
+  
+          // Fetch updated chart data from Flask API -----IMAGE----
+        //   fetch('http://127.0.0.1:5000/analytics-data') 
+        //   .then(response => {
+        //       if (response.ok) {
+        //           return response.blob(); // Convert the response to a Blob (image)
+        //       } else {
+        //           throw new Error('Image fetch failed');
+        //       }
+        //   })
+        //   .then(imageBlob => {
+        //       // Create an object URL for the image
+        //       const imageObjectURL = URL.createObjectURL(imageBlob);
 
-    setTimeout(() => {
-        generateBtn.textContent = 'Generate';
-        generateBtn.disabled = false;
+        //       // Create an image element
+        //       const img = new Image();
+        //       img.src = imageObjectURL;
+        //       img.alt = 'Fetched Chart Image';
+        //       img.style.width = '100%'; // Ensure the image fills the chart container
 
-        chart.data.datasets.push({
-        label: 'New Data',
-        data: [7, 11, 5, 8, 13, 6],
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: true,
-        });
-        chart.update();
-    }, 2000); // Simulate a 2-second chart generation delay
-    });
+        //       // Replace the chart with the image
+        //       const chartContainer = document.getElementById('chart').parentElement;
+        //       chartContainer.innerHTML = ''; // Clear existing chart
+        //       chartContainer.appendChild(img); // Append the image
 
-    // Event Listeners for Buttons
-    document.getElementById('show-individual').addEventListener('click', () => {
-    // Toggle between datasets
-    currentDatasetIndex = (currentDatasetIndex + 1) % chart.data.datasets.length;
-
-    chart.data.datasets = [
-        {
-        ...chart.data.datasets[currentDatasetIndex],
-        },
-    ];
-    chart.update();
-    });
-
-    document.getElementById('show-overlap').addEventListener('click', () => {
-    // Restore all datasets
-    chart.data.datasets = [
-        {
-        label: 'Data Set 1',
-        data: [12, 19, 3, 5, 2, 3],
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        fill: true,
-        },
-        {
-        label: 'Data Set 2',
-        data: [10, 15, 8, 6, 4, 7],
-        borderColor: 'rgba(54, 162, 235, 1)',
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        fill: true,
-        },
-    ];
-    chart.update();
-    });
-
-  </script>
-</body>
-</html>
+        //       // Reset the button
+        //       generateBtn.textContent = 'Generate';
+        //       generateBtn.disabled = false;
+        //   })
+        //   .catch(error => {
+        //       console.error('Error fetching image:', error);
+        //       generateBtn.textContent = 'Generate';
+        //       generateBtn.disabled = false;
+        //   });
+      });
+  
+      // Event listener for "Show Individual" button
+      document.getElementById('show-individual').addEventListener('click', () => {
+          currentDatasetIndex = (currentDatasetIndex + 1) % chart.data.datasets.length;
+          chart.data.datasets = [chart.data.datasets[currentDatasetIndex]];
+          chart.update();
+      });
+  
+      // Event listener for "Show Overlap" button
+      document.getElementById('show-overlap').addEventListener('click', () => {
+          chart.data.datasets = [
+              {
+                  label: 'Data Set 1',
+                  data: [12, 19, 3, 5, 2, 3],
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  fill: true,
+              },
+              {
+                  label: 'Data Set 2',
+                  data: [10, 15, 8, 6, 4, 7],
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  fill: true,
+              },
+          ];
+          chart.update();
+      });
+  
+      // Event listener for "Reset" button
+      document.getElementById('reset-button').addEventListener('click', () => {
+          // Reset chart and inputs
+          chart.data.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+          chart.data.datasets = [
+              {
+                  label: 'Data Set 1',
+                  data: [12, 19, 3, 5, 2, 3],
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  fill: true,
+              },
+              {
+                  label: 'Data Set 2',
+                  data: [10, 15, 8, 6, 4, 7],
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  fill: true,
+              },
+          ];
+          chart.update();
+          document.getElementById('start-date-1').value = '';
+          document.getElementById('start-time-1').value = '';
+          document.getElementById('end-date-1').value = '';
+          document.getElementById('end-time-1').value = '';
+          document.getElementById('start-date-2').value = '';
+          document.getElementById('start-time-2').value = '';
+          document.getElementById('end-date-2').value = '';
+          document.getElementById('end-time-2').value = '';
+      });
+    </script>
+  </body>
+  </html>

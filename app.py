@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, jsonify, render_template, request, url_for, Response
 from folium.plugins import BeautifyIcon
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import folium
 import os
+import io
 import random
 
 app = Flask(__name__)
@@ -378,6 +382,33 @@ def get_data():
     }
 
 # <......................................................>
+# analytics
+
+@app.route('/analytics-data')
+def analytics_data():
+    analytics_data = pd.read_excel('fan_dtc.xlsx')
+    selected_column = ["utc", "FanSpeed"]
+    req_data = analytics_data[selected_column]
+    data = req_data.to_json(orient='records')
+    return jsonify(data)
+
+    # Create the plot
+    plt.figure(figsize=(10, 5))
+    plt.plot(req_data["utc"], req_data["FanSpeed"], label="Fan Speed")
+    plt.title("Fan Speed vs UTC")
+    plt.xlabel("UTC")
+    plt.ylabel("Fan Speed")
+    plt.legend()
+    plt.grid(True)
+
+    # Save the plot to a BytesIO buffer
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    plt.close()
+
+    # Return the plot as a response
+    return Response(buf, mimetype='image/png')
 
 if __name__ == '__main__':
     # Generate the map before starting the app
