@@ -3,6 +3,7 @@ from folium.plugins import BeautifyIcon
 import pandas as pd
 import folium
 import os
+import random
 
 app = Flask(__name__)
 # Load data from Excel sheets
@@ -65,6 +66,87 @@ def dtc_description(vehicle, dtc_code):
         }
 
     return render_template('dtc_description.html', vehicle=vehicle, dtc_code=dtc_code, details=details)
+
+# Load data from Excel
+vehicle_live_data = pd.read_excel('Vehicle_live.xlsx')
+
+# Clean the data for consistency
+vehicle_live_data['model_sticker'] = vehicle_live_data.iloc[:, 5].astype(str).str.strip().str.lower()
+
+# Initialize segment-wise totals
+segment_totals = vehicle_live_data.groupby(vehicle_live_data.iloc[:, 0]).agg({
+    vehicle_live_data.columns[8]: 'sum',  # Column 9 for distance
+    vehicle_live_data.columns[9]: 'sum'  # Column 10 for engine hours
+}).rename(columns={vehicle_live_data.columns[8]: 'total_kms', vehicle_live_data.columns[9]: 'total_engine_hours'}).to_dict(orient='index')
+
+@app.route('/')
+def home():
+    # Get segment names and stats
+    segments = vehicle_live_data.iloc[:, 0].unique()
+    stats = {seg: len(vehicle_live_data[vehicle_live_data.iloc[:, 0] == seg]) for seg in segments}
+
+    # Prepare segment totals for rendering
+    totals = {seg: {
+        "total_kms": round(segment_totals[seg]['total_kms'], 2),
+        "total_engine_hours": round(segment_totals[seg]['total_engine_hours'], 2)
+    } for seg in segment_totals}
+
+    return render_template('home.html', stats=stats, totals=totals)
+
+@app.route('/update_segment_totals', methods=['GET'])
+def update_segment_totals():
+    # Simulate real-time updates
+    for segment in segment_totals:
+        segment_totals[segment]['total_kms'] += random.uniform(0.0, 0.0)  # Increment kilometers
+        segment_totals[segment]['total_engine_hours'] += random.uniform(0.000, 0.00)  # Increment engine hours
+
+    updated_totals = {seg: {
+        "total_kms": round(segment_totals[seg]['total_kms'], 2),
+        "total_engine_hours": round(segment_totals[seg]['total_engine_hours'], 2)
+    } for seg in segment_totals}
+
+    return jsonify(updated_totals)
+
+@app.route('/segment/<segment>')
+def segment(segment):
+    # Filter data for the given segment
+    segment_data = vehicle_live_data[vehicle_live_data.iloc[:, 0] == segment]
+    vehicles = []
+
+    for _, row in segment_data.iterrows():
+        vehicles.append({
+            "model_sticker": row[5],  # Column 6
+            "speed": row[7],          # Column 8
+            "distance": row[8],       # Column 9
+            "engine_hours": row[9],   # Column 10
+            "location": row[6]        # Column 5
+        })
+    
+    return render_template('segment.html', segment=segment, vehicles=vehicles)
+
+@app.route('/vehicle_detail/<model_sticker>')
+def vehicle_detail(model_sticker):
+    model_sticker = str(model_sticker).strip().lower()
+    vehicle_data = vehicle_live_data[vehicle_live_data['model_sticker'] == model_sticker]
+
+    if vehicle_data.empty:
+        return render_template('error.html', message=f"No vehicle found with Model Sticker: {model_sticker}")
+    
+    vehicle_data = vehicle_data.iloc[0]
+    vehicle = {
+        "model_sticker": vehicle_data[5],
+        "speed": vehicle_data[7],
+        "distance": vehicle_data[8],
+        "engine_hours": vehicle_data[9],
+        "location": vehicle_data[6],
+        "Engine_Temp": vehicle_data[13],
+        "Fuel_Level": vehicle_data[10]
+    }
+    segment = vehicle_data[0]
+    
+    return render_template('vehicle_detail.html', vehicle=vehicle, segment=segment)
+
+
 
 # <..................................................................>
 # Function to generate the India cities map
@@ -224,9 +306,9 @@ def generate_india_map1():
 
 
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+# @app.route('/')
+# def home():
+#     return render_template('home.html')
 
 # @app.route('/dtc')
 # def dtc():
@@ -248,9 +330,15 @@ def State_History():
 # def dtc_description():
 #     return render_template('dtc_description.html')
 
+@app.route('/analytics')
+def analytics():
+    return render_template('analytics.html')
+
 @app.route('/Segment2')
 def Segment2():
     return render_template('Segment2.html')
+
+
 
 @app.route('/Segment3')
 def Segment3():
@@ -290,8 +378,6 @@ def get_data():
     }
 
 # <......................................................>
-
-
 
 if __name__ == '__main__':
     # Generate the map before starting the app

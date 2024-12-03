@@ -8,24 +8,55 @@
 
 </head>
 <body>
+    <div class="navbar">
+        <!-- Logo Image (Before Home) -->
+        <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
+        <!-- <a href="{{ url_for('home') }}"><marquee style="font-size: 20px;">Valid Ops Centre</marquee></a> -->
+        <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
+        <!-- Home Icon -->
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        
+        <!-- Our Service Dropdown -->
+        
+            <!-- <a href="#" ><i class="fas fa-cogs" ></i> Our Service</a> -->
+           
+       
+        <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
+        <a href="{{ url_for('analytics') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
+        <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
+        <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
+    
+       
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        
+        <!-- Profile Icon (Aligned to the right) -->
+        <div class="profile-container">
+            <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
+        </div>
+    </div>
+
     <main>
         <div class="grid-container">
             <div class="header-row">
-                <p><strong>Segment:</strong> </p>
-                <div><p><strong>Model Sticker:</strong> </p> </div>
-                <div><p><strong>Speed:</strong> </p></div>
-                <div><p><strong>Distance:</strong> </p></div>
+                <div><p><strong>Segment:</strong> {{ segment }}</p></div>
+                <div><p><strong>Model Sticker:</strong> {{ vehicle.model_sticker }}</p> </div>
+                <div><p><strong>Speed:</strong> {{ vehicle.speed }} km/h</p></div>
+                <div><p><strong>Distance:</strong> {{ vehicle.distance }} km</p></div>
                 
                 
             </div>
             <div class="header-row">
-                <div></div>
-                <div><p><strong>Engine Operation Hrs:</strong> </p></div>
-                <p><strong>Location:</strong> </p>
                 
-                <div>Milage / Range</div>
+                <div><p><strong>Engine Operation Hrs:</strong> {{ vehicle.engine_hours }} h</p></div>
+                <div><p><strong>Location:</strong> {{ vehicle.location }}</p></div>
+                
+                <div>Engine Temperature: {{ vehicle.Engine_Temp }}</div>
                 <!-- <div>AdBlue Consumption</div> -->
-                <div>Fuel Level/SOC</div>
+                <div>Fuel Level/SOC: {{ vehicle.Fuel_Level }}</div>
             </div>
         </div>
 

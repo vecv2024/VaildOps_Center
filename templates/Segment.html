@@ -6,7 +6,30 @@
     <title>Navbar with Boxes</title>
     <link rel="stylesheet" type="text/css" href="../static/css/SegmentCSS.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
+    <style>
+    .grid-box-container {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    height: 84vh; /* or you can use a fixed height like 600px */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
+
+.grid-box {
+    margin-bottom: 10px; /* Adds some space between boxes */
+}
+
+.grid-box-container h2 {
+    background-color: #00539b;
+    color: white;
+    padding: 10px;
+    margin: -10px -10px 10px -10px;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+}
+
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -22,7 +45,7 @@
            
        
         <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
-        <a href="{{ url_for('State_History') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
+        <a href="{{ url_for('analytics') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
         <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
         <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
 
@@ -75,7 +98,7 @@
     </div>
 
     <!-- New Div Section with Three Connected Boxes -->
-    <div class="three-boxes-container">
+    <!-- <div class="three-boxes-container">
         <div class="three-box box-1">
             <p class="search-criteria">Search Criteria</p>
         </div>
@@ -87,7 +110,7 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
-    </div>
+    </div> -->
 
     <div class="container">
         <div class="map-container">
@@ -102,114 +125,35 @@
                 </iframe>
         </div>
 
+      
         <div class="grid-box-container">
-            <!-- Create 10 boxes -->
+            {% for vehicle in vehicles %}
             <div class="grid-box">
                 <table class="box-table">
                     <tr>
-                        <td colspan="2">Model Sticker No: 1</td>
+                        <td colspan="2">
+                            <a href="{{ url_for('vehicle_detail', model_sticker=vehicle.model_sticker) }}" style="text-decoration: none; color: black;">
+                                Model Sticker No: {{ vehicle.model_sticker }}
+                            </a>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Speed: 40 Km/h</td>
-                        <td>Distance: 150 Km</td>
+                        <td>Speed: {{ vehicle.speed }} km/h</td>
+                        <td>Distance: {{ vehicle.distance }} km</td>
                     </tr>
                     <tr>
-                        <td>Engine Hrs: 4 h</td>
-                        <td>Location: Delhi</td>
+                        <td>Engine Hrs: {{ vehicle.engine_hours }} h</td>
+                        <td>Location: {{ vehicle.location }}</td>
                     </tr>
                 </table>
             </div>
-        
-            <div class="grid-box">
-                <table class="box-table">
-                    <tr>
-                        <td colspan="2">Model Sticker No: 2</td>
-                    </tr>
-                    <tr>
-                        <td>Speed: 40 Km/h</td>
-                        <td>Distance: 0 Km</td>
-                    </tr>
-                    <tr>
-                        <td>Engine Hrs: 0 h</td>
-                        <td>Location: Indore</td>
-                    </tr>
-                </table>
-            </div>
-        
-            <!-- Repeat the structure for all 10 boxes -->
-            <div class="grid-box">
-                <table class="box-table">
-                    <tr>
-                        <td colspan="2">Model Sticker No: 3</td>
-                    </tr>
-                    <tr>
-                        <td>Speed: 40 Km/h</td>
-                        <td>Distance: 200 Km</td>
-                    </tr>
-                    <tr>
-                        <td>Engine Hrs: 5 h</td>
-                        <td>Location: Pune</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Repeat the structure for all 10 boxes -->
-            <div class="grid-box">
-                <table class="box-table">
-                    <tr>
-                        <td colspan="2">Model Sticker No: 4</td>
-                    </tr>
-                    <tr>
-                        <td>Speed: 40 Km/h</td>
-                        <td>Distance: 400 Km</td>
-                    </tr>
-                    <tr>
-                        <td>Engine Hrs: 10 h</td>
-                        <td>Location: Bhopal</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Repeat the structure for all 10 boxes -->
-            <div class="grid-box">
-                <table class="box-table">
-                    <tr>
-                        <td colspan="2">Model Sticker No: 5</td>
-                    </tr>
-                    <tr>
-                        <td>Speed: 40 Km/h</td>
-                        <td>Distance: 350 Km</td>
-                    </tr>
-                    <tr>
-                        <td>Engine Hrs: 9 h</td>
-                        <td>Location: Kolkata</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Repeat the structure for all 10 boxes -->
-            <div class="grid-box">
-                <table class="box-table">
-                    <tr>
-                        <td colspan="2">Model Sticker No: 6</td>
-                    </tr>
-                    <tr>
-                        <td>Speed: 40 Km/h</td>
-                        <td>Distance: 200 Km</td>
-                    </tr>
-                    <tr>
-                        <td>Engine Hrs: 5 h</td>
-                        <td>Location: Delhi</td>
-                    </tr>
-                </table>  
-            </div>
-            
-            <!-- Pagination Container -->
-            <div class="pagination-container">
-                <button class="pagination-button" id="prev-btn"><</button> <!-- Previous Button -->
-                <button class="pagination-button" id="next-btn">></button> <!-- Next Button -->
-            </div>
+            {% endfor %}
         </div>
+        
+        
+            
+            
+        </div> 
 
             <footer class="footer">
         <div class="footer-left">
