@@ -242,55 +242,91 @@
         <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
     </div>
 </div>
-<!-- <div>
-  <h3 class="dtc-tracking">DTC Tickets</h3>
-  <table id="ticket">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Segment</th>
-        <th>Vehicle</th>
-        <th>Issue (Active DTC)</th>
-        <th>Owner</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for ticket in dtc_tickets %}
-      <tr>
-        <td>{{ ticket.date }}</td>
-        <td>{{ ticket.segment }}</td>
-        <td>{{ ticket.vehicle }}</td>
-        <td>{{ ticket.issue }}</td>
-        <td>{{ ticket.owner }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div> -->
+  
 <div>
-  <h3 class="protus-tracking">Protus Tracking</h3>
-  <table id="myTable">
-    <thead>
-      <tr>
-          {% for column in protus_data[0].keys() %}
-          <th>{{ column }}</th>
-          {% endfor %}
-      </tr>
-  </thead>
-  <tbody>
-      {% for row in protus_data %}
-      <tr>
-          {% for cell in row.values() %}
-          <td>{{ cell }}</td>
-          {% endfor %}
-      </tr>
-      {% endfor %}
-  </tbody>
-  </table>
+    <h3 class="protus-tracking">DTC Tracking</h3>
+    <table class="table table-bordered">
+        <thead id="myTable">
+            <tr>
+                <th>#</th>
+                {% if dtc_data %}
+                    {% for col_name in dtc_data[0].keys() %}
+                    <th>{{ col_name }}</th>
+                    {% endfor %}
+                    <th>Actions</th>
+                {% else %}
+                    <th>No Data Available</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if dtc_data %}
+                {% for index, row in enumerate(dtc_data) %}
+                <tr>
+                    <td>{{ index + 1 }}</td>
+                    {% for cell in row.values() %}
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                    <td>
+                        <form action="/raise/{{ index }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm">Raise</button>
+                        </form>
+                        <form action="/delete/{{ index }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="100%">No data available in DTC List</td>
+                </tr>
+            {% endif %}
+            
+        </tbody>
+    </table>
 </div>
+
+<div>
+    <h3 class="protus-tracking">Protus Tracking</h3>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                {% if protus_data %}
+                    {% for col_name in protus_data[0].keys() %}
+                    <th>{{ col_name }}</th>
+                    {% endfor %}
+                    <th>Actions</th>
+                {% else %}
+                    <th>No Data Available</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if dtc_data %}
+                {% for index, row in enumerate(protus_data) %}
+                <tr>
+                    <td>{{ index + 1 }}</td>
+                    {% for cell in row.values() %}
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                    
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="100%">No data available in Protus List</td>
+                </tr>
+            {% endif %}
+            
+        </tbody>
+    </table>
+  </div>
 
 
   </div>
+
   <script>
 
 const table = document.getElementById("myTable")

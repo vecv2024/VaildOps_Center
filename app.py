@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, url_for, Response
+from flask import Flask, jsonify, redirect, render_template, request, url_for, Response
 from folium.plugins import BeautifyIcon
 import pandas as pd
 import matplotlib
@@ -8,6 +8,20 @@ import folium
 import os
 import io
 import random
+
+# File paths
+DTC_LIST_FILE = "DTC_List.xlsx"
+PROTUS_DATA_FILE = "Protus_data.xlsx"
+
+# Helper function to read Excel data
+def read_excel_safe(file_path):
+    if not os.path.exists(file_path):
+        return pd.DataFrame()  # Return an empty DataFrame if the file does not exist
+    return pd.read_excel(file_path).fillna("Not available")
+
+# Helper function to save data to Excel
+def save_excel_safe(file_path, data):
+    data.to_excel(file_path, index=False)
 
 def read_excel_data(filepath):
     try:
@@ -328,15 +342,66 @@ def generate_india_map1():
 # @app.route('/dtc')
 # def dtc():
 #     return render_template('dtc.html')
+# Protus Dtc Handler
 
 @app.route('/protus')
 def protus():
-    # dtc_tickets = read_excel_data("vehicle_dataDTC.xlsx")
-    # Read Protus Tracking data
-    protus_data = read_excel_data("Protus_data.xlsx")
+    # Load data from both files
+    dtc_data = read_excel_safe(DTC_LIST_FILE)
+    protus_data = read_excel_safe(PROTUS_DATA_FILE)
+    return render_template(
+        "protus.html",
+        dtc_data=dtc_data.to_dict(orient="records"),
+        protus_data=protus_data.to_dict(orient="records"),
+        enumerate=enumerate,  # Pass enumerate explicitly
+    )
 
-    return render_template("protus.html", protus_data=protus_data)
+@app.route("/raise/<int:row_index>", methods=["POST"])
+def raise_issue(row_index):
+    dtc_data = read_excel_safe(DTC_LIST_FILE)
+    protus_data = read_excel_safe(PROTUS_DATA_FILE)
 
+    if row_index < len(dtc_data):
+        row_to_move = dtc_data.iloc[row_index]
+
+        protus_data = pd.concat([protus_data, pd.DataFrame([row_to_move])], ignore_index=True)
+
+        # Remove the row from DTC_List.xlsx
+        dtc_data = dtc_data.drop(index=row_index).reset_index(drop=True)
+
+        # Save updated data
+        save_excel_safe(DTC_LIST_FILE, dtc_data)
+        save_excel_safe(PROTUS_DATA_FILE, protus_data)
+
+    return redirect(url_for("index"))
+
+@app.route("/delete/<int:row_index>", methods=["POST"])
+def delete_issue(row_index):
+    dtc_data = read_excel_safe(DTC_LIST_FILE)
+
+    if row_index < len(dtc_data):
+        # Remove the row
+        dtc_data = dtc_data.drop(index=row_index).reset_index(drop=True)
+
+        # Save updated data
+        save_excel_safe(DTC_LIST_FILE, dtc_data)
+
+    return redirect(url_for("index"))
+
+@app.route("/delete-protus/<int:row_index>", methods=["POST"])
+def delete_protus(row_index):
+    protus_data = read_excel_safe(PROTUS_DATA_FILE)
+
+    if row_index < len(protus_data):
+        # Remove the row
+        protus_data = protus_data.drop(index=row_index).reset_index(drop=True)
+
+        # Save updated data
+        save_excel_safe(PROTUS_DATA_FILE, protus_data)
+
+    return redirect(url_for("index"))
+
+# Protus DTC handler end
 @app.route('/Segment')
 def Segment():
     return render_template('Segment.html')
