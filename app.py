@@ -9,6 +9,17 @@ import os
 import io
 import random
 
+def read_excel_data(filepath):
+    try:
+        # Read the Excel file into a DataFrame
+        data = pd.read_excel(filepath)
+        # Replace NaN values with "Not available" for missing fields
+        data = data.fillna("Not available")
+        return data.to_dict(orient="records")  # Convert to a list of dictionaries
+    except Exception as e:
+        print(f"Error reading Excel file: {e}")
+        return []
+
 app = Flask(__name__)
 # Load data from Excel sheets
 ev_data = pd.read_excel('Vehicle_dataEV.xlsx')
@@ -389,8 +400,7 @@ def analytics_data():
     analytics_data = pd.read_excel('fan_dtc.xlsx')
     selected_column = ["utc", "FanSpeed"]
     req_data = analytics_data[selected_column]
-    data = req_data.to_json(orient='records')
-    return jsonify(data)
+    return jsonify(req_data.to_json(orient='records'))
 
     # Create the plot
     plt.figure(figsize=(10, 5))
@@ -409,6 +419,20 @@ def analytics_data():
 
     # Return the plot as a response
     return Response(buf, mimetype='image/png')
+
+    # Protus
+
+@app.route('/protus-data')
+def protus_data():
+    # pdata = pd.read_excel('DTC_new_data.xlsx')
+    # Read DTC tickets
+    
+    dtc_tickets = read_excel_data("vehicle_dataDTC.xlsx")
+    # Read Protus Tracking data
+    protus_data = read_excel_data("DTC_new_data.xlsx")
+
+    return render_template("index.html", dtc_tickets=dtc_tickets, protus_data=protus_data)
+
 
 if __name__ == '__main__':
     # Generate the map before starting the app

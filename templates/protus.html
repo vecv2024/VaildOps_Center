@@ -242,157 +242,135 @@
         <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
     </div>
 </div>
-  <div>
-    <h3 class="protus-tracking">DTC Tickets</h3>
-    <table id="ticket">
-      <thread>
-        <tr>
-          <th>Date</th>
-          <th>Segment</th>
-          <th>Vehicle</th>
-          <th>Issue (Active DTC)</th>
-          <th>Owner</th>
-        </tr>
-      </thread>
-      <tbody>
-        <tr>
-          <td>11/08/2024</td>
-          <td>HD</td>
-          <td>Pro 8035XM</td>
-          <td>P12040</td>
-          <td>ABC</td>
-        </tr>
-        <tr>
-          <td>11/08/2024</td>
-          <td>LMD</td>
-          <td>Pro 2116</td>
-          <td>P12040</td>
-          <td>ABC</td>
-        </tr>
-        <tr>
-          <td>9/08/2024</td>
-          <td>EV</td>
-          <td>Pro 8035XM</td>
-          <td>P12040</td>
-          <td>ABC</td>
-        </tr>
-        <tr>
-          <td>21/07/2024</td>
-          <td>BUS</td>
-          <td>StarLine 12m</td>
-          <td>P12040</td>
-          <td>ABC</td>
-        </tr>
-      </tbody>
+<!-- <div>
+  <h3 class="dtc-tracking">DTC Tickets</h3>
+  <table id="ticket">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Segment</th>
+        <th>Vehicle</th>
+        <th>Issue (Active DTC)</th>
+        <th>Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ticket in dtc_tickets %}
+      <tr>
+        <td>{{ ticket.date }}</td>
+        <td>{{ ticket.segment }}</td>
+        <td>{{ ticket.vehicle }}</td>
+        <td>{{ ticket.issue }}</td>
+        <td>{{ ticket.owner }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div> -->
+<div>
+  <h3 class="protus-tracking">Protus Tracking</h3>
+  <table id="myTable">
+    <thead>
+      <tr>
+          {% for column in table_data[0].keys() %}
+          <th>{{ column }}</th>
+          {% endfor %}
+      </tr>
+  </thead>
+  <tbody>
+      {% for row in table_data %}
+      <tr>
+          {% for cell in row.values() %}
+          <td>{{ cell }}</td>
+          {% endfor %}
+      </tr>
+      {% endfor %}
+  </tbody>
+  </table>
+</div>
 
-    </table>
-  </div>
-
-  <div>
-    <h3 class="protus-tracking"> Protus Tracking </h3>
-
-    <table id="myTable">
-
-      <thread class="details-row">
-        <tr>
-          <th>Protus Date</th>
-          <th>Protus ID</th>
-          <th>Aggregate</th>
-          <th>Orginator</th>
-          <th>Current Owner</th>
-          <th>Issue</th>
-          <th>RCA</th>
-          <th>Status</th>
-          <th>Severity</th>
-          <th>Final Comment</th>
-          <th>Part Number</th>
-          <th>Part Name</th>
-        </tr>
-      </thread>
-
-      <tbody>
-        <tr>
-          <td>05/25/2023 </th>
-          <td>VE2188_TT-Endurance-B-0077</th>
-          <td>Engine Peripheral</th>
-          <td>Ashish Kumar Paroha</th>
-          <td>Ashish Kumar Paroha</th>
-          <td>Pro 8055TT_CNG_LNG_Exhaust temp sensor interface loose with front pipe</th>
-          <td>RCA</th>
-          <td>Verification</th>
-          <td>25</th>
-          <td>MDEP has not shared correct inteface details. Now No furhter plan recieved from VI team for this vehicle.
-            </th>
-          <td>Part Number</th>
-          <td>Part Name</th>
-        </tr>
-        <tr>
-          <td>08/22/2023</td>
-          <td>VE2188_TT-PerformanceAndFeatureVerification-B-0002</td>
-          <td>Engine</td>
-          <td>R V BIBIN</td>
-          <td>Naveen Pratap Tripathi </td>
-          <td>Pro6055TT LNG gradeability not meeting the requirement</td>
-          <td>RCA</td>
-          <td>Verification</td>
-          <td>5</td>
-          <td>RCA</td>
-          <td>Part Number</td>
-          <td>Part Name</td>
-        </tr>
-        <tr>
-          <td>12/07/2023</td>
-          <td>VE2188_TT-PerformanceAndFeatureVerification-B-0003</td>
-          <td>Control System</td>
-          <td>Akshay Solanki</td>
-          <td>NA</td>
-          <td>Vehicle failed to meet RSL trial criteria</td>
-          <td>RCA</td>
-          <td>Closure</td>
-          <td>25</td>
-          <td>Refer to RCA</td>
-          <td>Part Number</td>
-          <td>Part Name</td>
-        </tr>
-        <tr>
-          <td>05/31/2024</td>
-          <td>VE2188_TT-PerformanceAndFeatureVerification-B-0004</td>
-          <td>Brake Foundation</td>
-          <td>Deepak Chavhan Chavhan</td>
-          <td>NA</td>
-          <td>Pro6055TT BS VI LNG Vehicle fail to meet dynamic air depletion test (brake grabbing is being observed
-            after 8 brake applications).</td>
-          <td>Air from line 23 is getting depleted after 8 brakes. Vehicle is tractor trailer, air from 23 line is also
-            used for trailer braking and the vehicle wheelbase also increased, resulting in air usage by TCV increased
-            for every brake application.</td>
-          <td>Closure</td>
-          <td>5</td>
-          <td>Pro6055TT BS VI LNG Vehicle fail to meet dynamic air depletion test</td>
-          <td>Part Number</td>
-          <td>Part Name</td>
-        </tr>
-      </tbody>
-
-    </table>
 
   </div>
   <script>
-    document.querySelector('.search-button').addEventListener('click', function () {
-      const query = document.querySelector('.search-bar').value;
-      alert(`Searching for: ${query}`);
-    });
-    // Table manipulation
-    const table = document.getElementById("myTable")
-    const rows = table.getElementsByTagName("tr");
-    for (let i = 1; i < rows.length; i++) {
-      const cells = rows[i].getElementsByTagName("td");
+    // document.querySelector('.search-button').addEventListener('click', function () {
+    //   const query = document.querySelector('.search-bar').value;
+    //   alert(`Searching for: ${query}`);
+    // });
+    // // Table manipulation
+    // const table = document.getElementById("myTable")
+    // const rows = table.getElementsByTagName("tr");
+    // for (let i = 1; i < rows.length; i++) {
+    //   const cells = rows[i].getElementsByTagName("td");
 
-      for (let cell of cells) {
-        if (cell.innerText.trim().toLowerCase().includes("closure")) {
-          rows[i].classList.add("highlight");
+    //   for (let cell of cells) {
+    //     if (cell.innerText.trim().toLowerCase().includes("closure")) {
+    //       rows[i].classList.add("highlight");
+    //     }
+    //   }
+    // }
+
+
+    function updateTable(data) {
+    const parsedData = JSON.parse(data);
+    const tableBody = document.querySelector("#myTable tbody");
+
+    // Loop through the parsed data
+    parsedData.forEach(item => {
+        // Extract necessary values from each item
+        const startDate = item["start data and time"] ? new Date(item["start data and time"]).toLocaleDateString() : "N/A";
+        const protusId = item["Protus Name"] || "N/A";
+        const aggregate = "N/A"; // Replace this with the correct mapping if available
+        const originator = item["Owner"] || "N/A";
+        const currentOwner = item["Owner"] || "N/A"; // Update if a different current owner exists
+        const issue = item["Description"] || "N/A";
+        const rca = "N/A"; // Replace this with the correct RCA if available
+        const status = item["Status"] || "N/A";
+        const severity = "N/A"; // Replace this with severity data if available
+        const finalComment = "N/A"; // Replace this with the final comment if available
+        const partNumber = "N/A"; // Replace with actual part number if available
+        const partName = "N/A"; // Replace with actual part name if available
+
+        // Check if a row with the same Protus ID already exists
+        const existingRow = Array.from(tableBody.rows).find(row => row.cells[1].textContent === protusId);
+
+        if (!existingRow) {
+            // Create a new row and append it to the table body
+            const newRow = tableBody.insertRow();
+
+            newRow.innerHTML = `
+                <td>${startDate}</td>
+                <td>${protusId}</td>
+                <td>${aggregate}</td>
+                <td>${originator}</td>
+                <td>${currentOwner}</td>
+                <td>${issue}</td>
+                <td>${rca}</td>
+                <td>${status}</td>
+                <td>${severity}</td>
+                <td>${finalComment}</td>
+                <td>${partNumber}</td>
+                <td>${partName}</td>
+            `;
         }
-      }
-    }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("http://127.0.0.1:5000/protus-data")
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+          })
+          .then(data => {
+              updateTable(data);
+          })
+          .catch(error => {
+              console.error("Error fetching Protus data:", error);
+          });
+  });
+}
+
   </script>
 
 <footer class="footer">

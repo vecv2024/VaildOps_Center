@@ -453,11 +453,22 @@ th, td {
           fetch('http://127.0.0.1:5000/analytics-data')
               .then(response => response.json())
               .then(data => {
+                  console.log(data);
                   // Update chart with new data
-                  chart.data.labels = data.utc;
-                  chart.data.datasets[0].data = data.FanSpeed;
-                  chart.update();
+                  // chart.data.labels = data.utc;
+                  // chart.data.datasets[0].data = data.FanSpeed;
+                  // chart.update();
   
+                  // generateBtn.textContent = 'Generate';
+                  // generateBtn.disabled = false;
+                  const labels = data.map(item => item.utc);
+                  const fanSpeeds = data.map(item => item.FanSpeed);
+
+                  // Update chart with the extracted data
+                  chart.data.labels = labels;
+                  chart.data.datasets[0].data = fanSpeeds;
+                  chart.update();
+
                   generateBtn.textContent = 'Generate';
                   generateBtn.disabled = false;
               })
