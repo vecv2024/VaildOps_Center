@@ -331,7 +331,11 @@ def generate_india_map1():
 
 @app.route('/protus')
 def protus():
-    return render_template('protus.html')
+    # dtc_tickets = read_excel_data("vehicle_dataDTC.xlsx")
+    # Read Protus Tracking data
+    protus_data = read_excel_data("Protus_data.xlsx")
+
+    return render_template("protus.html", protus_data=protus_data)
 
 @app.route('/Segment')
 def Segment():
@@ -402,36 +406,6 @@ def analytics_data():
     req_data = analytics_data[selected_column]
     return jsonify(req_data.to_json(orient='records'))
 
-    # Create the plot
-    plt.figure(figsize=(10, 5))
-    plt.plot(req_data["utc"], req_data["FanSpeed"], label="Fan Speed")
-    plt.title("Fan Speed vs UTC")
-    plt.xlabel("UTC")
-    plt.ylabel("Fan Speed")
-    plt.legend()
-    plt.grid(True)
-
-    # Save the plot to a BytesIO buffer
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png')
-    buf.seek(0)
-    plt.close()
-
-    # Return the plot as a response
-    return Response(buf, mimetype='image/png')
-
-    # Protus
-
-@app.route('/protus-data')
-def protus_data():
-    # pdata = pd.read_excel('DTC_new_data.xlsx')
-    # Read DTC tickets
-    
-    dtc_tickets = read_excel_data("vehicle_dataDTC.xlsx")
-    # Read Protus Tracking data
-    protus_data = read_excel_data("DTC_new_data.xlsx")
-
-    return render_template("index.html", dtc_tickets=dtc_tickets, protus_data=protus_data)
 
 
 if __name__ == '__main__':

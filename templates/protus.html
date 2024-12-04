@@ -158,7 +158,7 @@
                 align-items: center;
                 justify-content: space-between;
                 padding: 10px 20px;
-                position: fixed;
+                position: relative;
                 bottom: 0;
                 width: 100%;
                 box-sizing: border-box;
@@ -272,13 +272,13 @@
   <table id="myTable">
     <thead>
       <tr>
-          {% for column in table_data[0].keys() %}
+          {% for column in protus_data[0].keys() %}
           <th>{{ column }}</th>
           {% endfor %}
       </tr>
   </thead>
   <tbody>
-      {% for row in table_data %}
+      {% for row in protus_data %}
       <tr>
           {% for cell in row.values() %}
           <td>{{ cell }}</td>
@@ -292,6 +292,16 @@
 
   </div>
   <script>
+
+const table = document.getElementById("myTable")
+  const rows = table.getElementsByTagName("tr");
+  for (let i = 1; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+  
+      if (cells[4].innerText.trim().toLowerCase().includes("c")) { 
+        rows[i].classList.add("highlight"); 
+      }
+  }
     // document.querySelector('.search-button').addEventListener('click', function () {
     //   const query = document.querySelector('.search-bar').value;
     //   alert(`Searching for: ${query}`);
@@ -310,66 +320,66 @@
     // }
 
 
-    function updateTable(data) {
-    const parsedData = JSON.parse(data);
-    const tableBody = document.querySelector("#myTable tbody");
+  //   function updateTable(data) {
+  //   const parsedData = JSON.parse(data);
+  //   const tableBody = document.querySelector("#myTable tbody");
 
-    // Loop through the parsed data
-    parsedData.forEach(item => {
-        // Extract necessary values from each item
-        const startDate = item["start data and time"] ? new Date(item["start data and time"]).toLocaleDateString() : "N/A";
-        const protusId = item["Protus Name"] || "N/A";
-        const aggregate = "N/A"; // Replace this with the correct mapping if available
-        const originator = item["Owner"] || "N/A";
-        const currentOwner = item["Owner"] || "N/A"; // Update if a different current owner exists
-        const issue = item["Description"] || "N/A";
-        const rca = "N/A"; // Replace this with the correct RCA if available
-        const status = item["Status"] || "N/A";
-        const severity = "N/A"; // Replace this with severity data if available
-        const finalComment = "N/A"; // Replace this with the final comment if available
-        const partNumber = "N/A"; // Replace with actual part number if available
-        const partName = "N/A"; // Replace with actual part name if available
+  //   // Loop through the parsed data
+  //   parsedData.forEach(item => {
+  //       // Extract necessary values from each item
+  //       const startDate = item["start data and time"] ? new Date(item["start data and time"]).toLocaleDateString() : "N/A";
+  //       const protusId = item["Protus Name"] || "N/A";
+  //       const aggregate = "N/A"; // Replace this with the correct mapping if available
+  //       const originator = item["Owner"] || "N/A";
+  //       const currentOwner = item["Owner"] || "N/A"; // Update if a different current owner exists
+  //       const issue = item["Description"] || "N/A";
+  //       const rca = "N/A"; // Replace this with the correct RCA if available
+  //       const status = item["Status"] || "N/A";
+  //       const severity = "N/A"; // Replace this with severity data if available
+  //       const finalComment = "N/A"; // Replace this with the final comment if available
+  //       const partNumber = "N/A"; // Replace with actual part number if available
+  //       const partName = "N/A"; // Replace with actual part name if available
 
-        // Check if a row with the same Protus ID already exists
-        const existingRow = Array.from(tableBody.rows).find(row => row.cells[1].textContent === protusId);
+  //       // Check if a row with the same Protus ID already exists
+  //       const existingRow = Array.from(tableBody.rows).find(row => row.cells[1].textContent === protusId);
 
-        if (!existingRow) {
-            // Create a new row and append it to the table body
-            const newRow = tableBody.insertRow();
+  //       if (!existingRow) {
+  //           // Create a new row and append it to the table body
+  //           const newRow = tableBody.insertRow();
 
-            newRow.innerHTML = `
-                <td>${startDate}</td>
-                <td>${protusId}</td>
-                <td>${aggregate}</td>
-                <td>${originator}</td>
-                <td>${currentOwner}</td>
-                <td>${issue}</td>
-                <td>${rca}</td>
-                <td>${status}</td>
-                <td>${severity}</td>
-                <td>${finalComment}</td>
-                <td>${partNumber}</td>
-                <td>${partName}</td>
-            `;
-        }
-    });
+  //           newRow.innerHTML = `
+  //               <td>${startDate}</td>
+  //               <td>${protusId}</td>
+  //               <td>${aggregate}</td>
+  //               <td>${originator}</td>
+  //               <td>${currentOwner}</td>
+  //               <td>${issue}</td>
+  //               <td>${rca}</td>
+  //               <td>${status}</td>
+  //               <td>${severity}</td>
+  //               <td>${finalComment}</td>
+  //               <td>${partNumber}</td>
+  //               <td>${partName}</td>
+  //           `;
+  //       }
+  //   });
 
-    document.addEventListener("DOMContentLoaded", () => {
-      fetch("http://127.0.0.1:5000/protus-data")
-          .then(response => {
-              if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              return response.json();
-          })
-          .then(data => {
-              updateTable(data);
-          })
-          .catch(error => {
-              console.error("Error fetching Protus data:", error);
-          });
-  });
-}
+  //   document.addEventListener("DOMContentLoaded", () => {
+  //     fetch("http://127.0.0.1:5000/protus-data")
+  //         .then(response => {
+  //             if (!response.ok) {
+  //                 throw new Error(`HTTP error! status: ${response.status}`);
+  //             }
+  //             return response.json();
+  //         })
+  //         .then(data => {
+  //             updateTable(data);
+  //         })
+  //         .catch(error => {
+  //             console.error("Error fetching Protus data:", error);
+  //         });
+  // });
+// }
 
   </script>
 
