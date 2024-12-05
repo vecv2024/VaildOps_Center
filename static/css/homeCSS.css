@@ -207,8 +207,8 @@ body {
   position: absolute;
   top: 250px; /* Adjust to place map below header */
   left: 0;
-  width: 50%;
-  height: 400px;
+  width: 51%;
+  height: 430px;
 }
 /* Keyframe animation for rotating, moving, and pulsing */
 @keyframes moveRotatePulse {
@@ -428,7 +428,7 @@ body {
   top: 268px;
   left: 52%; /* Positioned to the right of the map */
   width: 47%; /* Adjust width of the boxes */
-  height: 220px;
+  height: 160px;
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -611,29 +611,164 @@ body {
   height: 50px; /* Adjust the map container height */
   width: 100%; /* Adjust the map container width */
 }
-.footer {
-  background: #e7e7e7;
-  color: #525050;
-  text-align: center;
-  padding: 4px 0;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+.footer-left,
+.footer-center, 
+.footer-right {
+    flex: 1;
 }
 
-.footer i {
-  margin: 0 5px;
-  color: #ff6b66; /* Icon color */
-  color: #525050;
+.footer-left {
+    text-align: left;
 }
 
-.footer h3 {
-  margin: 4px 0;
+.footer-center {
+    text-align: center;
+    color: #d9241d;
+    text-shadow: 2px 2px 4px rgba(175, 21, 21, 0.5); /* Adds a shadow to the text */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.footer-right {
+    text-align: right;
+    font-size: 18px;
+    color: #1c1b1b;
+}
+
+.footer-logo {
+    height: 20px;
+}
+
+.fleet-tracking {
+  /* width: 300px; */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fleet-tracking-header {
+  background: #f8f9fa;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.fleet-tracking-title {
   font-size: 16px;
   font-weight: bold;
-  color: #525050;
+  display: flex;
+  align-items: center;
 }
-.profile-container {
-  margin-left: auto;
-  padding-left: 20px;
+
+.fleet-tracking-icon {
+  width: 20px;
+  height: 20px;
+  background: url('path-to-icon.png') no-repeat center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.fleet-tracking-brand {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.fleet-tracking-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 8px;
+  padding: 10px;
+  background: #fff;
+}
+
+.fleet-tracking-box {
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1px;
+  height: 85px;
+  width: 250px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.fleet-tracking-box.running {
+  background: #e9f8e8;
+  color: #28a745;
+}
+
+.fleet-tracking-box.idle {
+  background: #e8f3ff;
+  color: #007bff;
+}
+
+.fleet-tracking-box.stopped {
+  background: #ffe8e8;
+  color: #dc3545;
+}
+
+.fleet-tracking-box.unreachable {
+  background: #f3f3f3;
+  color: #6c757d;
+}
+
+.fleet-tracking-number {
+  font-size: 24px;
+}
+
+.fleet-tracking-label {
+  font-size: 12px;
+  margin-top: 5px;
+}
+.fleet-tracking-icon {
+  font-size: 20px;
+  margin-right: 8px;
+  color: #007bff; /* Customize the icon color */
+}
+/* Base Styles for all icons */
+.fleet-tracking-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: inherit;
+}
+
+/* Running Icon Animation */
+.running-icon {
+  color: #28a745; /* Green for running */
+  animation: move 1s ease-in-out infinite;
+}
+
+/* Animation Keyframes */
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px); /* Move to the right */
+  }
+  100% {
+    transform: translateX(0); /* Return to the starting position */
+  }
+}
+
+/* Idle Icon */
+.fleet-tracking-box.idle .fleet-tracking-icon {
+  color: #007bff; /* Blue for idle */
+}
+
+/* Stopped Icon */
+.fleet-tracking-box.stopped .fleet-tracking-icon {
+  color: #dc3545; /* Red for stopped */
+}
+
+/* Not Reachable Icon */
+.fleet-tracking-box.unreachable .fleet-tracking-icon {
+  color: #6c757d; /* Gray for not reachable */
 }

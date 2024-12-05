@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request,  jsonify,  url_for
 from folium.plugins import BeautifyIcon
 import pandas as pd
 import folium
@@ -22,13 +22,16 @@ vehicle_data = {
 
 @app.route('/dtc')
 def dtc():
+    # Convert the segment status counts into a list of dictionaries for rendering in HTML
+    segment_data = segment_status_counts.to_dict(orient="records")
+    # return render_template("dtc.html",)
     # Create sections for each vehicle type
     sections = {}
     for key, info in vehicle_data.items():
         data = info["data"]
         dtcs = data.iloc[:, [2, 1]].values.tolist()  # Extract DTCs (column 3) and descriptions (column 2)
         sections[key] = {"title": info["title"], "dtcs": dtcs}
-    return render_template('dtc.html', sections=sections)
+    return render_template('dtc.html', sections=sections,  segments=segment_data)
 
 @app.route('/dtc/dtc_description/<vehicle>/<dtc_code>')
 def dtc_description(vehicle, dtc_code):
@@ -81,6 +84,12 @@ segment_totals = vehicle_live_data.groupby(vehicle_live_data.iloc[:, 0]).agg({
 
 @app.route('/')
 def home():
+
+# Calculate overall totals for Open and Closed DTCs
+    total_open = segment_status_counts["Open"].sum()
+    total_closed = segment_status_counts["Closed"].sum()
+
+
     # Get segment names and stats
     segments = vehicle_live_data.iloc[:, 0].unique()
     stats = {seg: len(vehicle_live_data[vehicle_live_data.iloc[:, 0] == seg]) for seg in segments}
@@ -91,7 +100,9 @@ def home():
         "total_engine_hours": round(segment_totals[seg]['total_engine_hours'], 2)
     } for seg in segment_totals}
 
-    return render_template('home.html', stats=stats, totals=totals)
+    return render_template('home.html', stats=stats, totals=totals,
+        total_open=total_open,
+        total_closed=total_closed,)
 
 @app.route('/update_segment_totals', methods=['GET'])
 def update_segment_totals():
@@ -119,7 +130,8 @@ def segment(segment):
             "speed": row[7],          # Column 8
             "distance": row[8],       # Column 9
             "engine_hours": row[9],   # Column 10
-            "location": row[6]        # Column 5
+            "location": row[6],        # Column 5
+            "segment": row[0]
         })
     
     return render_template('segment.html', segment=segment, vehicles=vehicles)
@@ -145,6 +157,62 @@ def vehicle_detail(model_sticker):
     segment = vehicle_data[0]
     
     return render_template('vehicle_detail.html', vehicle=vehicle, segment=segment)
+
+#<.......................................................>
+
+# Load and process the updated Excel file
+file_path = "DTC_data.xlsx"
+dtc_data = pd.read_excel(file_path)
+
+# Ensure the correct column is used for the 'Status' field (Column 5)
+dtc_data["Status"] = dtc_data.iloc[:, 4].str.upper().str.strip()  # Assuming Status is in the 5th column (index 4)
+
+# Filter the data to include only 'O' (Open) and 'C' (Closed) statuses
+dtc_data = dtc_data[dtc_data["Status"].isin(["O", "C"])]
+
+# Group the data by 'Segment/section' and 'Status', then count occurrences
+segment_status_counts = (
+    dtc_data.groupby(["Segment/section", "Status"])
+    .size()
+    .unstack(fill_value=0)
+    .reset_index()
+)
+
+# Ensure the DataFrame has the correct number of columns
+if segment_status_counts.shape[1] == 3:
+    segment_status_counts.columns = ["Segment/section", "Closed", "Open"]
+else:
+    raise ValueError(
+        f"Unexpected data format: The DataFrame has {segment_status_counts.shape[1]} columns instead of 3."
+    )
+
+@app.route("/fetch_data", methods=["POST"])
+def fetch_data():
+    segment = request.json.get("segment")
+    if not segment:
+        return jsonify({"error": "No segment provided"}), 400
+
+    # Filter the DTC data for the selected segment
+    filtered_data = dtc_data[dtc_data["Segment/section"] == segment]
+    if filtered_data.empty:
+        return jsonify([])  # Return an empty array if no data is found
+
+    # Extract the relevant columns and replace NaN values
+    data_to_display = filtered_data.iloc[:, [0, 2, 9, 10, 3, 7, 11]].rename(
+        columns={
+            filtered_data.columns[0]: "Segment",
+            filtered_data.columns[2]: "DTC",
+            filtered_data.columns[9]: "Description",
+            filtered_data.columns[10]: "Ageing",
+            filtered_data.columns[3]: "Protus Name",
+            filtered_data.columns[7]: "Responsible",
+            filtered_data.columns[11]: "Status",
+        }
+    ).fillna("N/A")  # Replace NaN values with "N/A"
+
+    return jsonify(data_to_display.to_dict(orient="records"))
+
+
 
 
 
