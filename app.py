@@ -144,7 +144,7 @@ def home():
 # Calculate overall totals for Open and Closed DTCs
     total_open = segment_status_counts["Open"].sum()
     total_closed = segment_status_counts["Closed"].sum()
-
+    total_progress = segment_status_counts["InProcess"].sum()
 
     # Get segment names and stats
     segments = vehicle_live_data.iloc[:, 0].unique()
@@ -158,7 +158,8 @@ def home():
 
     return render_template('home.html', stats=stats, totals=totals,
         total_open=total_open,
-        total_closed=total_closed,)
+        total_closed=total_closed,
+        total_progress=total_progress,)
 
 @app.route('/update_segment_totals', methods=['GET'])
 def update_segment_totals():
@@ -223,8 +224,8 @@ dtc_data = pd.read_excel(file_path)
 # Ensure the correct column is used for the 'Status' field (Column 5)
 dtc_data["Status"] = dtc_data.iloc[:, 4].str.upper().str.strip()  # Assuming Status is in the 5th column (index 4)
 
-# Filter the data to include only 'O' (Open) and 'C' (Closed) statuses
-dtc_data = dtc_data[dtc_data["Status"].isin(["O", "C"])]
+# Filter the data to include only 'O' (Open), 'C' (Closed), and 'P' (InProcess) statuses
+dtc_data = dtc_data[dtc_data["Status"].isin(["O", "C", "P"])]
 
 # Group the data by 'Segment/section' and 'Status', then count occurrences
 segment_status_counts = (
@@ -234,13 +235,29 @@ segment_status_counts = (
     .reset_index()
 )
 
+# Add missing columns with default values if necessary
+for status in ["C", "O", "P"]:
+    if status not in segment_status_counts.columns:
+        segment_status_counts[status] = 0
+
+# Rename columns for clarity
+segment_status_counts.rename(
+    columns={"C": "Closed", "O": "Open", "P": "InProcess"}, inplace=True
+)
+
+# Ensure the DataFrame has the correct column order
+segment_status_counts = segment_status_counts[["Segment/section", "Closed", "Open", "InProcess"]]
+
+
+
+
 # Ensure the DataFrame has the correct number of columns
-if segment_status_counts.shape[1] == 3:
-    segment_status_counts.columns = ["Segment/section", "Closed", "Open"]
-else:
-    raise ValueError(
-        f"Unexpected data format: The DataFrame has {segment_status_counts.shape[1]} columns instead of 3."
-    )
+# if segment_status_counts.shape[1] == 3:
+#     segment_status_counts.columns = ["Segment/section", "Closed", "Open"]
+# else:
+#     raise ValueError(
+#         f"Unexpected data format: The DataFrame has {segment_status_counts.shape[1]} columns instead of 3."
+#     )
 
 @app.route("/fetch_data", methods=["POST"])
 def fetch_data():

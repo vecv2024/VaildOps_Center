@@ -198,22 +198,22 @@
       <div class="fleet-tracking-content">
         <div class="fleet-tracking-box running">
   <i class="fas fa-truck-moving fleet-tracking-icon running-icon"></i>
-  <div class="fleet-tracking-number">6</div>
+  <div class="fleet-tracking-number">89</div>
   <div class="fleet-tracking-label">RUNNING</div>
 </div>
 <div class="fleet-tracking-box idle">
   <i class="fas fa-clock fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">3</div>
+  <div class="fleet-tracking-number">11</div>
   <div class="fleet-tracking-label">IDLE</div>
 </div>
 <div class="fleet-tracking-box stopped">
   <i class="fas fa-stop-circle fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">31</div>
+  <div class="fleet-tracking-number">96</div>
   <div class="fleet-tracking-label">STOPPED</div>
 </div>
 <div class="fleet-tracking-box unreachable">
   <i class="fas fa-wifi-slash fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">6</div>
+  <div class="fleet-tracking-number">17</div>
   <div class="fleet-tracking-label">NOT REACHABLE</div>
 </div>
 
@@ -246,13 +246,13 @@
 }
 
 .total-summary h1 {
-    font-size: 24px; /* Larger font size for the title */
+    font-size: 20px; /* Larger font size for the title */
     color: #d9241d; /* Red color for the title to match the navbar */
     margin-bottom: 10px; /* Space below the title */
 }
 
 .total-summary p {
-    font-size: 16px; /* Font size for better readability */
+    font-size: 14px; /* Font size for better readability */
     color: #333; /* Darker text color for contrast */
     margin: 5px 0; /* Space between paragraphs */
 }
@@ -260,6 +260,7 @@
           <div class="total-summary" onclick="window.location='/dtc'">
               <h1><i class="fas fa-exclamation-triangle"></i> DTC Summary</h1>
               <p>Total Open DTC: {{ total_open }}</p>
+              <p>Total In Progress DTC: {{ total_progress }}</p>
               <p>Total Closed DTC: {{ total_closed }}</p>
           </div>
           <!-- <div class="container"> -->
