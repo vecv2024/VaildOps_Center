@@ -185,10 +185,87 @@
       >
       </iframe>
     </div>
-
     <div class="data-box">
+    <div class="section">
+      <br><br><br><br><br><br><br><br>
+    <div class="fleet-tracking">
+      <div class="fleet-tracking-header">
+        <div class="fleet-tracking-title">
+          <i class="fas fa-truck fleet-tracking-icon"></i> Fleet Tracking
+        </div>
+        <div class="fleet-tracking-brand"></div>
+      </div>
+      <div class="fleet-tracking-content">
+        <div class="fleet-tracking-box running">
+  <i class="fas fa-truck-moving fleet-tracking-icon running-icon"></i>
+  <div class="fleet-tracking-number">6</div>
+  <div class="fleet-tracking-label">RUNNING</div>
+</div>
+<div class="fleet-tracking-box idle">
+  <i class="fas fa-clock fleet-tracking-icon"></i>
+  <div class="fleet-tracking-number">3</div>
+  <div class="fleet-tracking-label">IDLE</div>
+</div>
+<div class="fleet-tracking-box stopped">
+  <i class="fas fa-stop-circle fleet-tracking-icon"></i>
+  <div class="fleet-tracking-number">31</div>
+  <div class="fleet-tracking-label">STOPPED</div>
+</div>
+<div class="fleet-tracking-box unreachable">
+  <i class="fas fa-wifi-slash fleet-tracking-icon"></i>
+  <div class="fleet-tracking-number">6</div>
+  <div class="fleet-tracking-label">NOT REACHABLE</div>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="data-box">
+      
       <div class="section">
-        <h2><i class="fas fa-exclamation-triangle"></i> Pending Issues</h2>
+        
+          
+          <!-- Total Summary Section -->
+           <style>
+            .total-summary {
+    text-align: center;
+    padding: 20px; /* Adequate padding for a spacious feel */
+    background-color: #ffffff; /* White background to match the header */
+    border: 2px solid #d9241d; /* Red border to match the navbar */
+    border-radius: 12px; /* Rounded corners for a softer look */
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.total-summary:hover {
+    transform: translateY(-3px); /* Slight lift on hover */
+    background-color: #f8d7da; /* Light red background on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.total-summary h1 {
+    font-size: 24px; /* Larger font size for the title */
+    color: #d9241d; /* Red color for the title to match the navbar */
+    margin-bottom: 10px; /* Space below the title */
+}
+
+.total-summary p {
+    font-size: 16px; /* Font size for better readability */
+    color: #333; /* Darker text color for contrast */
+    margin: 5px 0; /* Space between paragraphs */
+}
+           </style>
+          <div class="total-summary" onclick="window.location='/dtc'">
+              <h1><i class="fas fa-exclamation-triangle"></i> DTC Summary</h1>
+              <p>Total Open DTC: {{ total_open }}</p>
+              <p>Total Closed DTC: {{ total_closed }}</p>
+          </div>
+          <!-- <div class="container"> -->
+          <!-- <h1>DTC Overview</h1> -->
+      <!-- </div> -->
+        <!-- <h2><i class="fas fa-exclamation-triangle"></i> Pending Issues</h2>
         <ul class="dtc-list">
           <li class="dtc-item">
             <div>
@@ -207,9 +284,11 @@
             <span class="dtc-status status-pending">Pending</span>
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
-    <div class="data-box1">
+    
+    
+    <!-- <div class="data-box1">
       <div class="section">
         <h2><i class="fas fa-cogs"></i> In Progress Issues</h2>
         <ul class="dtc-list">
@@ -233,8 +312,8 @@
           </li>
         </ul>
       </div>
-    </div>
-    <footer class="footer">
+    </div> -->
+    <!-- <footer class="footer">
       <div class="footer-left">
         <img
           src="../static/images/ve-logo.jpg"
@@ -246,6 +325,19 @@
         <a href="#"><marquee>Validation Operation Command Centre</marquee></a>
       </div>
       <div class="footer-right">© 2024 Eicher. All rights reserved.</div>
-    </footer>
+    </footer> -->
+    </div>
+    
+    <footer class="footer">
+      <div class="footer-left">
+          <img src="../static/images/ve-logo.jpg" alt="VE Logo" class="footer-logo">
+      </div>
+      <div class="footer-center">
+          <a href="#"><marquee>Validation Operation Command Centre</marquee></a>
+      </div>
+      <div class="footer-right">
+          © 2024 Eicher. All rights reserved.
+      </div>
+      </footer>
   </body>
 </html>
