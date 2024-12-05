@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request,  jsonify,  url_for
-=======
 from flask import Flask, jsonify, redirect, render_template, request, url_for, Response
 from flask_cors import CORS
->>>>>>> 2c0d7e5beb5ee14ecf226800358d8dca9571be5e
 from folium.plugins import BeautifyIcon
 import pandas as pd
 import matplotlib
