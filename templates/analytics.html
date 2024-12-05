@@ -380,6 +380,16 @@ th, td {
                           <label for="end-time" class="form-label">End Time:</label>
                           <input type="datetime-local" id="end-time" class="form-control" disabled>
                       </div>
+                      <div class="mb-3">
+                        <label for="plot-type" class="form-label">Plot Type:</label>
+                        <select id="plot-type" class="form-select">
+                            <option value="line" selected>Line Plot</option>
+                            <option value="scatter">Scatter Plot</option>
+                            <option value="bar">Bar Chart</option>
+                            <option value="histogram">Histogram</option>
+                            <option value="heatmap">Heatmap</option>
+                        </select>
+                    </div>
                       <button id="plot-btn" class="btn btn-primary w-100" disabled>Plot</button>
                   </div>
               </div>
@@ -441,34 +451,35 @@ th, td {
         });
 
         plotBtn.addEventListener("click", () => {
-            const filename = fileSelect.value;
-            const xKey = xAxisSelect.value;
-            const yKey = yAxisSelect.value;
-            const startTime = startTimeInput.value;
-            const endTime = endTimeInput.value;
+    const filename = fileSelect.value;
+    const xKey = xAxisSelect.value;
+    const yKey = yAxisSelect.value;
+    const startTime = startTimeInput.value;
+    const endTime = endTimeInput.value;
+    const plotType = document.getElementById("plot-type").value;
 
-            // Validate inputs
-            if (!filename || !xKey || !yKey || !startTime || !endTime) {
-                alert("Please complete all fields before plotting.");
-                return;
-            }
+    // Validate inputs
+    if (!filename || !xKey || !yKey || !startTime || !endTime) {
+        alert("Please complete all fields before plotting.");
+        return;
+    }
 
-            plotBtn.disabled = true;
-            plotBtn.textContent = "Loading...";
+    plotBtn.disabled = true;
+    plotBtn.textContent = "Loading...";
 
-            axios.post("/plot", { filename, x_key: xKey, y_key: yKey, start_time: startTime, end_time: endTime })
-                .then(response => {
-                    plotImg.src = response.data.plot_url;
-                    plotBtn.textContent = "Plot";
-                    plotBtn.disabled = false;
-                })
-                .catch(err => {
-                    console.error("Error plotting data:", err);
-                    alert("Failed to plot data.");
-                    plotBtn.textContent = "Plot";
-                    plotBtn.disabled = false;
-                });
+    axios.post("/plot", { filename, x_key: xKey, y_key: yKey, start_time: startTime, end_time: endTime, plot_type: plotType })
+        .then(response => {
+            plotImg.src = response.data.plot_url;
+            plotBtn.textContent = "Plot";
+            plotBtn.disabled = false;
+        })
+        .catch(err => {
+            console.error("Error plotting data:", err);
+            alert("Failed to plot data.");
+            plotBtn.textContent = "Plot";
+            plotBtn.disabled = false;
         });
+});
     </script>
   </body>
   </html>
