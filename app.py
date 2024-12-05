@@ -474,6 +474,7 @@ def plot_data():
     y_key = data.get("y_key")
     start_time = pd.to_datetime(data.get("start_time"))
     end_time = pd.to_datetime(data.get("end_time"))
+    plot_type = data.get("plot_type", "line")  # Default to line plot
 
     file_path = os.path.join(CSV_DIR, filename)
     _, df = read_csv_keys(file_path)
@@ -484,8 +485,27 @@ def plot_data():
             df = df[(df['IST_DateTime'] >= start_time) & (df['IST_DateTime'] <= end_time)]
 
         plt.figure(figsize=(10, 6))
-        plt.plot(df[x_key], df[y_key], marker='o')
-        plt.title(f"{y_key} vs {x_key}")
+
+        # Create plots based on the selected plot type
+        if plot_type == "line":
+            plt.plot(df[x_key], df[y_key], marker='o')
+        elif plot_type == "scatter":
+            plt.scatter(df[x_key], df[y_key])
+        elif plot_type == "bar":
+            plt.bar(df[x_key], df[y_key])
+        elif plot_type == "histogram":
+            plt.hist(df[x_key], bins=20)
+        elif plot_type == "heatmap":
+            if x_key and y_key:  # Ensure both axes are provided
+                heatmap_data = pd.pivot_table(df, values=y_key, index=x_key, aggfunc='mean')
+                sns.heatmap(heatmap_data, cmap="coolwarm", annot=True, fmt=".1f")
+            else:
+                return jsonify({"error": "Heatmap requires both x_key and y_key."}), 400
+        else:
+            return jsonify({"error": "Unsupported plot type."}), 400
+
+        # Set common plot properties
+        plt.title(f"{y_key} vs {x_key} ({plot_type.capitalize()})")
         plt.xlabel(x_key)
         plt.ylabel(y_key)
         plt.grid(True)
