@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Navbar</title>
+<<<<<<< HEAD
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
+=======
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+>>>>>>> 2c0d7e5beb5ee14ecf226800358d8dca9571be5e
   <style>
     body {
     font-family: Arial, sans-serif;
@@ -298,233 +302,173 @@ th, td {
     background-color: #aaa;
     cursor: not-allowed;
   }
+  #plot-area img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .disabled-inputs select,
+    .disabled-inputs input,
+    .disabled-inputs button {
+        pointer-events: none;
+        opacity: 0.6;
+    }
   </style>
 </head>
 <body>
 
-  <div class="navbar">
-    <!-- Logo Image (Before Home) -->
-    <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
-    <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
-    <!-- Home Icon -->
-    <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
-    
-    <!-- Our Service Dropdown -->
-    
-        <!-- <a href="#" ><i class="fas fa-cogs" ></i> Our Service</a> -->
-       
-   
-    <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
-    <a href="{{ url_for('State_History') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
-    <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
-    <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
-
+    <div class="navbar">
+      <!-- Logo Image (Before Home) -->
+      <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
+      <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
+      <!-- Home Icon -->
+      <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+      <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
+      <a href="{{ url_for('State_History') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
+      <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
+      
+      <!-- Search Bar -->
+      <div class="search-container">
+          <input type="text" placeholder="Search...">
+          <button><i class="fas fa-search"></i></button>
+      </div>
+      
+      <!-- Profile Icon (Aligned to the right) -->
+      <div class="profile-container">
+          <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
+      </div>
+    </div>
   
-    <!-- Help & Support Dropdown -->
-    <!-- <div class="dropdown">
-        <a href="javascript:void(0);" onclick="toggleDropdown('support-dropdown')"><i class="fas fa-question-circle"></i> Help & Support</a>
-        <div id="support-dropdown" class="dropdown-content">
-            <a href="#">FAQ</a>
-            <a href="#">Contact Us</a>
-        </div>
-    </div> -->
-    
-    <!-- My Subscriptions -->
-    <!-- <a href="#"><i class="fas fa-box"></i> My Subscriptions</a> -->
-   
-    <!-- Search Bar -->
-    <div class="search-container">
-        <input type="text" placeholder="Search...">
-        <button><i class="fas fa-search"></i></button>
-    </div>
-    
-    <!-- Profile Icon (Aligned to the right) -->
-    <div class="profile-container">
-        <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
-    </div>
-</div>
-
     <main>
-        <div class="top-container">
-            <div class="box">
-                <table>
-                    <tr>
-                        <td>STR No.</td>
-                        <td>696</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="box">
-                <table>
-                    <tr>
-                        <td>Model</td>
-                        <td>PRO 6055TT</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="box">
-                <table>
-                    <tr>
-                        <td>DTC</td>
-                        <td>DTC List</td>
-                    </tr>
-                </table>
-            </div>
-            <button>Reset</button>
-        </div>
-        
-        <!-- test -->
-
-        <div class="container">
-            <!-- Left Section: Chart -->
-            <div class="chart-container">
-              <canvas id="chart"></canvas>
-            </div>
-        
-            <!-- Right Section: Input Fields -->
-            <div class="inputs-container">
-              <div class="input-group">
-                <label for="x-parameter">X-Axis:</label>
-                <select id="x-parameter">
-                  <option value="x1">X1</option>
-                  <option value="x2">X2</option>
-                  <option value="x3">X3</option>
-                </select>
-        
-                <label for="y-parameter">Y-Axis:</label>
-                <select id="y-parameter">
-                  <option value="y1">Y1</option>
-                  <option value="y2">Y2</option>
-                  <option value="y3">Y3</option>
-                </select>
+      <div class="container py-5">
+          <div class="row g-3">
+              <!-- Left column for the plot -->
+              <div class="col-md-8" id="plot-area">
+                  <img id="plot" alt="Plot will appear here">
               </div>
-        
-              <div class="input-group">
-                <label for="start-date-1">Start:</label>
-                <input type="date" id="start-date-1" />
-                <input type="time" id="start-time-1" />
-        
-                <label for="end-date-1">End:</label>
-                <input type="date" id="end-date-1" />
-                <input type="time" id="end-time-1" />
+              
+              <!-- Right column for input parameters -->
+              <div class="col-md-4">
+                  <div class="card shadow p-4">
+                      <h5 class="card-title">Input Parameters</h5>
+                      <div class="mb-3">
+                          <label for="file-select" class="form-label">Select Vehicle:</label>
+                          <select id="file-select" class="form-select">
+                              <option value="" disabled selected>Choose a vehicle</option>
+                              {% for file in files %}
+                              <option value="{{ file }}">{{ file.split('.csv')[0] }}</option>
+                              {% endfor %}
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="x-axis" class="form-label">X-Axis:</label>
+                          <select id="x-axis" class="form-select" disabled></select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="y-axis" class="form-label">Y-Axis:</label>
+                          <select id="y-axis" class="form-select" disabled></select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="start-time" class="form-label">Start Time:</label>
+                          <input type="datetime-local" id="start-time" class="form-control" disabled>
+                      </div>
+                      <div class="mb-3">
+                          <label for="end-time" class="form-label">End Time:</label>
+                          <input type="datetime-local" id="end-time" class="form-control" disabled>
+                      </div>
+                      <button id="plot-btn" class="btn btn-primary w-100" disabled>Plot</button>
+                  </div>
               </div>
-        
-              <div class="input-group">
-                <label for="search">Search Model:</label>
-                <select id="y-parameter">
-                    <option value="y1">Model 1</option>
-                  <option value="y2">Model 2</option>
-                  <option value="y3">Model 3</option>
-                </select>
-                <!-- <input type="text" id="search" placeholder="Search..." /> -->
-              </div>
-        
-              <div class="input-group">
-                <label for="start-date-2">Start :</label>
-                <input type="date" id="start-date-2" />
-                <input type="time" id="start-time-2" />
-        
-                <label for="end-date-2">End :</label>
-                <input type="date" id="end-date-2" />
-                <input type="time" id="end-time-2" />
-              </div>
-        
-              <div class="input-group">
-                <button id="generate">Generate</button>
-                <button id="show-individual">Show Individual</button>
-                <button id="show-overlap">Show Overlap</button>
-              </div>
-            </div>
           </div>
-        
-          
-    </main>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    // Sample Chart Data
-    const ctx = document.getElementById('chart').getContext('2d');
-    const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [
-        {
-            label: 'Data Set 1',
-            data: [12, 19, 3, 5, 2, 3],
-            borderColor: 'rgba(255, 99, 132, 1)',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            fill: true,
-        },
-        {
-            label: 'Data Set 2',
-            data: [10, 15, 8, 6, 4, 7],
-            borderColor: 'rgba(54, 162, 235, 1)',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            fill: true,
-        },
-        ],
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-    },
-    });
-    let currentDatasetIndex = 0;
+      </div>
+  </main>
+  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const fileSelect = document.getElementById("file-select");
+        const xAxisSelect = document.getElementById("x-axis");
+        const yAxisSelect = document.getElementById("y-axis");
+        const startTimeInput = document.getElementById("start-time");
+        const endTimeInput = document.getElementById("end-time");
+        const plotBtn = document.getElementById("plot-btn");
+        const plotImg = document.getElementById("plot");
 
-    const generateBtn = document.getElementById('generate');
-    generateBtn.addEventListener('click', () => {
-    generateBtn.textContent = 'Loading...';
-    generateBtn.disabled = true;
-
-    setTimeout(() => {
-        generateBtn.textContent = 'Generate';
-        generateBtn.disabled = false;
-
-        chart.data.datasets.push({
-        label: 'New Data',
-        data: [7, 11, 5, 8, 13, 6],
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: true,
+        document.addEventListener("DOMContentLoaded", () => {
+            // Fetch and display the empty plot on page load
+            axios.get("/empty_plot")
+                .then(response => {
+                    plotImg.src = response.data.plot_url;
+                })
+                .catch(err => {
+                    console.error("Error fetching empty plot:", err);
+                });
         });
-        chart.update();
-    }, 2000); // Simulate a 2-second chart generation delay
-    });
 
-    // Event Listeners for Buttons
-    document.getElementById('show-individual').addEventListener('click', () => {
-    // Toggle between datasets
-    currentDatasetIndex = (currentDatasetIndex + 1) % chart.data.datasets.length;
+        fileSelect.addEventListener("change", () => {
+            const filename = fileSelect.value;
+            axios.post("/get_keys", { filename })
+                .then(response => {
+                    const data = response.data;
+                    const columns = data.columns;
+                    const dateRange = data.date_range;
 
-    chart.data.datasets = [
-        {
-        ...chart.data.datasets[currentDatasetIndex],
-        },
-    ];
-    chart.update();
-    });
+                    // Enable and populate the axis dropdowns
+                    xAxisSelect.disabled = false;
+                    yAxisSelect.disabled = false;
+                    xAxisSelect.innerHTML = columns.map(col => `<option value="${col}">${col}</option>`).join("");
+                    yAxisSelect.innerHTML = columns.map(col => `<option value="${col}">${col}</option>`).join("");
 
-    document.getElementById('show-overlap').addEventListener('click', () => {
-    // Restore all datasets
-    chart.data.datasets = [
-        {
-        label: 'Data Set 1',
-        data: [12, 19, 3, 5, 2, 3],
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        fill: true,
-        },
-        {
-        label: 'Data Set 2',
-        data: [10, 15, 8, 6, 4, 7],
-        borderColor: 'rgba(54, 162, 235, 1)',
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        fill: true,
-        },
-    ];
-    chart.update();
-    });
+                    // Set date range for inputs
+                    if (dateRange) {
+                        startTimeInput.min = dateRange.min;
+                        startTimeInput.max = dateRange.max;
+                        endTimeInput.min = dateRange.min;
+                        endTimeInput.max = dateRange.max;
+                    }
 
-  </script>
-</body>
-</html>
+                    startTimeInput.disabled = false;
+                    endTimeInput.disabled = false;
+                    plotBtn.disabled = false;
+                })
+                .catch(err => {
+                    console.error("Error fetching keys:", err);
+                    alert("Failed to fetch column keys.");
+                });
+        });
+
+        plotBtn.addEventListener("click", () => {
+            const filename = fileSelect.value;
+            const xKey = xAxisSelect.value;
+            const yKey = yAxisSelect.value;
+            const startTime = startTimeInput.value;
+            const endTime = endTimeInput.value;
+
+            // Validate inputs
+            if (!filename || !xKey || !yKey || !startTime || !endTime) {
+                alert("Please complete all fields before plotting.");
+                return;
+            }
+
+            plotBtn.disabled = true;
+            plotBtn.textContent = "Loading...";
+
+            axios.post("/plot", { filename, x_key: xKey, y_key: yKey, start_time: startTime, end_time: endTime })
+                .then(response => {
+                    plotImg.src = response.data.plot_url;
+                    plotBtn.textContent = "Plot";
+                    plotBtn.disabled = false;
+                })
+                .catch(err => {
+                    console.error("Error plotting data:", err);
+                    alert("Failed to plot data.");
+                    plotBtn.textContent = "Plot";
+                    plotBtn.disabled = false;
+                });
+        });
+    </script>
+  </body>
+  </html>
