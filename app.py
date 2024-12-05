@@ -1,9 +1,12 @@
 from flask import Flask, jsonify, redirect, render_template, request, url_for, Response
+from flask_cors import CORS
 from folium.plugins import BeautifyIcon
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 import folium
 import os
 import io
@@ -34,7 +37,29 @@ def read_excel_data(filepath):
         print(f"Error reading Excel file: {e}")
         return []
 
+CSV_DIR = "./csv_files"  # Directory containing CSV files
+
+
+def get_csv_files():
+    """Retrieve a list of CSV files in the directory."""
+    files = [f for f in os.listdir(CSV_DIR) if f.endswith('.csv')]
+    return files
+
+
+def read_csv_keys(file_path):
+    """Read the keys (columns) from a CSV file."""
+    try:
+        df = pd.read_csv(file_path)
+        return df.columns.tolist(), df
+    except Exception as e:
+        print(f"Error reading file {file_path}: {e}")
+        return [], None
+
+
 app = Flask(__name__)
+CORS(app)
+
+
 # Load data from Excel sheets
 ev_data = pd.read_excel('Vehicle_dataEV.xlsx')
 lmd_data = pd.read_excel('Vehicle_dataLMD.xlsx')
@@ -373,7 +398,7 @@ def raise_issue(row_index):
         save_excel_safe(DTC_LIST_FILE, dtc_data)
         save_excel_safe(PROTUS_DATA_FILE, protus_data)
 
-    return redirect(url_for("index"))
+    return redirect(url_for("protus"))
 
 @app.route("/delete/<int:row_index>", methods=["POST"])
 def delete_issue(row_index):
@@ -386,7 +411,7 @@ def delete_issue(row_index):
         # Save updated data
         save_excel_safe(DTC_LIST_FILE, dtc_data)
 
-    return redirect(url_for("index"))
+    return redirect(url_for("protus"))
 
 @app.route("/delete-protus/<int:row_index>", methods=["POST"])
 def delete_protus(row_index):
@@ -399,7 +424,7 @@ def delete_protus(row_index):
         # Save updated data
         save_excel_safe(PROTUS_DATA_FILE, protus_data)
 
-    return redirect(url_for("index"))
+    return redirect(url_for("protus"))
 
 # Protus DTC handler end
 @app.route('/Segment')
@@ -410,13 +435,90 @@ def Segment():
 def State_History():
     return render_template('State_History.html')
 
-# @app.route('/dtc_description')
-# def dtc_description():
-#     return render_template('dtc_description.html')
+# start of analytics
 
-@app.route('/analytics')
+@app.route("/analytics")
 def analytics():
-    return render_template('analytics.html')
+    csv_files = get_csv_files()
+    return render_template("analytics.html", files=csv_files)
+
+
+@app.route("/get_keys", methods=["POST"])
+def get_keys():
+    """Return column keys and data range for a selected CSV file."""
+    filename = request.json.get("filename")
+    file_path = os.path.join(CSV_DIR, filename)
+    
+    columns, df = read_csv_keys(file_path)
+    
+    if df is not None:
+        # Check for IST_DateTime column for date/time range
+        if 'IST_DateTime' in df.columns:
+            df['IST_DateTime'] = pd.to_datetime(df['IST_DateTime'], errors='coerce')
+            min_date = df['IST_DateTime'].min()
+            max_date = df['IST_DateTime'].max()
+            date_range = {"min": min_date.isoformat(), "max": max_date.isoformat()}
+        else:
+            date_range = None
+        return jsonify({"columns": columns, "date_range": date_range})
+    else:
+        return jsonify({"error": "Unable to read file"}), 400
+
+
+@app.route("/plot", methods=["POST"])
+def plot_data():
+    """Plot data based on user selection."""
+    data = request.json
+    filename = data.get("filename")
+    x_key = data.get("x_key")
+    y_key = data.get("y_key")
+    start_time = pd.to_datetime(data.get("start_time"))
+    end_time = pd.to_datetime(data.get("end_time"))
+
+    file_path = os.path.join(CSV_DIR, filename)
+    _, df = read_csv_keys(file_path)
+
+    if df is not None:
+        if 'IST_DateTime' in df.columns:
+            df['IST_DateTime'] = pd.to_datetime(df['IST_DateTime'], errors='coerce')
+            df = df[(df['IST_DateTime'] >= start_time) & (df['IST_DateTime'] <= end_time)]
+
+        plt.figure(figsize=(10, 6))
+        plt.plot(df[x_key], df[y_key], marker='o')
+        plt.title(f"{y_key} vs {x_key}")
+        plt.xlabel(x_key)
+        plt.ylabel(y_key)
+        plt.grid(True)
+
+        # Convert plot to base64 string
+        img = BytesIO()
+        plt.savefig(img, format='png')
+        img.seek(0)
+        plot_url = base64.b64encode(img.getvalue()).decode()
+        plt.close()
+        return jsonify({"plot_url": f"data:image/png;base64,{plot_url}"})
+    else:
+        return jsonify({"error": "Unable to read file"}), 400
+
+
+@app.route("/empty_plot")
+def empty_plot():
+    """Serve an empty plot as a placeholder."""
+    plt.figure(figsize=(10, 6))
+    plt.title("Empty Plot")
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
+    plt.grid(True)
+
+    # Save the empty plot to a BytesIO object
+    img = BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
+    plt.close()
+    return jsonify({"plot_url": f"data:image/png;base64,{plot_url}"})
+
+# end of analytics
 
 @app.route('/Segment2')
 def Segment2():

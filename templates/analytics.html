@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Navbar</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
     body {
     font-family: Arial, sans-serif;
@@ -296,6 +297,21 @@ th, td {
     background-color: #aaa;
     cursor: not-allowed;
   }
+  #plot-area img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .disabled-inputs select,
+    .disabled-inputs input,
+    .disabled-inputs button {
+        pointer-events: none;
+        opacity: 0.6;
+    }
   </style>
 </head>
 <body>
@@ -323,254 +339,131 @@ th, td {
     </div>
   
     <main>
-      <div class="top-container">
-        <div class="box">
-          <table>
-            <tr>
-              <td>STR No.</td>
-              <td>696</td>
-            </tr>
-          </table>
-        </div>
-        <div class="box">
-          <table>
-            <tr>
-              <td>Model</td>
-              <td>PRO 6055TT</td>
-            </tr>
-          </table>
-        </div>
-        <div class="box">
-          <table>
-            <tr>
-              <td>DTC</td>
-              <td>DTC List</td>
-            </tr>
-          </table>
-        </div>
-        <button id="reset-button">Reset</button>
+      <div class="container py-5">
+          <div class="row g-3">
+              <!-- Left column for the plot -->
+              <div class="col-md-8" id="plot-area">
+                  <img id="plot" alt="Plot will appear here">
+              </div>
+              
+              <!-- Right column for input parameters -->
+              <div class="col-md-4">
+                  <div class="card shadow p-4">
+                      <h5 class="card-title">Input Parameters</h5>
+                      <div class="mb-3">
+                          <label for="file-select" class="form-label">Select Vehicle:</label>
+                          <select id="file-select" class="form-select">
+                              <option value="" disabled selected>Choose a vehicle</option>
+                              {% for file in files %}
+                              <option value="{{ file }}">{{ file.split('.csv')[0] }}</option>
+                              {% endfor %}
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="x-axis" class="form-label">X-Axis:</label>
+                          <select id="x-axis" class="form-select" disabled></select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="y-axis" class="form-label">Y-Axis:</label>
+                          <select id="y-axis" class="form-select" disabled></select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="start-time" class="form-label">Start Time:</label>
+                          <input type="datetime-local" id="start-time" class="form-control" disabled>
+                      </div>
+                      <div class="mb-3">
+                          <label for="end-time" class="form-label">End Time:</label>
+                          <input type="datetime-local" id="end-time" class="form-control" disabled>
+                      </div>
+                      <button id="plot-btn" class="btn btn-primary w-100" disabled>Plot</button>
+                  </div>
+              </div>
+          </div>
       </div>
-      
-      <div class="container">
-        <div class="chart-container">
-          <canvas id="chart"></canvas>
-        </div>
-        
-        <div class="inputs-container">
-          <div class="input-group">
-            <label for="x-parameter">X-Axis:</label>
-            <select id="x-parameter">
-              <option value="x1">X1</option>
-              <option value="x2">X2</option>
-              <option value="x3">X3</option>
-            </select>
-            
-            <label for="y-parameter">Y-Axis:</label>
-            <select id="y-parameter">
-              <option value="y1">Y1</option>
-              <option value="y2">Y2</option>
-              <option value="y3">Y3</option>
-            </select>
-          </div>
+  </main>
   
-          <div class="input-group">
-            <label for="start-date-1">Start:</label>
-            <input type="date" id="start-date-1" />
-            <input type="time" id="start-time-1" />
-          
-            <label for="end-date-1">End:</label>
-            <input type="date" id="end-date-1" />
-            <input type="time" id="end-time-1" />
-          </div>
-          
-          <div class="input-group">
-            <label for="search">Search Model:</label>
-            <select id="search-model">
-              <option value="model1">Model 1</option>
-              <option value="model2">Model 2</option>
-              <option value="model3">Model 3</option>
-            </select>
-          </div>
-          
-          <div class="input-group">
-            <label for="start-date-2">Start:</label>
-            <input type="date" id="start-date-2" />
-            <input type="time" id="start-time-2" />
-          
-            <label for="end-date-2">End:</label>
-            <input type="date" id="end-date-2" />
-            <input type="time" id="end-time-2" />
-          </div>
-  
-          <div class="input-group">
-            <button id="generate">Generate</button>
-            <button id="show-individual">Show Individual</button>
-            <button id="show-overlap">Show Overlap</button>
-          </div>
-        </div>
-      </div>
-    </main>
-  
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-      // Sample Chart Data
-      const ctx = document.getElementById('chart').getContext('2d');
-      const chart = new Chart(ctx, {
-          type: 'line',
-          data: {
-              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-              datasets: [
-                  {
-                      label: 'Data Set 1',
-                      data: [12, 19, 3, 5, 2, 3],
-                      borderColor: 'rgba(255, 99, 132, 1)',
-                      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                      fill: true,
-                  },
-                  {
-                      label: 'Data Set 2',
-                      data: [10, 15, 8, 6, 4, 7],
-                      borderColor: 'rgba(54, 162, 235, 1)',
-                      backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                      fill: true,
-                  },
-              ],
-          },
-          options: {
-              responsive: true,
-              maintainAspectRatio: false,
-          },
-      });
-  
-      let currentDatasetIndex = 0;
-  
-      // Event listener for "Generate" button
-      document.getElementById('generate').addEventListener('click', () => {
-          const generateBtn = document.getElementById('generate');
-          generateBtn.textContent = 'Loading...';
-          generateBtn.disabled = true;
+      const fileSelect = document.getElementById("file-select");
+        const xAxisSelect = document.getElementById("x-axis");
+        const yAxisSelect = document.getElementById("y-axis");
+        const startTimeInput = document.getElementById("start-time");
+        const endTimeInput = document.getElementById("end-time");
+        const plotBtn = document.getElementById("plot-btn");
+        const plotImg = document.getElementById("plot");
 
-          fetch('http://127.0.0.1:5000/analytics-data')
-              .then(response => response.json())
-              .then(data => {
-                  console.log(data);
-                  // Update chart with new data
-                  // chart.data.labels = data.utc;
-                  // chart.data.datasets[0].data = data.FanSpeed;
-                  // chart.update();
-  
-                  // generateBtn.textContent = 'Generate';
-                  // generateBtn.disabled = false;
-                  const labels = data.map(item => item.utc);
-                  const fanSpeeds = data.map(item => item.FanSpeed);
+        document.addEventListener("DOMContentLoaded", () => {
+            // Fetch and display the empty plot on page load
+            axios.get("/empty_plot")
+                .then(response => {
+                    plotImg.src = response.data.plot_url;
+                })
+                .catch(err => {
+                    console.error("Error fetching empty plot:", err);
+                });
+        });
 
-                  // Update chart with the extracted data
-                  chart.data.labels = labels;
-                  chart.data.datasets[0].data = fanSpeeds;
-                  chart.update();
+        fileSelect.addEventListener("change", () => {
+            const filename = fileSelect.value;
+            axios.post("/get_keys", { filename })
+                .then(response => {
+                    const data = response.data;
+                    const columns = data.columns;
+                    const dateRange = data.date_range;
 
-                  generateBtn.textContent = 'Generate';
-                  generateBtn.disabled = false;
-              })
-              .catch(error => {
-                  console.error('Error fetching data:', error);
-                  generateBtn.textContent = 'Generate';
-                  generateBtn.disabled = false;
-              });
-  
-          // Fetch updated chart data from Flask API -----IMAGE----
-        //   fetch('http://127.0.0.1:5000/analytics-data') 
-        //   .then(response => {
-        //       if (response.ok) {
-        //           return response.blob(); // Convert the response to a Blob (image)
-        //       } else {
-        //           throw new Error('Image fetch failed');
-        //       }
-        //   })
-        //   .then(imageBlob => {
-        //       // Create an object URL for the image
-        //       const imageObjectURL = URL.createObjectURL(imageBlob);
+                    // Enable and populate the axis dropdowns
+                    xAxisSelect.disabled = false;
+                    yAxisSelect.disabled = false;
+                    xAxisSelect.innerHTML = columns.map(col => `<option value="${col}">${col}</option>`).join("");
+                    yAxisSelect.innerHTML = columns.map(col => `<option value="${col}">${col}</option>`).join("");
 
-        //       // Create an image element
-        //       const img = new Image();
-        //       img.src = imageObjectURL;
-        //       img.alt = 'Fetched Chart Image';
-        //       img.style.width = '100%'; // Ensure the image fills the chart container
+                    // Set date range for inputs
+                    if (dateRange) {
+                        startTimeInput.min = dateRange.min;
+                        startTimeInput.max = dateRange.max;
+                        endTimeInput.min = dateRange.min;
+                        endTimeInput.max = dateRange.max;
+                    }
 
-        //       // Replace the chart with the image
-        //       const chartContainer = document.getElementById('chart').parentElement;
-        //       chartContainer.innerHTML = ''; // Clear existing chart
-        //       chartContainer.appendChild(img); // Append the image
+                    startTimeInput.disabled = false;
+                    endTimeInput.disabled = false;
+                    plotBtn.disabled = false;
+                })
+                .catch(err => {
+                    console.error("Error fetching keys:", err);
+                    alert("Failed to fetch column keys.");
+                });
+        });
 
-        //       // Reset the button
-        //       generateBtn.textContent = 'Generate';
-        //       generateBtn.disabled = false;
-        //   })
-        //   .catch(error => {
-        //       console.error('Error fetching image:', error);
-        //       generateBtn.textContent = 'Generate';
-        //       generateBtn.disabled = false;
-        //   });
-      });
-  
-      // Event listener for "Show Individual" button
-      document.getElementById('show-individual').addEventListener('click', () => {
-          currentDatasetIndex = (currentDatasetIndex + 1) % chart.data.datasets.length;
-          chart.data.datasets = [chart.data.datasets[currentDatasetIndex]];
-          chart.update();
-      });
-  
-      // Event listener for "Show Overlap" button
-      document.getElementById('show-overlap').addEventListener('click', () => {
-          chart.data.datasets = [
-              {
-                  label: 'Data Set 1',
-                  data: [12, 19, 3, 5, 2, 3],
-                  borderColor: 'rgba(255, 99, 132, 1)',
-                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                  fill: true,
-              },
-              {
-                  label: 'Data Set 2',
-                  data: [10, 15, 8, 6, 4, 7],
-                  borderColor: 'rgba(54, 162, 235, 1)',
-                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                  fill: true,
-              },
-          ];
-          chart.update();
-      });
-  
-      // Event listener for "Reset" button
-      document.getElementById('reset-button').addEventListener('click', () => {
-          // Reset chart and inputs
-          chart.data.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-          chart.data.datasets = [
-              {
-                  label: 'Data Set 1',
-                  data: [12, 19, 3, 5, 2, 3],
-                  borderColor: 'rgba(255, 99, 132, 1)',
-                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                  fill: true,
-              },
-              {
-                  label: 'Data Set 2',
-                  data: [10, 15, 8, 6, 4, 7],
-                  borderColor: 'rgba(54, 162, 235, 1)',
-                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                  fill: true,
-              },
-          ];
-          chart.update();
-          document.getElementById('start-date-1').value = '';
-          document.getElementById('start-time-1').value = '';
-          document.getElementById('end-date-1').value = '';
-          document.getElementById('end-time-1').value = '';
-          document.getElementById('start-date-2').value = '';
-          document.getElementById('start-time-2').value = '';
-          document.getElementById('end-date-2').value = '';
-          document.getElementById('end-time-2').value = '';
-      });
+        plotBtn.addEventListener("click", () => {
+            const filename = fileSelect.value;
+            const xKey = xAxisSelect.value;
+            const yKey = yAxisSelect.value;
+            const startTime = startTimeInput.value;
+            const endTime = endTimeInput.value;
+
+            // Validate inputs
+            if (!filename || !xKey || !yKey || !startTime || !endTime) {
+                alert("Please complete all fields before plotting.");
+                return;
+            }
+
+            plotBtn.disabled = true;
+            plotBtn.textContent = "Loading...";
+
+            axios.post("/plot", { filename, x_key: xKey, y_key: yKey, start_time: startTime, end_time: endTime })
+                .then(response => {
+                    plotImg.src = response.data.plot_url;
+                    plotBtn.textContent = "Plot";
+                    plotBtn.disabled = false;
+                })
+                .catch(err => {
+                    console.error("Error plotting data:", err);
+                    alert("Failed to plot data.");
+                    plotBtn.textContent = "Plot";
+                    plotBtn.disabled = false;
+                });
+        });
     </script>
   </body>
   </html>
