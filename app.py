@@ -697,5 +697,6 @@ def analytics_data():
 if __name__ == '__main__':
     # Generate the map before starting the app
     generate_india_map()
-    port = int(os.getenv('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    # port = int(os.getenv('PORT', 5000))
+    # app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(debug=True)

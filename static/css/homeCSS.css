@@ -208,7 +208,7 @@ body {
   top: 250px; /* Adjust to place map below header */
   left: 0;
   width: 51%;
-  height: 430px;
+  height: 490px;
 }
 /* Keyframe animation for rotating, moving, and pulsing */
 @keyframes moveRotatePulse {
@@ -426,9 +426,9 @@ body {
 .data-box {
   position: absolute;
   top: 268px;
-  left: 52%; /* Positioned to the right of the map */
-  width: 47%; /* Adjust width of the boxes */
-  height: 160px;
+  left: 52%; 
+  width: 47%; 
+  height: 275px;
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -443,9 +443,9 @@ body {
 }
 .data-box1 {
   position: absolute;
-  top: 500px;
-  left: 52%; /* Positioned to the right of the map */
-  width: 47%; /* Adjust width of the boxes */
+  top: 550px;
+  left: 52%; 
+  width: 47%; 
   height: 210px;
   background-color: #fff;
   padding: 10px;
@@ -611,51 +611,91 @@ body {
   height: 50px; /* Adjust the map container height */
   width: 100%; /* Adjust the map container width */
 }
+.footer {
+  background-color: #dedddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid #ccc;
+  z-index: 1000;
+}
+
 .footer-left,
 .footer-center, 
 .footer-right {
-    flex: 1;
+  flex: 1;
 }
 
 .footer-left {
-    text-align: left;
+  text-align: left;
 }
 
 .footer-center {
-    text-align: center;
-    color: #d9241d;
-    text-shadow: 2px 2px 4px rgba(175, 21, 21, 0.5); /* Adds a shadow to the text */
-    font-size: 24px;
-    font-weight: bold;
+  text-align: center;
+  color: #d9241d;
+  text-shadow: 2px 2px 4px rgba(175, 21, 21, 0.5); /* Adds a shadow to the text */
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .footer-right {
-    text-align: right;
-    font-size: 18px;
-    color: #1c1b1b;
+  text-align: right;
+  font-size: 18px;
+  color: #1c1b1b;
 }
 
 .footer-logo {
-    height: 20px;
+  height: 20px;
 }
-
+.profile-container {
+  margin-left: auto;
+  padding-left: 20px;
+}
 .fleet-tracking {
   /* width: 300px; */
   border: 1px solid #ccc;
   border-radius: 8px;
-  overflow: hidden;
+  /* overflow: hidden; */
   font-family: Arial, sans-serif;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .fleet-tracking-header {
-  background: #f8f9fa;
+  /* background: #f8f9fa; */
+  padding: 14px;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: right;
+
+  /* border-bottom: 1px solid #ddd; */
+}
+
+.fleet-tracking-header1 {
   padding: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ddd;
 }
+
+/* Style for the DTC Tracking text */
+.dtc-text {
+  font-family: 'Arial', sans-serif; /* Change font family */
+  font-size: 18px; /* Set a desired font size */
+  font-weight: bold; /* Set a desired font weight */
+  color: #333; /* Set text color */
+}
+
+/* Optional: Style the icon */
+.fleet-tracking-icon {
+  margin-right: 8px; /* Adjust space between icon and text */
+}
+
+
 
 .fleet-tracking-title {
   font-size: 16px;
@@ -670,6 +710,7 @@ body {
   background: url('path-to-icon.png') no-repeat center;
   background-size: contain;
   margin-right: 8px;
+  padding: auto;
 }
 
 .fleet-tracking-brand {
@@ -691,7 +732,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1px;
+  padding: 8px;
   height: 85px;
   width: 250px;
   border-radius: 8px;
@@ -771,4 +812,83 @@ body {
 /* Not Reachable Icon */
 .fleet-tracking-box.unreachable .fleet-tracking-icon {
   color: #6c757d; /* Gray for not reachable */
+}
+
+
+/* .........boxes................ */
+ /* Common styles for all summary boxes */
+ .summary-box {
+  text-align: center;
+  padding: 10px; /* Reduced padding for smaller size */
+  border: 2px solid #ccc;
+  border-radius: 8px; /* Slightly smaller rounded corners */
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reduced shadow for smaller boxes */
+  flex: 1; /* Make boxes equally wide in a row */
+  margin: 0 5px; /* Smaller gap between boxes */
+  max-width: 200px; /* Limit the width of each box */
+  transition: background 0.3s ease;
+  
+}
+
+.summary-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly enhanced shadow on hover */
+}
+
+/* Specific styles for each category */
+.summary-box.open {
+  background-color: #f8d7da; /* Light red background */
+  border-color: #d9241d;
+  color: #d9241d;
+}
+
+.summary-box.in-progress {
+  background-color: #fff3cd; /* Light yellow background */
+  border-color: #ffc107;
+}
+
+.summary-box.closed {
+  background-color: #d4edda; /* Light green background */
+  border-color: #28a745;
+  color: #22d740;
+}
+
+/* Heading and paragraph styles */
+.summary-box h1 {
+  font-size: 20px; /* Smaller font size for the title */
+  margin-bottom: 18px; /* Reduced space below the title */
+}
+
+.summary-box p {
+  font-size: 14px; /* Smaller font size for better proportions */
+  margin: 5px 0; /* Reduced space between paragraphs */
+  color: #333;
+}
+
+/* Container for flex layout */
+.summary-container {
+  display: flex;
+  justify-content: center; /* Center-align the boxes */
+  padding: 10px;
+  gap: 5px; /* Smaller gap between boxes */
+}
+.header01 {
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.icon01 {
+  width: 4px;
+  height: 4px;
+  background: url('path-to-icon.png') no-repeat center;
+  background-size: contain;
+  margin-right: 8px;
+  color: #ff1919;
 }
