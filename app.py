@@ -652,6 +652,18 @@ def Profile():
 @app.route('/map')
 def map_view():
     return render_template('map.html')
+@app.route('/efficiency')
+def efficiency():
+    return render_template('efficiency.html')
+@app.route('/aggregate')
+def aggregate():
+    return render_template('aggregate.html')
+
+@app.route('/enhancement')
+def enhancement():
+    return render_template('enhancement.html')
+
+
 
 @app.route('/get-data', methods=['POST'])
 def get_data():
@@ -685,4 +697,5 @@ def analytics_data():
 if __name__ == '__main__':
     # Generate the map before starting the app
     generate_india_map()
-    app.run(debug=True)
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)

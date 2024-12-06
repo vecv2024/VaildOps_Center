@@ -14,7 +14,7 @@
     <div class="navbar">
       <!-- Logo Image (Before Home) -->
       <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
-      <a
+      <!-- <a
         href="{{ url_for('home') }}"
         style="
           color: white;
@@ -23,7 +23,7 @@
           text-decoration: none;
         "
         >Valid Ops Centre</a
-      >
+      > -->
       <!-- Home Icon -->
       <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
 
@@ -37,9 +37,17 @@
       >
       <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
       <a href="{{ url_for('protus') }}"
-        ><i class="fas fa-briefcase"></i> Protus Management</a
+        ><i class="fas fa-briefcase"></i>Protus Management</a
       >
-
+      <a href="{{ url_for('efficiency') }}">
+        <i class="fas fa-tachometer-alt"></i>Eff. Improvement
+      </a>
+      <a href="{{ url_for('aggregate') }}">
+        <i class="fas fa-cubes"></i> Comp./Agg. life
+      </a>
+      <a href="{{ url_for('enhancement') }}">
+        <i class="fas fa-tools"></i>Enhancement
+      </a>
       <!-- Help & Support Dropdown -->
       <!-- <div class="dropdown">
             <a href="javascript:void(0);" onclick="toggleDropdown('support-dropdown')"><i class="fas fa-question-circle"></i> Help & Support</a>
@@ -198,22 +206,22 @@
       <div class="fleet-tracking-content">
         <div class="fleet-tracking-box running">
   <i class="fas fa-truck-moving fleet-tracking-icon running-icon"></i>
-  <div class="fleet-tracking-number">89</div>
+  <div class="fleet-tracking-number">131</div>
   <div class="fleet-tracking-label">RUNNING</div>
 </div>
 <div class="fleet-tracking-box idle">
   <i class="fas fa-clock fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">11</div>
+  <div class="fleet-tracking-number">31</div>
   <div class="fleet-tracking-label">IDLE</div>
 </div>
 <div class="fleet-tracking-box stopped">
   <i class="fas fa-stop-circle fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">96</div>
+  <div class="fleet-tracking-number">21</div>
   <div class="fleet-tracking-label">STOPPED</div>
 </div>
 <div class="fleet-tracking-box unreachable">
   <i class="fas fa-wifi-slash fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">17</div>
+  <div class="fleet-tracking-number">29</div>
   <div class="fleet-tracking-label">NOT REACHABLE</div>
 </div>
 
@@ -227,42 +235,83 @@
         
           
           <!-- Total Summary Section -->
-           <style>
-            .total-summary {
-    text-align: center;
-    padding: 20px; /* Adequate padding for a spacious feel */
-    background-color: #ffffff; /* White background to match the header */
-    border: 2px solid #d9241d; /* Red border to match the navbar */
-    border-radius: 12px; /* Rounded corners for a softer look */
-    cursor: pointer;
-    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.total-summary:hover {
-    transform: translateY(-3px); /* Slight lift on hover */
-    background-color: #f8d7da; /* Light red background on hover */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-}
-
-.total-summary h1 {
-    font-size: 20px; /* Larger font size for the title */
-    color: #d9241d; /* Red color for the title to match the navbar */
-    margin-bottom: 10px; /* Space below the title */
-}
-
-.total-summary p {
-    font-size: 14px; /* Font size for better readability */
-    color: #333; /* Darker text color for contrast */
-    margin: 5px 0; /* Space between paragraphs */
-}
-           </style>
-          <div class="total-summary" onclick="window.location='/dtc'">
-              <h1><i class="fas fa-exclamation-triangle"></i> DTC Summary</h1>
-              <p>Total Open DTC: {{ total_open }}</p>
-              <p>Total In Progress DTC: {{ total_progress }}</p>
-              <p>Total Closed DTC: {{ total_closed }}</p>
-          </div>
+          <style>
+            /* Common styles for all summary boxes */
+            .summary-box {
+                text-align: center;
+                padding: 10px; /* Reduced padding for smaller size */
+                border: 2px solid #ccc;
+                border-radius: 8px; /* Slightly smaller rounded corners */
+                cursor: pointer;
+                transition: transform 0.3s, box-shadow 0.3s;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reduced shadow for smaller boxes */
+                flex: 1; /* Make boxes equally wide in a row */
+                margin: 0 5px; /* Smaller gap between boxes */
+                max-width: 200px; /* Limit the width of each box */
+            }
+            
+            .summary-box:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly enhanced shadow on hover */
+            }
+            
+            /* Specific styles for each category */
+            .summary-box.open {
+                background-color: #f8d7da; /* Light red background */
+                border-color: #d9241d;
+            }
+            
+            .summary-box.in-progress {
+                background-color: #fff3cd; /* Light yellow background */
+                border-color: #ffc107;
+            }
+            
+            .summary-box.closed {
+                background-color: #d4edda; /* Light green background */
+                border-color: #28a745;
+            }
+            
+            /* Heading and paragraph styles */
+            .summary-box h1 {
+                font-size: 16px; /* Smaller font size for the title */
+                margin-bottom: 8px; /* Reduced space below the title */
+            }
+            
+            .summary-box p {
+                font-size: 12px; /* Smaller font size for better proportions */
+                margin: 3px 0; /* Reduced space between paragraphs */
+                color: #333;
+            }
+            
+            /* Container for flex layout */
+            .summary-container {
+                display: flex;
+                justify-content: center; /* Center-align the boxes */
+                padding: 20px;
+                gap: 5px; /* Smaller gap between boxes */
+            }
+            </style>
+            
+            <div class="summary-container">
+                <!-- Open DTC Box -->
+                <div class="summary-box open" onclick="window.location='/dtc.html'">
+                    <h1><i class="fas fa-exclamation-circle"></i> Open DTC</h1>
+                    <p>Total: {{ dtc }}</p>
+                </div>
+            
+                <!-- In Progress DTC Box -->
+                <div class="summary-box in-progress" onclick="window.location='/dtc.html'">
+                    <h1><i class="fas fa-tasks"></i> In Progress</h1>
+                    <p>Total: {{ dtc }}</p>
+                </div>
+            
+                <!-- Closed DTC Box -->
+                <div class="summary-box closed" onclick="window.location='/dtc.html'">
+                    <h1><i class="fas fa-check-circle"></i> Closed DTC</h1>
+                    <p>Total: {{ dtc }}</p>
+                </div>
+            </div>
+            
           <!-- <div class="container"> -->
           <!-- <h1>DTC Overview</h1> -->
       <!-- </div> -->

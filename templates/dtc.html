@@ -14,97 +14,98 @@
     padding: 0;
     background-color: #f4f4f4;
 }
-    /* Navbar Styles */
-    .navbar {
-        background-color: #d9241d;
-        display: flex;
-        align-items: center;
-        padding: 10px 20px;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-    
-    .navbar img {
-        height: 70px; /* Adjust height of the logo */
-        margin-right: 15px; /* Space between the logo and Home */
-    }
-    
-    .navbar a {
-        color: white;
-        padding: 10px 20px;
-        text-decoration: none;
-        font-size: 16px;
-        display: inline-block;
-        position: relative;
-    }
-    
-    .navbar a:hover {
-        background-color: transparent; /* No background change on hover */
-    }
-    
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-    
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 160px;
-        z-index: 1;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        margin-top: 10px;
-    }
-    
-    .dropdown.show .dropdown-content {
-        display: block;
-    }
-    
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-    
-    .dropdown-content a:hover {
-        background-color: #ddd;
-    }
-    
-    .search-container {
-        display: inline-block;
-        position: relative;
-    }
-    
-    .search-container input[type="text"] {
-        padding: 6px 10px;
-        font-size: 16px;
-        border: none;
-        border-radius: 4px;
-        width: 200px;
-    }
-    
-    .search-container button {
-        position: absolute;
-        right: 0;
-        top: 0;
-        background-color: #fff;
-        border: none;
-        padding: 8px;
-        cursor: pointer;
-    }
-    
-    .search-container button i {
-        color: red;
-    }
-    
-    .profile-container {
-        margin-left: auto;
-        padding-left: 20px;
-    }
+/* Navbar Styles */
+.navbar {
+  background-color: #d9241d;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.navbar img {
+  height: 40px; /* Adjust height of the logo */
+  margin-right: 15px; /* Space between the logo and Home */
+}
+
+.navbar a {
+  color: white;
+  padding: 8px 15px;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-block;
+  position: relative;
+}
+
+.navbar a:hover {
+  background-color: transparent; /* No background change on hover */
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+}
+
+.dropdown.show .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.search-container {
+  display: inline-block;
+  position: relative;
+}
+
+.search-container input[type="text"] {
+  padding: 6px 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.search-container button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #fff;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search-container button i {
+  color: red;
+}
+
+.profile-container {
+  margin-left: auto;
+  padding-left: 20px;
+}
+
 /* old section css */
-/* .container {
+.container1 {
     margin: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr; 
@@ -165,7 +166,7 @@
 
 .view-details:hover {
     background-color: #00539b;
-} */
+}
 
 /* new section CSS */
 .container {
@@ -237,7 +238,7 @@ tr:hover {
         <!-- Logo Image (Before Home) -->
         <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
         <!-- <a href="{{ url_for('home') }}"><marquee style="font-size: 20px;">Valid Ops Centre</marquee></a> -->
-        <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a>
+        <!-- <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a> -->
         <!-- Home Icon -->
         <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
         
@@ -250,7 +251,15 @@ tr:hover {
         <a href="{{ url_for('analytics') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
         <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
         <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
-    
+        <a href="{{ url_for('efficiency') }}">
+        <i class="fas fa-tachometer-alt"></i>Eff. Improvement
+      </a>
+      <a href="{{ url_for('aggregate') }}">
+        <i class="fas fa-cubes"></i> Comp./Agg. life
+      </a>
+      <a href="{{ url_for('enhancement') }}">
+        <i class="fas fa-tools"></i>Enhancement
+      </a>
        
         <!-- Search Bar -->
         <div class="search-container">
@@ -342,10 +351,11 @@ tr:hover {
             });
         });
     </script>
+    <h2 style="text-align: center;">ALL DTC Info</h2>
 
-    <!-- <div class="container"> -->
+    <div class="container1">
         <!-- EV Section -->
-        <!-- <div class="vehicle-section">
+        <div class="vehicle-section">
             <h2>EV DTC</h2>
             <div class="dtc-box">
                 <ul>
@@ -362,10 +372,10 @@ tr:hover {
                     {% endfor %}
                 </ul>
             </div>
-        </div> -->
+        </div>
 
         <!-- LMD Section -->
-        <!-- <div class="vehicle-section">
+        <div class="vehicle-section">
             <h2>LMD DTC</h2>
             <div class="dtc-box">
                 <ul>
@@ -382,10 +392,10 @@ tr:hover {
                     {% endfor %}
                 </ul>
             </div>
-        </div> -->
+        </div>
 
         <!-- HD Section -->
-        <!-- <div class="vehicle-section">
+        <div class="vehicle-section">
             <h2>HD DTC</h2>
             <div class="dtc-box">
                 <ul>
@@ -402,10 +412,10 @@ tr:hover {
                     {% endfor %}
                 </ul>
             </div>
-        </div> -->
+        </div>
 
         <!-- SCV Section -->
-        <!-- <div class="vehicle-section">
+        <div class="vehicle-section">
             <h2>SCV DTC</h2>
             <div class="dtc-box">
                 <ul>
@@ -423,6 +433,6 @@ tr:hover {
                 </ul>
             </div>
         </div>
-    </div> -->
+    </div>
 </body>
 </html>
