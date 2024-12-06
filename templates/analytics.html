@@ -314,6 +314,99 @@ th, td {
         pointer-events: none;
         opacity: 0.6;
     }
+
+/* Center the table container */
+.anamoly {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Table Styles */
+.anamoly table {
+    width: 79%; /* Make the table responsive */
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: 1px solid #a09b9b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Prevent corners from overflowing */
+}
+
+/* Table Header Styles */
+.anamoly th {
+    padding: 15px;
+    background-color: #eae8e8; /* Subtle background for headers */
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    border-bottom: 2px solid #d1cccc;
+}
+
+/* Table Data Cell Styles */
+.anamoly td {
+    padding: 12px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Column Colors */
+.anamoly th.ok-column, .anamoly td.ok-column {
+    background-color: #d4edda; /* Light green for OK */
+    color: #155724; /* Darker green for text */
+}
+
+.anamoly th.not-ok-column, .anamoly td.not-ok-column {
+    background-color: #f8d7da; /* Light red for Not OK */
+    color: #721c24; /* Darker red for text */
+}
+
+/* Add Hover Effects */
+.anamoly td.not-ok-column:hover {
+    cursor: pointer;
+    background-color: #f1c6c8; /* Slightly darker hover color for Not OK */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Rounded Button Styles */
+.anamoly button {
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.anamoly button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7; /* Make disabled buttons semi-transparent */
+}
+
+/* Hover effect for buttons */
+.anamoly button:hover:not(:disabled) {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .anamoly table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .anamoly th, .anamoly td {
+        padding: 10px;
+    }
+}
+
   </style>
 </head>
 <body>
@@ -339,8 +432,41 @@ th, td {
           <a href="{{ url_for('Profile') }}"><i class="fas fa-user"></i> Profile</a>
       </div>
     </div>
+
+    <div class="anamoly">
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">Vehicle Stats</th>
+                    <th colspan="2">Status</th>
+                </tr>
+                <tr>
+                    <th class="ok-column">Ok</th>
+                    <th class="not-ok-column">Not Ok</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Coolant Overheating</td>
+                    <td class="ok-column">211</td>
+                    <td class="not-ok-column" id="COI"><button style="background:#d9241d;">1</button></td>
+                </tr>
+                <tr>
+                    <td>Low Oil Pressure</td>
+                    <td class="ok-column">211</td>
+                    <td class="not-ok-column" id="LOPI"><button style="background:#d9241d;">1</button></td>
+                </tr>
+                <tr>
+                    <td>Frequent DPF Choke</td>
+                    <td class="ok-column">212</td>
+                    <td class="not-ok-column"><button disabled style="background:#e27d79;">0</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
   
-    <main>
+        <!-- Analytics -->
+
       <div class="container py-5">
           <div class="row g-3">
               <!-- Left column for the plot -->
@@ -392,7 +518,6 @@ th, td {
               </div>
           </div>
       </div>
-  </main>
   
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -403,6 +528,8 @@ th, td {
         const endTimeInput = document.getElementById("end-time");
         const plotBtn = document.getElementById("plot-btn");
         const plotImg = document.getElementById("plot");
+        const coi = document.getElementById("COI")
+        const lopi = document.getElementById("LOPI")
 
         document.addEventListener("DOMContentLoaded", () => {
             // Fetch and display the empty plot on page load
@@ -477,6 +604,43 @@ th, td {
             plotBtn.disabled = false;
         });
 });
+coi.addEventListener("click", () => {
+    plotBtn.disabled = true;
+    plotBtn.textContent = "Loading...";
+    fileSelect.value = 'MC2FLERC0PK229196.csv';
+    axios.post("/plot", { filename : 'MC2FLERC0PK229196.csv', x_key: 'FanSpeed', y_key: 'EngineCoolantTemp', start_time: '2024-11-14T00:00', end_time: '2024-11-21T00:00', plot_type: 'scatter', 
+    thresholdx1: 0, thresholdx2: 4000, thresholdy1: 100, thresholdy2: 100})
+        .then(response => {
+            plotImg.src = response.data.plot_url;
+            plotBtn.textContent = "Plot";
+            plotBtn.disabled = false;
+        })
+        .catch(err => {
+            console.error("Error plotting data:", err);
+            alert("Failed to plot data.");
+            plotBtn.textContent = "Plot";
+            plotBtn.disabled = false;
+        });
+})
+lopi.addEventListener("click", () => {
+    plotBtn.disabled = true;
+    plotBtn.textContent = "Loading...";
+    fileSelect.value = 'MC2FCHRT0PK535735.csv';
+    axios.post("/plot", { filename : 'MC2FCHRT0PK535735.csv', x_key: 'EngineRpm', y_key: 'EngineOilPressure', start_time: '2024-11-14T00:00', end_time: '2024-11-21T00:00', plot_type: 'scatter', 
+    thresholdx1: 800, thresholdx2: 3000, thresholdy1: 100, thresholdy2: 290})
+        .then(response => {
+            plotImg.src = response.data.plot_url;
+            plotBtn.textContent = "Plot";
+            plotBtn.disabled = false;
+        })
+        .catch(err => {
+            console.error("Error plotting data:", err);
+            alert("Failed to plot data.");
+            plotBtn.textContent = "Plot";
+            plotBtn.disabled = false;
+        });
+});
+
     </script>
   </body>
   </html>

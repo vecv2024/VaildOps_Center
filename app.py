@@ -2,6 +2,7 @@ from flask import Flask, render_template, request,  jsonify,  url_for
 from flask import Flask, jsonify, redirect, render_template, request, url_for, Response
 from flask_cors import CORS
 from folium.plugins import BeautifyIcon
+import numpy as np
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
@@ -188,7 +189,8 @@ def segment(segment):
             "distance": row[8],       # Column 9
             "engine_hours": row[9],   # Column 10
             "location": row[6],        # Column 5
-            "segment": row[0]
+            "segment": row[0],
+            "chassis": row[3]
         })
     
     return render_template('segment.html', segment=segment, vehicles=vehicles)
@@ -559,9 +561,16 @@ def plot_data():
     filename = data.get("filename")
     x_key = data.get("x_key")
     y_key = data.get("y_key")
+
+    # Extract threshold values if provided
+    thresholdx1 = data.get("thresholdx1")
+    thresholdx2 = data.get("thresholdx2")
+    thresholdy1 = data.get("thresholdy1")
+    thresholdy2 = data.get("thresholdy2")
+
     start_time = pd.to_datetime(data.get("start_time"))
     end_time = pd.to_datetime(data.get("end_time"))
-    plot_type = data.get("plot_type", "line")  # Default to line plot
+    plot_type = data.get("plot_type", "line")
 
     file_path = os.path.join(CSV_DIR, filename)
     _, df = read_csv_keys(file_path)
@@ -575,15 +584,15 @@ def plot_data():
 
         # Create plots based on the selected plot type
         if plot_type == "line":
-            plt.plot(df[x_key], df[y_key], marker='o')
+            plt.plot(df[x_key], df[y_key], marker='o', label=f"{y_key} (line)")
         elif plot_type == "scatter":
-            plt.scatter(df[x_key], df[y_key])
+            plt.scatter(df[x_key], df[y_key], label=f"{y_key} (scatter)")
         elif plot_type == "bar":
-            plt.bar(df[x_key], df[y_key])
+            plt.bar(df[x_key], df[y_key], label=f"{y_key} (bar)")
         elif plot_type == "histogram":
-            plt.hist(df[x_key], bins=20)
+            plt.hist(df[x_key], bins=20, label=f"{y_key} (histogram)")
         elif plot_type == "heatmap":
-            if x_key and y_key:  # Ensure both axes are provided
+            if x_key and y_key:
                 heatmap_data = pd.pivot_table(df, values=y_key, index=x_key, aggfunc='mean')
                 sns.heatmap(heatmap_data, cmap="coolwarm", annot=True, fmt=".1f")
             else:
@@ -591,10 +600,47 @@ def plot_data():
         else:
             return jsonify({"error": "Unsupported plot type."}), 400
 
-        # Set common plot properties
+        # Plot the threshold line if coordinates are provided
+        if thresholdx1 is not None and thresholdx2 is not None and thresholdy1 is not None and thresholdy2 is not None:
+            # Convert threshold values to float
+            thresholdx1 = float(thresholdx1)
+            thresholdx2 = float(thresholdx2)
+            thresholdy1 = float(thresholdy1)
+            thresholdy2 = float(thresholdy2)
+
+            if thresholdy1 == thresholdy2:  # Horizontal line
+                # Generate x values across the data range
+                x_vals = np.linspace(df[x_key].min(), df[x_key].max(), 500)
+                y_vals = np.full_like(x_vals, thresholdy1)  # Constant y-value for the horizontal line
+            else:  # Tilted line
+                # Calculate slope (m) and intercept (b) of the line
+                m = (thresholdy2 - thresholdy1) / (thresholdx2 - thresholdx1)
+                b = thresholdy1 - m * thresholdx1
+
+                # Generate x values for the entire plot range
+                x_vals = np.linspace(df[x_key].min(), df[x_key].max(), 500)
+                y_vals = m * x_vals + b
+
+            # Plot the threshold line
+            plt.plot(x_vals, y_vals, 'r--', label=f'Threshold Line')
+
+            # Highlight points above the threshold
+            if thresholdy1 == thresholdy2:  # Horizontal line case
+                above_threshold = df[df[y_key] > thresholdy1]  # Compare y-values directly
+            else:  # Slanted line case
+                # Compute the threshold y-value for each data point's x-value
+                df['threshold_y'] = m * df[x_key] + b
+                above_threshold = df[df[y_key] > df['threshold_y']]  # Compare y-values with the line
+
+            # Highlight the points above the threshold line
+            # if not above_threshold.empty:
+                # plt.scatter(above_threshold[x_key], above_threshold[y_key],label="Above Threshold", zorder=5)
+
+
         plt.title(f"{y_key} vs {x_key} ({plot_type.capitalize()})")
         plt.xlabel(x_key)
         plt.ylabel(y_key)
+        plt.legend()
         plt.grid(True)
 
         # Convert plot to base64 string
@@ -603,9 +649,12 @@ def plot_data():
         img.seek(0)
         plot_url = base64.b64encode(img.getvalue()).decode()
         plt.close()
+
         return jsonify({"plot_url": f"data:image/png;base64,{plot_url}"})
+    
     else:
         return jsonify({"error": "Unable to read file"}), 400
+
 
 
 @app.route("/empty_plot")
@@ -697,6 +746,5 @@ def analytics_data():
 if __name__ == '__main__':
     # Generate the map before starting the app
     generate_india_map()
-    # port = int(os.getenv('PORT', 5000))
-    # app.run(host='0.0.0.0', port=port, debug=False)
-    app.run(debug=True)
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)

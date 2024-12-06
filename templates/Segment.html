@@ -164,8 +164,14 @@
                 <table class="box-table">
                     <tr>
                         <td colspan="2">
-                            <a href="{{ url_for('vehicle_detail', model_sticker=vehicle.model_sticker) }}" style="text-decoration: none; color: black;">
+                            <!-- <a href="{{ url_for('vehicle_detail', model_sticker=vehicle.model_sticker) }}" style="text-decoration: none; color: black;">
                                 Model Sticker No: {{ vehicle.model_sticker }}
+                                <br>
+                                Chassis: {{vehicle.chassis}}
+                            </a> -->
+                            <a href="{{ url_for('vehicle_detail', model_sticker=vehicle.model_sticker) }}" style="text-decoration: none; color: black;">
+                                <span style="display: block;">Model Sticker No: {{ "Seeding" if vehicle.model_sticker == "NO-STR" else vehicle.model_sticker}}</span>
+                                <span style="display: block;">Chassis: {{ vehicle.chassis }}</span>
                             </a>
                         </td>
                     </tr>
