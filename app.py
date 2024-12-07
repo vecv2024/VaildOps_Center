@@ -382,7 +382,7 @@ def generate_india_map():
             popup=city["name"],
             tooltip="HD",
             icon=BeautifyIcon(
-            icon='fas fa-truck-monster km-icon',  # Font Awesome truck icon
+            icon='fas fa-truck-moving',  # Font Awesome truck icon
             icon_shape='marker',  # Marker shape
             background_color='transparent',  # Transparent background
             border_width=0,  # Remove the border
@@ -429,7 +429,7 @@ def generate_india_map():
             popup=city["name"],
             tooltip="SCV",
             icon=BeautifyIcon(
-            icon='fas fa-tractor km-icon',  # Font Awesome truck icon
+            icon='fas fa-shipping-fast',  # Font Awesome truck icon
             icon_shape='marker',  # Marker shape
             background_color='transparent',  # Transparent background
             border_width=0,  # Remove the border
