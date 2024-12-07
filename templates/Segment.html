@@ -38,7 +38,7 @@
         <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
         <!-- <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a> -->
         <!-- Home Icon -->
-        <a href="#"><i class="fas fa-home"></i> Home</a>
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
         
         <!-- Our Service Dropdown -->
         
@@ -46,11 +46,11 @@
            
        
         <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
-        <a href="{{ url_for('analytics') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
-        <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
+        
         <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
 
-       
+        <a href="{{ url_for('analytics') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
+        <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
         <a class="tooltip" data-tooltip="Coming Soon...">
             <i class="fas fa-tachometer-alt"></i> Eff. Improvement
           </a>
@@ -108,7 +108,7 @@
             </div>
         </div>
         <div class="box">
-            <img src="..\static\images\Segment01.png" alt="HD Segment Vehicle" class="hd-vehicle-image">
+            <img src="../static/images/Vehicle stats.jpg" alt="HD Segment Vehicle" class="hd-vehicle-image">
         </div>
         <div class="box">
             <h3>Segment Name</h3>
