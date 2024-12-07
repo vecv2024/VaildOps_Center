@@ -17,7 +17,7 @@ import random
 
 # File paths
 DTC_LIST_FILE = "DTC_List.xlsx"
-PROTUS_DATA_FILE = "Protus_data.xlsx"
+PROTUS_DATA_FILE = "Telematics_Protus_file.xlsx"
 
 # Helper function to read Excel data
 def read_excel_safe(file_path):
@@ -471,6 +471,7 @@ def protus():
     # Load data from both files
     dtc_data = read_excel_safe(DTC_LIST_FILE)
     protus_data = read_excel_safe(PROTUS_DATA_FILE)
+    protus_data = protus_data[1:]
     return render_template(
         "protus.html",
         dtc_data=dtc_data.to_dict(orient="records"),
