@@ -94,19 +94,7 @@
 
     <!-- Boxes Section -->
     <div class="box-container">
-        <div class="grid-menu">
-            <div>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        
         <div class="box">
             <img src="../static/images/Vehicle stats.jpg" alt="HD Segment Vehicle" class="hd-vehicle-image">
         </div>
@@ -120,12 +108,12 @@
         <div class="box">
             <h3 class="kms-title">Total Kms Achieved</h3>
             <i class="fas fa-road kms-icon"></i>
-            <div class="kms-value">318 Kms</div>
+            <div class="kms-value">{{ totals[segment].total_kms }} km</div>
         </div>
         <div class="box">
             <h3 class="Hrs-title">Engine Operation Hrs Achieved</h3>
             <i class="fas fa-clock clock-icon"></i> 
-            <div class="Hrs-value">31 h</div>
+            <div class="Hrs-value">{{ totals[segment].total_engine_hours }} hrs</div>
         </div>
     </div>
 

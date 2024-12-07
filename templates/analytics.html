@@ -411,111 +411,65 @@ th, td {
 </head>
 <body>
 
-    <div class="navbar">
-        <!-- Logo Image (Before Home) -->
-        <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
-        <!-- <a
-          href="{{ url_for('home') }}"
-          style="
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-          "
-          >Valid Ops Centre</a
-        > -->
-        <!-- Home Icon -->
-        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
-  
-        <!-- Our Service Dropdown -->
-  
+  <div class="navbar">
+    <!-- Logo Image (Before Home) -->
+    <img src="../static/images/eicher_logo.png" alt="Eicher Logo" />
+    <!-- <a href="{{ url_for('home') }}" style="color: white; font-size: 20px; font-weight: bold; text-decoration: none;">Valid Ops Centre</a> -->
+    <!-- Home Icon -->
+    <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+    
+    <!-- Our Service Dropdown -->
+    
         <!-- <a href="#" ><i class="fas fa-cogs" ></i> Our Service</a> -->
-  
-        <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
-        
-        <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
-        <pre><a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a></pre>
-  
-        <a href="{{ url_for('analytics') }}"
-          ><i class="fas fa-chart-bar"></i> Analytics</a
-        >
-        <!-- <a href="{{ url_for('efficiency') }}">
-          <i class="fas fa-tachometer-alt"></i>Eff. Improvement
-        </a>
-        <a href="{{ url_for('aggregate') }}">
-          <i class="fas fa-cubes"></i> Comp./Agg. life
-        </a>
-        <a href="{{ url_for('enhancement') }}">
-          <i class="fas fa-tools"></i>Enhancement
-        </a> -->
-        
-       <a class="tooltip" data-tooltip="Coming Soon...">
-          <i class="fas fa-tachometer-alt"></i> Eff. Improvement
-        </a>
-        <a class="tooltip" data-tooltip="Coming Soon...">
-          <i class="fas fa-cubes"></i> Comp./Agg. life
-        </a>
-        <a class="tooltip" data-tooltip="Coming Soon...">
-          <i class="fas fa-tools"></i> Enhancement
-        </a>
-        <style>
-          /* Basic styling */
-  
-  /* Tooltip appearance */
-  .tooltip:hover::after {
-    content: attr(data-tooltip); /* Use the data-tooltip attribute */
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 5px 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    font-size: 14px;
-    border-radius: 5px;
-    white-space: nowrap;
-    z-index: 10;
-  }
-  
-  /* Tooltip arrow */
-  /* .tooltip:hover::before {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 10px;
-    height: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 5;
-  } */
-  
-        </style>
-        <!-- Help & Support Dropdown -->
-        <!-- <div class="dropdown">
-              <a href="javascript:void(0);" onclick="toggleDropdown('support-dropdown')"><i class="fas fa-question-circle"></i> Help & Support</a>
-              <div id="support-dropdown" class="dropdown-content">
-                  <a href="#">FAQ</a>
-                  <a href="#">Contact Us</a>
-              </div>
-          </div> -->
-  
-        <!-- My Subscriptions -->
-        <!-- <a href="#"><i class="fas fa-box"></i> My Subscriptions</a> -->
-  
-        <!-- Search Bar -->
-        <div class="search-container">
-          <input type="text" placeholder="Search..." />
-          <button><i class="fas fa-search"></i></button>
-        </div>
-  
-        <!-- Profile Icon (Aligned to the right) -->
-        <div class="profile-container">
-          <a href="{{ url_for('Profile') }}"
-            ><i class="fas fa-user"></i> Profile</a
-          >
-        </div>
-      </div>
+       
+   
+    <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
+    
+    <a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a>
+
+    <a href="{{ url_for('analytics') }}"><i class="fas fa-chart-bar"></i> Analytics</a>
+    <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
+    <a class="tooltip" data-tooltip="Coming Soon...">
+        <i class="fas fa-tachometer-alt"></i> Eff. Improvement
+      </a>
+      <a class="tooltip" data-tooltip="Coming Soon...">
+        <i class="fas fa-cubes"></i> Comp./Agg. life
+      </a>
+      <a class="tooltip" data-tooltip="Coming Soon...">
+        <i class="fas fa-tools"></i> Enhancement
+      </a>
+      
+      <style>
+        /* Basic styling */
+
+/* Tooltip appearance */
+.tooltip:hover::after {
+  content: attr(data-tooltip); /* Use the data-tooltip attribute */
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 10;
+}
+      </style>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" placeholder="Search...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+    
+    <!-- Profile Icon (Aligned to the right) -->
+    <div class="profile-container">
+        <a href="#"><i class="fas fa-user"></i> Profile</a>
+    </div>
+</div>
 
     <div class="anamoly">
         <table>
@@ -528,76 +482,86 @@ th, td {
             </thead>
             <tbody>
                 <tr class="data-row">
-                    <td>Coolant Overheating</td>
-                    <td class="ok-column">211</td>
+                    <td>Engine Overheating</td>
+                    <td class="ok-column">83</td>
                     <td class="not-ok-column" id="COI"><button style="background:#d9241d;">1</button></td>
                 </tr>
                 <tr class="data-row">
                     <td>Low Oil Pressure</td>
-                    <td class="ok-column">211</td>
+                    <td class="ok-column">83</td>
                     <td class="not-ok-column" id="LOPI"><button style="background:#d9241d;">1</button></td>
                 </tr>
                 <tr class="data-row">
                     <td>Frequent DPF Choke</td>
-                    <td class="ok-column">212</td>
+                    <td class="ok-column">53</td>
                     <td class="not-ok-column"><button disabled style="background:#e27d79;">0</button></td>
                 </tr>
-                <tr class="data-row">
+                <tr class="data-row extra-data">
                     <td>Motor Overheating</td>
-                    <td class="ok-column"></td>
-                    <td class="not-ok-column"><button style="background:#d9241d;"></button></td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <!-- These rows will be hidden initially -->
                 <tr class="data-row extra-data">
                     <td>Battery Overheating</td>
-                    <td class="ok-column"></td>
-                    <td class="not-ok-column"><button style="background:#d9241d;"></button></td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
                     <td>Battery Cell Imbalancing</td>
-                    <td class="ok-column"></td>
-                    <td class="not-ok-column"><button style="background:#d9241d;"></button></td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
                     <td>Battery Life Estimation</td>
-                    <td class="ok-column"></td>
-                    <td class="not-ok-column"><button style="background:#d9241d;"></button></td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
                     <td>Turbo Failures</td>
-                    <td class="ok-column"></td>
-                    <td class="not-ok-column"><button style="background:#d9241d;"></button></td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
-                    <td>Transmission Health</td>
-                    <td class="ok-column">190</td>
-                    <td class="not-ok-column"><button style="background:#d9241d;">4</button></td>
+                    <td>NOx Efficiency</td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
-                    <td>Exhaust System</td>
-                    <td class="ok-column">215</td>
-                    <td class="not-ok-column"><button style="background:#d9241d;">1</button></td>
+                    <td>Adblue Pressure</td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
-                    <td>Suspension Wear</td>
-                    <td class="ok-column">210</td>
-                    <td class="not-ok-column"><button style="background:#d9241d;">0</button></td>
+                    <td>High Adblue Consumption</td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
-                    <td>Tire Pressure</td>
-                    <td class="ok-column">220</td>
-                    <td class="not-ok-column"><button style="background:#d9241d;">2</button></td>
+                    <td>Engine Fan Status</td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
-                    <td>Windshield Wipers</td>
-                    <td class="ok-column">230</td>
-                    <td class="not-ok-column"><button style="background:#d9241d;">1</button></td>
+                    <td>CNG Engine Misfire</td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
                 <tr class="data-row extra-data">
-                    <td>Fuel Tank Level</td>
-                    <td class="ok-column">250</td>
-                    <td class="not-ok-column"><button style="background:#d9241d;">0</button></td>
+                    <td>Diesel Oxi-Catalyst</td>
+                    <td class="ok-column">-</td>
+                    <td class="not-ok-column">-</td>
                 </tr>
+                <tr class="data-row extra-data">
+                  <td>CNG Catalyst</td>
+                  <td class="ok-column">-</td>
+                  <td class="not-ok-column">-</td>
+              </tr>
+              <tr class="data-row extra-data">
+                  <td>Engine Over run</td>
+                  <td class="ok-column">-</td>
+                  <td class="not-ok-column">-</td>
+              </tr>
                 <tr>
                     <td colspan="3" style="text-align: center;">
                         <button id="view-more-btn">View More</button>

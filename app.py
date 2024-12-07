@@ -182,6 +182,8 @@ def segment(segment):
     segment_data = vehicle_live_data[vehicle_live_data.iloc[:, 0] == segment]
     vehicles = []
 
+
+
     for _, row in segment_data.iterrows():
         vehicles.append({
             "model_sticker": row[5],  # Column 6
@@ -193,7 +195,13 @@ def segment(segment):
             "chassis": row[3]
         })
     
-    return render_template('segment.html', segment=segment, vehicles=vehicles)
+# Prepare segment totals for rendering
+    totals = {seg: {
+        "total_kms": round(segment_totals[seg]['total_kms'], 2),
+        "total_engine_hours": round(segment_totals[seg]['total_engine_hours'], 2)
+    } for seg in segment_totals}
+
+    return render_template('segment.html', segment=segment, vehicles=vehicles, totals=totals,)
 
 @app.route('/vehicle_detail/<model_sticker>')
 def vehicle_detail(model_sticker):
