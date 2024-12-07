@@ -713,6 +713,9 @@ def aggregate():
 def enhancement():
     return render_template('enhancement.html')
 
+@app.route('/analytics2')
+def analytics2():
+    return render_template('analytics2.html')
 
 
 @app.route('/get-data', methods=['POST'])

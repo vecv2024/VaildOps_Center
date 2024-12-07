@@ -8,6 +8,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link rel="stylesheet" href="/static/css/homeCSS.css" />
   </head>
   <body>
@@ -32,14 +34,14 @@
       <!-- <a href="#" ><i class="fas fa-cogs" ></i> Our Service</a> -->
 
       <a href="{{ url_for('dtc') }}"><i class="fas fa-chart-line"></i> DTC</a>
+      
+      <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
+      <pre><a href="{{ url_for('protus') }}"><i class="fas fa-briefcase"></i> Protus Management</a></pre>
+
       <a href="{{ url_for('analytics') }}"
         ><i class="fas fa-chart-bar"></i> Analytics</a
       >
-      <!-- <a href="./protus.html"><i class="fas fa-briefcase"></i> Protus Management</a> -->
-      <a href="{{ url_for('protus') }}"
-        ><i class="fas fa-briefcase"></i>Protus Management</a
-      >
-      <a href="{{ url_for('efficiency') }}">
+      <!-- <a href="{{ url_for('efficiency') }}">
         <i class="fas fa-tachometer-alt"></i>Eff. Improvement
       </a>
       <a href="{{ url_for('aggregate') }}">
@@ -47,7 +49,50 @@
       </a>
       <a href="{{ url_for('enhancement') }}">
         <i class="fas fa-tools"></i>Enhancement
+      </a> -->
+      
+     <a class="tooltip" data-tooltip="Coming Soon...">
+        <i class="fas fa-tachometer-alt"></i> Eff. Improvement
       </a>
+      <a class="tooltip" data-tooltip="Coming Soon...">
+        <i class="fas fa-cubes"></i> Comp./Agg. life
+      </a>
+      <a class="tooltip" data-tooltip="Coming Soon...">
+        <i class="fas fa-tools"></i> Enhancement
+      </a>
+      <style>
+        /* Basic styling */
+
+/* Tooltip appearance */
+.tooltip:hover::after {
+  content: attr(data-tooltip); /* Use the data-tooltip attribute */
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Tooltip arrow */
+/* .tooltip:hover::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 5;
+} */
+
+      </style>
       <!-- Help & Support Dropdown -->
       <!-- <div class="dropdown">
             <a href="javascript:void(0);" onclick="toggleDropdown('support-dropdown')"><i class="fas fa-question-circle"></i> Help & Support</a>
@@ -77,18 +122,19 @@
     <!-- Header Section (LMD, HD, BUS, EV, SCV) -->
     <div class="header">
         {% for segment, count in stats.items() %}
-<a href="{{ url_for('segment', segment=segment) }}" class="header-section">
+    <a href="{{ url_for('segment', segment=segment) }}" class="header-section">
     {% if segment == "LMD" %}
+    <!-- <img src="../static/images/EV001.png" alt="Eicher Logo" /> -->
     <i class="fas fa-truck km-icon" style="color: red"></i>
     {% elif segment == "HD" %}
-    <i class="fas fa-truck-monster km-icon" style="color: red"></i>
+    <!-- <img src="../static/images/eicher_logo.png" alt="Eicher Logo" /> -->
+    <i class="fas fa-truck-moving" style="color: red"></i>
     {% elif segment == "BUS" %}
     <i class="fas fa-bus km-icon" style="color: red"></i>
     {% elif segment == "EV" %}
     <i class="fas fa-bolt km-icon" style="color: red"></i>
     {% elif segment == "SCV" %}
-    <i class="fas fa-truck km-icon" style="color: red"></i>
-    <!-- <i class="fas fa-tractor km-icon" style="color: red"></i> -->
+    <i class="fas fa-shipping-fast" style="color: red"></i>
     {% endif %}
     <h4>{{ segment }} : {{ count }} Vehicles</h4>
     <p>
@@ -196,123 +242,80 @@
     </div>
     <div class="data-box">
     <div class="section">
-      <br><br><br><br><br><br><br><br>
-    <div class="fleet-tracking">
+      
+    <!-- <div class="fleet-tracking"> -->
       <div class="fleet-tracking-header">
         <div class="fleet-tracking-title">
-          <i class="fas fa-truck fleet-tracking-icon"></i> Fleet Tracking
+          <pre><i class="fas fa-truck fleet-tracking-icon"></i> Fleet Tracking</pre>
         </div>
         <div class="fleet-tracking-brand"></div>
       </div>
       <div class="fleet-tracking-content">
         <div class="fleet-tracking-box running">
   <i class="fas fa-truck-moving fleet-tracking-icon running-icon"></i>
-  <div class="fleet-tracking-number">131</div>
+  <div class="fleet-tracking-number">204</div>
   <div class="fleet-tracking-label">RUNNING</div>
 </div>
 <div class="fleet-tracking-box idle">
   <i class="fas fa-clock fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">31</div>
+  <div class="fleet-tracking-number">4</div>
   <div class="fleet-tracking-label">IDLE</div>
 </div>
 <div class="fleet-tracking-box stopped">
   <i class="fas fa-stop-circle fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">21</div>
+  <div class="fleet-tracking-number">3</div>
   <div class="fleet-tracking-label">STOPPED</div>
 </div>
 <div class="fleet-tracking-box unreachable">
   <i class="fas fa-wifi-slash fleet-tracking-icon"></i>
-  <div class="fleet-tracking-number">29</div>
+  <div class="fleet-tracking-number">2</div>
   <div class="fleet-tracking-label">NOT REACHABLE</div>
 </div>
 
-      </div>
+      <!-- </div> -->
     </div>
   </div>
 </div>
-    <div class="data-box">
+    <div class="data-box1">
       
       <div class="section">
         
-          
           <!-- Total Summary Section -->
           <style>
-            /* Common styles for all summary boxes */
-            .summary-box {
-                text-align: center;
-                padding: 10px; /* Reduced padding for smaller size */
-                border: 2px solid #ccc;
-                border-radius: 8px; /* Slightly smaller rounded corners */
-                cursor: pointer;
-                transition: transform 0.3s, box-shadow 0.3s;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reduced shadow for smaller boxes */
-                flex: 1; /* Make boxes equally wide in a row */
-                margin: 0 5px; /* Smaller gap between boxes */
-                max-width: 200px; /* Limit the width of each box */
-            }
-            
-            .summary-box:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly enhanced shadow on hover */
-            }
-            
-            /* Specific styles for each category */
-            .summary-box.open {
-                background-color: #f8d7da; /* Light red background */
-                border-color: #d9241d;
-            }
-            
-            .summary-box.in-progress {
-                background-color: #fff3cd; /* Light yellow background */
-                border-color: #ffc107;
-            }
-            
-            .summary-box.closed {
-                background-color: #d4edda; /* Light green background */
-                border-color: #28a745;
-            }
-            
-            /* Heading and paragraph styles */
-            .summary-box h1 {
-                font-size: 16px; /* Smaller font size for the title */
-                margin-bottom: 8px; /* Reduced space below the title */
-            }
-            
-            .summary-box p {
-                font-size: 12px; /* Smaller font size for better proportions */
-                margin: 3px 0; /* Reduced space between paragraphs */
-                color: #333;
-            }
-            
-            /* Container for flex layout */
-            .summary-container {
-                display: flex;
-                justify-content: center; /* Center-align the boxes */
-                padding: 20px;
-                gap: 5px; /* Smaller gap between boxes */
-            }
             </style>
             
+            <div class="fleet-tracking-header">
+              <pre><i class="fas fa-triangle-exclamation "></i><span class="dtc-text"> DTC Tracking</span></pre>
+              
+            </div>
+          
+
             <div class="summary-container">
+              <a href="{{ url_for('dtc')}}">
                 <!-- Open DTC Box -->
                 <div class="summary-box open" onclick="window.location='/dtc.html'">
-                    <h1><i class="fas fa-exclamation-circle"></i> Open DTC</h1>
-                    <p>Total: {{ dtc }}</p>
+                    <h1><i class="fas fa-exclamation-circle "></i> Open DTC</h1>
+                    <p>{{ total_open }}</p>
                 </div>
-            
+              </a>
+              <a href="{{ url_for('dtc')}}">
                 <!-- In Progress DTC Box -->
                 <div class="summary-box in-progress" onclick="window.location='/dtc.html'">
                     <h1><i class="fas fa-tasks"></i> In Progress</h1>
-                    <p>Total: {{ dtc }}</p>
+                    <p>{{ total_progress }}</p>
                 </div>
-            
+              </a>
+                <a href="{{ url_for('dtc')}}">
                 <!-- Closed DTC Box -->
                 <div class="summary-box closed" onclick="window.location='/dtc.html'">
                     <h1><i class="fas fa-check-circle"></i> Closed DTC</h1>
-                    <p>Total: {{ dtc }}</p>
+                    <p>{{ total_closed }}</p>
                 </div>
+              </a>
             </div>
-            
+        </div>   
+      </div> 
+          
           <!-- <div class="container"> -->
           <!-- <h1>DTC Overview</h1> -->
       <!-- </div> -->
@@ -336,7 +339,7 @@
           </li>
         </ul>
       </div> -->
-    </div>
+    
     
     
     <!-- <div class="data-box1">
@@ -377,7 +380,7 @@
       </div>
       <div class="footer-right">© 2024 Eicher. All rights reserved.</div>
     </footer> -->
-    </div>
+    
     
     <footer class="footer">
       <div class="footer-left">
