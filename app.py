@@ -139,8 +139,51 @@ segment_totals = vehicle_live_data.groupby(vehicle_live_data.iloc[:, 0]).agg({
     vehicle_live_data.columns[9]: 'sum'  # Column 10 for engine hours
 }).rename(columns={vehicle_live_data.columns[8]: 'total_kms', vehicle_live_data.columns[9]: 'total_engine_hours'}).to_dict(orient='index')
 
+#<..................../home...........................>
 @app.route('/')
 def home():
+
+# Load the Excel file containing city data (ensure the path is correct)
+    try:
+        df = pd.read_excel('cities.xlsx')  # Make sure cities.xlsx is in the correct location
+    except Exception as e:
+        return f"Error reading the Excel file: {e}"
+
+    # Create the base map centered around India
+    india_map = folium.Map(location=[20.5937, 78.9629], zoom_start=5)
+
+    # Define a dictionary to map segments to FontAwesome icon classes
+    segment_icons = {
+        'EV': 'fas fa-bolt km-icon',    # Electric vehicle icon
+        'HD': 'fas fa-truck-moving',   # Heavy-duty truck icon
+        'LMD': 'fas fa-truck km-icon',    # Light-medium duty car
+        'SCV': 'fas fa-shipping-fast',   # Small commercial vehicle (leaf)
+        'BUS': 'fas fa-bus km-icon',    # Bus icon
+    }
+
+    # Add markers for each city from the dataset
+    for i, row in df.iterrows():
+        # Determine the icon based on the segment column
+        segment = row['Segment']  # Assuming 'Segment' is the name of the column in your Excel file
+        icon_class = segment_icons.get(segment, 'fas fa-info-circle')  # Default icon if segment is not recognized
+
+        # Create a custom icon without the blue marker
+        icon = folium.DivIcon(
+            html=f'<i class="{icon_class}" style="font-size:24px; color:#FF6347;"></i>'  # Set icon size and color
+        )
+
+        # Add the marker with the custom FontAwesome icon
+        folium.Marker(
+            location=[row['Latitude'], row['Longitude']],  # Coordinates for the city
+            popup=f"{row['City']} ({segment})",  # Popup shows city and segment
+            icon=icon  # Use the custom FontAwesome icon
+        ).add_to(india_map)
+
+    # Get the HTML representation of the map
+    map_html = india_map._repr_html_()  # Convert Folium map to HTML for Flask
+
+
+
 
 # Calculate overall totals for Open and Closed DTCs
     total_open = segment_status_counts["Open"].sum()
@@ -160,8 +203,10 @@ def home():
     return render_template('home.html', stats=stats, totals=totals,
         total_open=total_open,
         total_closed=total_closed,
-        total_progress=total_progress,)
+        total_progress=total_progress,
+        map_html=map_html,)
 
+# <.................................>
 @app.route('/update_segment_totals', methods=['GET'])
 def update_segment_totals():
     # Simulate real-time updates
@@ -175,14 +220,56 @@ def update_segment_totals():
     } for seg in segment_totals}
 
     return jsonify(updated_totals)
+# <.................../segment.................>
+# Load the Excel file globally, so it's accessible throughout the app
+try:
+    df = pd.read_excel('cities.xlsx')  # Make sure the path is correct
+except Exception as e:
+    print(f"Error reading the Excel file: {e}")
+    df = None  # Set df to None if the file cannot be loaded
+
+# Segment to icon mapping
+segment_icons = {
+    'EV': 'fas fa-bolt km-icon',    # Electric vehicle icon
+    'HD': 'fas fa-truck-moving',   # Heavy-duty truck icon
+    'LMD': 'fas fa-truck km-icon',    # Light-medium duty car
+    'SCV': 'fas fa-shipping-fast',   # Small commercial vehicle (leaf)
+    'BUS': 'fas fa-bus km-icon',    # Bus icon
+}
 
 @app.route('/segment/<segment>')
 def segment(segment):
-    # Filter data for the given segment
+    # Check if the dataframe was loaded successfully
+    if df is None:
+        return "Error: Could not load the city data."
+
+    # Filter the dataframe by the selected segment
+    filtered_df = df[df['Segment'] == segment]
+
+    # Create the base map centered around India
+    india_map = folium.Map(location=[20.5937, 78.9629], zoom_start=5)
+
+    # Add markers for cities of the selected segment
+    for i, row in filtered_df.iterrows():
+        # Get the icon class based on the segment
+        icon_class = segment_icons.get(row['Segment'], 'fas fa-info-circle')  # Default to info-circle if no match
+        icon = folium.DivIcon(
+            html=f'<i class="{icon_class}" style="font-size:24px; color:#FF6347;"></i>'
+        )
+
+        folium.Marker(
+            location=[row['Latitude'], row['Longitude']],
+            popup=f"{row['City']} ({row['Segment']})",
+            icon=icon
+        ).add_to(india_map)
+
+    # Get the HTML representation of the map
+    map_html = india_map._repr_html_()
+
+    # Now filter the vehicle data (assuming vehicle_live_data is defined)
+    # Filter data for the given segment in the vehicle live data
     segment_data = vehicle_live_data[vehicle_live_data.iloc[:, 0] == segment]
     vehicles = []
-
-
 
     for _, row in segment_data.iterrows():
         vehicles.append({
@@ -190,19 +277,21 @@ def segment(segment):
             "speed": row[7],          # Column 8
             "distance": row[8],       # Column 9
             "engine_hours": row[9],   # Column 10
-            "location": row[6],        # Column 5
+            "location": row[6],       # Column 5
             "segment": row[0],
             "chassis": row[3]
         })
     
-# Prepare segment totals for rendering
+    # Prepare segment totals for rendering (assuming segment_totals is defined)
     totals = {seg: {
         "total_kms": round(segment_totals[seg]['total_kms'], 2),
         "total_engine_hours": round(segment_totals[seg]['total_engine_hours'], 2)
     } for seg in segment_totals}
 
-    return render_template('segment.html', segment=segment, vehicles=vehicles, totals=totals,)
+    # Render the segment page with vehicles, totals, and the map
+    return render_template('segment.html', segment=segment, vehicles=vehicles, totals=totals, map_html=map_html)
 
+# <................../vehicledetails........................>
 @app.route('/vehicle_detail/<model_sticker>')
 def vehicle_detail(model_sticker):
     model_sticker = str(model_sticker).strip().lower()

@@ -135,14 +135,15 @@
     <div class="container">
         <div class="map-container">
 
-            <iframe 
+            <!-- <iframe 
                     src="{{ url_for('static', filename='india_map.html') }}"   
                     width="100%" 
                     height="100%" 
                     style="border:0;" 
                     allowfullscreen="" 
                     loading="lazy">
-                </iframe>
+                </iframe> -->
+                {{ map_html | safe }}  <!-- This will render the Folium map HTML -->
         </div>
 
       
