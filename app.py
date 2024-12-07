@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request,  jsonify,  url_for
+from flask import Flask, abort, render_template, request,  jsonify, send_file,  url_for
 from flask import Flask, jsonify, redirect, render_template, request, url_for, Response
 from flask_cors import CORS
 from folium.plugins import BeautifyIcon
@@ -471,7 +471,6 @@ def protus():
     # Load data from both files
     dtc_data = read_excel_safe(DTC_LIST_FILE)
     protus_data = read_excel_safe(PROTUS_DATA_FILE)
-    protus_data = protus_data[1:]
     return render_template(
         "protus.html",
         dtc_data=dtc_data.to_dict(orient="records"),
@@ -746,12 +745,25 @@ def get_data():
 # <......................................................>
 # analytics
 
-@app.route('/analytics-data')
-def analytics_data():
-    analytics_data = pd.read_excel('fan_dtc.xlsx')
-    selected_column = ["utc", "FanSpeed"]
-    req_data = analytics_data[selected_column]
-    return jsonify(req_data.to_json(orient='records'))
+@app.route('/download', methods=['POST'])
+def download_file():
+    # Parse the filename from the request JSON body
+    filename = request.get_json().get('filename')
+    
+    if not filename:
+        return jsonify({"error": "Filename is required"}), 400
+
+    # Construct the file path
+    file_path = os.path.join('./protus', f'Protus_{filename}.pptx')
+
+    # Check if the file exists
+    if not os.path.exists(file_path):
+        return jsonify({"error": "File not found"}), 404
+
+    try:
+        return send_file(file_path, as_attachment=True)
+    except Exception as e:
+        return jsonify({"error": f"Error serving file: {str(e)}"}), 500
 
 
 

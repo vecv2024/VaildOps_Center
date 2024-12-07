@@ -126,22 +126,23 @@
 
     th,
     td {
-      border: 1px solid #8b8b8b;
+      border: 1px solid #dad5d5;
       padding: 10px;
       text-align: left;
     }
 
     th {
-      background: linear-gradient(to bottom, #f0f0f0, #d3d3d3, #f0f0f0);
+      background: #bfbfbf;
       font-size: 14px;
     }
 
     tr {
-      background: linear-gradient(to bottom, #FFF8DC, #FFF9C4);
+      background: #fff;
     }
 
     .highlight {
-      background: linear-gradient(to bottom, #A3E4D7, #76D7C4);
+      /* background: linear-gradient(to bottom, #A3E4D7, #76D7C4); */
+      background: #e2ff8c;
     }
 
     .protus-tracking {
@@ -261,7 +262,7 @@
     </div>
 </div>
   
-<div>
+<!-- <div>
     <h3 class="protus-tracking">DTC Tracking</h3>
     <table class="table table-bordered">
         <thead id="myTable">
@@ -303,7 +304,7 @@
             
         </tbody>
     </table>
-</div>
+</div> -->
 
 <div>
     <h3 class="protus-tracking">Protus Tracking</h3>
@@ -313,9 +314,11 @@
                 <th>#</th>
                 {% if protus_data %}
                     {% for col_name in protus_data[0].keys() %}
-                    <th>{{ col_name }}</th>
+                    {% if col_name != "Sr no" %}
+                        <th>{{ col_name }}</th>
+                    {% endif %}
                     {% endfor %}
-                    <th>Actions</th>
+                    <th>Report</th>
                 {% else %}
                     <th>No Data Available</th>
                 {% endif %}
@@ -327,9 +330,20 @@
                 <tr>
                     <td>{{ index + 1 }}</td>
                     {% for cell in row.values() %}
-                    <td>{{ cell }}</td>
+                    {% if loop.index > 1 %}
+                    <td>
+                        {% if cell != "Not available" %}
+                            {% if loop.index in [7, 8] %}
+                                {{ cell.strftime('%d/%m/%Y') }}
+                            {% else %}
+                                {{ cell }}
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    {% endif %}
                     {% endfor %}
-                    
+                    {%print(row.values()[5])%}
+                    <td><button id={{index}} disabled>View</button></td>
                 </tr>
                 {% endfor %}
             {% else %}
@@ -345,95 +359,73 @@
 
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <script>
 
 const table = document.getElementById("myTable")
-  const rows = table.getElementsByTagName("tr");
-  for (let i = 1; i < rows.length; i++) {
+const rows = table.getElementsByTagName("tr");
+
+for (let i = 1; i < rows.length; i++) {
     const cells = rows[i].getElementsByTagName("td");
-  
-      if (cells[4].innerText.trim().toLowerCase().includes("c")) { 
+
+    if (cells[5].innerText.trim().toLowerCase().includes("closed")) { 
+        button = document.getElementById(i - 1);
+        button.disabled = false;
         rows[i].classList.add("highlight"); 
-      }
-  }
-    // document.querySelector('.search-button').addEventListener('click', function () {
-    //   const query = document.querySelector('.search-bar').value;
-    //   alert(`Searching for: ${query}`);
-    // });
-    // // Table manipulation
-    // const table = document.getElementById("myTable")
-    // const rows = table.getElementsByTagName("tr");
-    // for (let i = 1; i < rows.length; i++) {
-    //   const cells = rows[i].getElementsByTagName("td");
-
-    //   for (let cell of cells) {
-    //     if (cell.innerText.trim().toLowerCase().includes("closure")) {
-    //       rows[i].classList.add("highlight");
-    //     }
-    //   }
-    // }
+    }
+}
 
 
-  //   function updateTable(data) {
-  //   const parsedData = JSON.parse(data);
-  //   const tableBody = document.querySelector("#myTable tbody");
+for (let i = 1; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
 
-  //   // Loop through the parsed data
-  //   parsedData.forEach(item => {
-  //       // Extract necessary values from each item
-  //       const startDate = item["start data and time"] ? new Date(item["start data and time"]).toLocaleDateString() : "N/A";
-  //       const protusId = item["Protus Name"] || "N/A";
-  //       const aggregate = "N/A"; // Replace this with the correct mapping if available
-  //       const originator = item["Owner"] || "N/A";
-  //       const currentOwner = item["Owner"] || "N/A"; // Update if a different current owner exists
-  //       const issue = item["Description"] || "N/A";
-  //       const rca = "N/A"; // Replace this with the correct RCA if available
-  //       const status = item["Status"] || "N/A";
-  //       const severity = "N/A"; // Replace this with severity data if available
-  //       const finalComment = "N/A"; // Replace this with the final comment if available
-  //       const partNumber = "N/A"; // Replace with actual part number if available
-  //       const partName = "N/A"; // Replace with actual part name if available
+    if (cells[5].innerText.trim().toLowerCase().includes("closed")) { 
+        const button = cells[13].querySelector('button');
 
-  //       // Check if a row with the same Protus ID already exists
-  //       const existingRow = Array.from(tableBody.rows).find(row => row.cells[1].textContent === protusId);
+        if (button && !button.disabled) {
+            button.addEventListener('click', () => {
+                const filename = cells[10]?.innerText.trim();
 
-  //       if (!existingRow) {
-  //           // Create a new row and append it to the table body
-  //           const newRow = tableBody.insertRow();
+                if (!filename) {
+                    alert("Filename is missing.");
+                    return;
+                }
 
-  //           newRow.innerHTML = `
-  //               <td>${startDate}</td>
-  //               <td>${protusId}</td>
-  //               <td>${aggregate}</td>
-  //               <td>${originator}</td>
-  //               <td>${currentOwner}</td>
-  //               <td>${issue}</td>
-  //               <td>${rca}</td>
-  //               <td>${status}</td>
-  //               <td>${severity}</td>
-  //               <td>${finalComment}</td>
-  //               <td>${partNumber}</td>
-  //               <td>${partName}</td>
-  //           `;
-  //       }
-  //   });
+                console.log('Attempting to download file:', filename);
 
-  //   document.addEventListener("DOMContentLoaded", () => {
-  //     fetch("http://127.0.0.1:5000/protus-data")
-  //         .then(response => {
-  //             if (!response.ok) {
-  //                 throw new Error(`HTTP error! status: ${response.status}`);
-  //             }
-  //             return response.json();
-  //         })
-  //         .then(data => {
-  //             updateTable(data);
-  //         })
-  //         .catch(error => {
-  //             console.error("Error fetching Protus data:", error);
-  //         });
-  // });
-// }
+                // Send POST request to Flask backend to download the file
+                axios({
+                    method: 'POST',
+                    url: '/download',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: JSON.stringify({ filename }),
+                    responseType: 'blob'  // Handle the response as a binary file
+                })
+                .then(response => {
+                    // Create a link element to trigger the download
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${filename}.pptx`);
+                    document.body.appendChild(link);
+                    link.click();
+
+                    // Clean up
+                    setTimeout(() => {
+                        link.parentNode.removeChild(link);
+                        window.URL.revokeObjectURL(url);
+                    }, 100);
+                })
+                .catch(error => {
+                    console.error("Download Error:", error);
+                    alert("Failed to download the file. Please try again.");
+                });
+            });
+        }
+    }
+}
+
 
   </script>
 
