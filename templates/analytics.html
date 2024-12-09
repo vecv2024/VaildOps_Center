@@ -751,7 +751,7 @@ lopi.addEventListener("click", () => {
     plotBtn.disabled = true;
     plotBtn.textContent = "Loading...";
     fileSelect.value = 'MC2FCHRT0PK535735.csv';
-    axios.post("/plot", { filename : 'MC2FCHRT0PK535735.csv', x_key: 'EngineRpm', y_key: 'EngineOilPressure', start_time: '2024-11-14T00:00', end_time: '2024-11-21T00:00', plot_type: 'scatter', 
+    axios.post("/plot-down", { filename : 'MC2FCHRT0PK535735.csv', x_key: 'EngineRpm', y_key: 'EngineOilPressure', start_time: '2024-11-14T00:00', end_time: '2024-11-21T00:00', plot_type: 'scatter', 
     thresholdx1: 800, thresholdx2: 3000, thresholdy1: 100, thresholdy2: 290})
         .then(response => {
             plotImg.src = response.data.plot_url;
