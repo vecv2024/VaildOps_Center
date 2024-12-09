@@ -871,7 +871,7 @@ body {
 .summary-container {
   display: flex;
   justify-content: center; /* Center-align the boxes */
-  padding: 10px;
+  padding: 10px; 
   gap: 5px; /* Smaller gap between boxes */
 }
 .header01 {

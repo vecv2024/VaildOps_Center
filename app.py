@@ -154,11 +154,11 @@ def home():
 
     # Define a dictionary to map segments to FontAwesome icon classes
     segment_icons = {
-        'EV': 'fas fa-bolt km-icon fa-xs',    # Electric vehicle icon, 2x size
-        'HD': 'fas fa-truck-moving fa-xs',    # Heavy-duty truck icon, 3x size
-        'LMD': 'fas fa-truck km-icon fa-xs',  # Light-medium duty car, large size
-        'SCV': 'fas fa-shipping-fast fa-xs',  # Small commercial vehicle (leaf), small size
-        'BUS': 'fas fa-bus km-icon fa-xs',    # Bus icon, 5x size
+        'EV': 'fas fa-bolt km-icon fa-xs01',    # Electric vehicle icon, 2x size
+        'HD': 'fas fa-truck-moving fa-xs01',    # Heavy-duty truck icon, 3x size
+        'LMD': 'fas fa-truck km-icon fa-xs01',  # Light-medium duty car, large size
+        'SCV': 'fas fa-shipping-fast fa-xs01',  # Small commercial vehicle (leaf), small size
+        'BUS': 'fas fa-bus km-icon fa-xs01',    # Bus icon, 5x size
     }
 
     # Add markers for each city from the dataset
