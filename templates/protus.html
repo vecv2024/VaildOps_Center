@@ -383,7 +383,7 @@ for (let i = 1; i < rows.length; i++) {
     const cells = rows[i].getElementsByTagName("td");
 
     if (cells[5].innerText.trim().toLowerCase().includes("closed")) { 
-        const button = cells[13].querySelector('button');
+        const button = cells[12].querySelector('button');
 
         if (button && !button.disabled) {
             button.addEventListener('click', () => {
