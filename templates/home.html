@@ -9,7 +9,13 @@
       rel="stylesheet"
     />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <style>
+      /* Custom class to make icons smaller than fa-xs */
+      .fa-xs-smaller {
+          font-size: 0.00001em;  /* Adjust this value to make the icon even smaller */
+      }
+    </style>
+    
     <link rel="stylesheet" href="/static/css/homeCSS.css" />
   </head>
   <body>
@@ -142,7 +148,7 @@
         <span class="param">{{ totals[segment].total_kms }}</span> km
     </p>
     <p>
-        <i class="fas fa-clock hours-icon" style="font-size: 15px"></i> Engine
+        <i class="fas fa-clock hours-icon" style="font-size: 15px"></i> 
         Operating Hrs: <span class="param">{{ totals[segment].total_engine_hours }}</span> hrs
     </p>
 </a>
