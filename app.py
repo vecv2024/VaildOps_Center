@@ -578,7 +578,7 @@ def plot_data():
 
             # Highlight the points above the threshold line
             # if not above_threshold.empty:
-            plt.scatter(above_threshold[x_key], above_threshold[y_key], color = "red", label="Above Threshold", zorder=5)
+            plt.scatter(above_threshold[x_key], above_threshold[y_key], color = "red", label="Outliers", zorder=5)
 
 
         plt.title(f"{y_key} vs {x_key} ({plot_type.capitalize()})")
@@ -679,7 +679,7 @@ def plot_data_down():
 
             # Highlight the points above the threshold line
             # if not above_threshold.empty:
-            plt.scatter(above_threshold[x_key], above_threshold[y_key], color = "red", label="Above Threshold", zorder=5)
+            plt.scatter(above_threshold[x_key], above_threshold[y_key], color = "red", label="Outliers", zorder=5)
 
 
         plt.title(f"{y_key} vs {x_key} ({plot_type.capitalize()})")

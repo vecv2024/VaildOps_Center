@@ -388,6 +388,8 @@ for (let i = 1; i < rows.length; i++) {
         if (button && !button.disabled) {
             button.addEventListener('click', () => {
                 const filename = cells[10]?.innerText.trim();
+                button.innerText = 'Downloading';
+                button.disavle = true;
 
                 if (!filename) {
                     alert("Filename is missing.");
@@ -418,10 +420,14 @@ for (let i = 1; i < rows.length; i++) {
                         link.parentNode.removeChild(link);
                         window.URL.revokeObjectURL(url);
                     }, 100);
+                    button.innerText = 'View'
+                    button.disable = false;
                 })
                 .catch(error => {
                     console.error("Download Error:", error);
                     alert("Failed to download the file. Please try again.");
+                    button.innerText = 'View'
+                    button.disable = false;
                 });
             });
         }
