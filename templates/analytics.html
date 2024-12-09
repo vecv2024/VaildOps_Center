@@ -481,17 +481,17 @@ th, td {
                 </tr>
             </thead>
             <tbody>
-                <tr class="data-row">
+                <tr class="data-row extra-data">
                     <td>Engine Overheating</td>
                     <td class="ok-column">83</td>
                     <td class="not-ok-column" id="COI"><button style="background:#d9241d;">1</button></td>
                 </tr>
-                <tr class="data-row">
+                <tr class="data-row extra-data">
                     <td>Low Oil Pressure</td>
                     <td class="ok-column">83</td>
                     <td class="not-ok-column" id="LOPI"><button style="background:#d9241d;">1</button></td>
                 </tr>
-                <tr class="data-row">
+                <tr class="data-row extra-data">
                     <td>Frequent DPF Choke</td>
                     <td class="ok-column">53</td>
                     <td class="not-ok-column"><button disabled style="background:#e27d79;">0</button></td>
@@ -572,19 +572,36 @@ th, td {
         
     </div>
   <script>
-    // Function to toggle visibility of additional rows
-document.getElementById('view-more-btn').addEventListener('click', function() {
-    // Get all extra data rows
+    document.addEventListener('DOMContentLoaded', function() {
+    // Hide all rows except the first 3 extra-data rows on page load
     const extraRows = document.querySelectorAll('.extra-data');
+    extraRows.forEach((row, index) => {
+        if (index >= 3) {
+            row.style.display = 'none'; // Hide all but the first 3 extra rows
+        }
+    });
 
-    // Check if the rows are currently hidden or visible
-    extraRows.forEach(row => {
-        if (row.style.display === 'none' || row.style.display === '') {
-            row.style.display = 'table-row'; // Show extra data rows
-            this.textContent = 'View Less';  // Change button text to "View Less"
+    // Function to toggle visibility of additional rows
+    document.getElementById('view-more-btn').addEventListener('click', function() {
+        // Get all extra data rows
+        const extraRows = document.querySelectorAll('.extra-data');
+        
+        if (extraRows[0].style.display === 'none' || extraRows[0].style.display === '') {
+            // Show all extra rows
+            extraRows.forEach(row => {
+                row.style.display = 'table-row';
+            });
+            // Change button text to "View Less"
+            this.textContent = 'View Less';
         } else {
-            row.style.display = 'none'; // Hide extra data rows
-            this.textContent = 'View More'; // Change button text to "View More"
+            // Hide extra rows again (after the first 3)
+            extraRows.forEach((row, index) => {
+                if (index >= 3) {
+                    row.style.display = 'none';
+                }
+            });
+            // Change button text to "View More"
+            this.textContent = 'View More';
         }
     });
 });
