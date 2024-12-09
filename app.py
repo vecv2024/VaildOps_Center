@@ -743,7 +743,7 @@ def get_data():
     }
 
 # <......................................................>
-# analytics
+# download
 
 @app.route('/download', methods=['POST'])
 def download_file():
